@@ -1,0 +1,17 @@
+name: Example
+parameters:
+  # no whitespace allowed!
+  current_environment: production
+schedule: 0 0 *
+schedule_active: True
+
+tasks:
+- name: task_1
+  queue: default
+  max_retries: 1
+  timeout: 30
+  command: [echo, 'true', string]
+- name: task_2
+  queue: default
+  command: [echo, 'false', '1']
+  upstream: [task_1]

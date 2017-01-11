@@ -1,0 +1,21 @@
+/* Global */
+
+/* WorkflowDetailGraph */
+
+svg.taskGraph {
+    height: 500px;
+    width: 100%;
+    margin: 0 auto;
+    display: block;
+}
+
+g.node rect {
+    stroke: #333;
+    fill: #fff
+}
+
+g.edgePath path {
+    stroke: #333;
+    fill: #333;
+    stroke-width: 1px;
+}

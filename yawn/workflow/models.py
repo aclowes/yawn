@@ -1,0 +1,96 @@
+from django.db import models
+from django.contrib.postgres import fields
+from django.db.models import functions
+
+from yawn.utilities import cron
+
+
+class WorkflowName(models.Model):
+    name = models.SlugField(allow_unicode=True)
+    current_version = models.ForeignKey('Workflow', null=True)
+
+    def new_version(self, **kwargs):
+        """Create a new version of a workflow"""
+        version = 0
+        if self.current_version_id:
+            version = self.current_version.version
+        workflow = Workflow.objects.create(name=self, version=version + 1, **kwargs)
+        self.current_version = workflow
+        self.save()
+        return workflow
+
+
+class Workflow(models.Model):
+    class Meta:
+        unique_together = (('name', 'version'),)
+
+    name = models.ForeignKey(WorkflowName, models.PROTECT)
+    version = models.IntegerField(editable=False)  # serializer read-only
+
+    # scheduling is completely optional:
+    schedule_active = models.BooleanField(default=False)
+    schedule = models.TextField(null=True, validators=[cron.cron_validator])
+    next_run = models.DateTimeField(null=True)
+
+    # parameters
+    parameters = fields.JSONField(default=dict)
+
+    @classmethod
+    def first_ready(cls):
+        ready_templates = list(cls.objects.raw("""
+            SELECT * FROM yawn_workflow
+            WHERE schedule_active
+            AND next_run < transaction_timestamp()
+            ORDER BY next_run LIMIT 1
+            FOR UPDATE SKIP LOCKED -- requires PG 9.5+
+        """))
+        return ready_templates[0] if len(ready_templates) else None
+
+    def submit_run(self, parameters=None, scheduled_time=None):
+        """Create a run of this template"""
+        from yawn.task.models import Task
+
+        run_parameters = self.parameters.copy()
+        run_parameters.update(parameters or {})
+
+        run = Run.objects.create(
+            workflow=self,
+            submitted_time=functions.Now(),
+            scheduled_time=scheduled_time,
+            parameters=run_parameters,
+        )
+        for template in self.template_set.all():
+            task = Task.objects.create(
+                run=run,
+                template=template,
+            )
+            if not template.upstream.exists():
+                task.enqueue()
+        return run
+
+
+class Run(models.Model):
+    RUNNING = 'running'
+    SUCCEEDED = 'succeeded'
+    FAILED = 'failed'
+    STATUS_CHOICES = [(x, x) for x in (RUNNING, SUCCEEDED, FAILED)]
+
+    workflow = models.ForeignKey(Workflow, models.PROTECT)
+    submitted_time = models.DateTimeField()
+    scheduled_time = models.DateTimeField(null=True)
+    status = models.TextField(default=RUNNING, choices=STATUS_CHOICES)
+    parameters = fields.JSONField(default=dict)
+
+    def update_status(self):
+        from yawn.task.models import Task
+
+        task_statuses = self.task_set.all().values_list('status', flat=True)
+
+        if all([status == Task.SUCCEEDED for status in task_statuses]):
+            self.status = self.SUCCEEDED
+        elif any([status in [Task.WAITING, Task.QUEUED, Task.RUNNING] for status in task_statuses]):
+            self.status = self.RUNNING
+        else:
+            self.status = self.FAILED
+
+        self.save()

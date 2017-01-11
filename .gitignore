@@ -1,0 +1,12 @@
+# pycharm
+.idea/
+
+# build
+*.egg-info/
+*/build/
+
+# node packages
+*/node_modules/
+
+# python cache
+*.cache/
