@@ -1,5 +1,5 @@
 import React from 'react';
-import {Panel, PanelGroup} from 'react-bootstrap';
+import {Panel, PanelGroup, Alert} from 'react-bootstrap';
 //import {Link} from 'react-router';
 
 import API from "./API";
@@ -36,7 +36,12 @@ export default class WorkflowDetail extends React.Component {
         </PanelGroup>
       );
     } else {
-      return <span>Loading...</span>
+      return (
+        <div>
+          {this.state.error && <Alert bsStyle="danger">{this.state.error}</Alert>}
+          Loading...
+        </div>
+      )
     }
   }
 }

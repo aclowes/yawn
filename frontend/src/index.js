@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Router, Route, IndexRedirect, browserHistory} from 'react-router'
-import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap/dist/css/bootstrap-theme.css';
+// import 'bootstrap/dist/css/bootstrap.css';
+// import 'bootstrap/dist/css/bootstrap-theme.css';
+import './bootswatch-theme.css';
 
 import App from './App';
 import WorkflowList from './WorkflowList';

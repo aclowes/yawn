@@ -1,13 +1,36 @@
 /* Global */
 
-/* WorkflowDetailGraph */
-
-svg.taskGraph {
-    height: 500px;
-    width: 100%;
-    margin: 0 auto;
-    display: block;
+.navbar {
+    border-radius: 0;
 }
+
+.pagination {
+    margin: 0;
+}
+
+/* Status Colors */
+
+.waiting {
+    background-color: ghostwhite;
+}
+
+.queued {
+    background-color: lightyellow;
+}
+
+.running {
+    background-color: yellow;
+}
+
+.succeeded {
+    background-color: forestgreen;
+}
+
+.failed {
+    background-color: red;
+}
+
+/* WorkflowDetailGraph */
 
 g.node rect {
     stroke: #333;

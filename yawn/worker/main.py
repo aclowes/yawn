@@ -1,18 +1,15 @@
-import os
 import enum
 import signal
-import socket
-import logging
+import typing
 import collections
 
-from django.db import models
 from django.db import transaction
 from django.db.models import functions
 
-from yawn.task.models import Template, Task, Execution
+from yawn.task.models import Task, Execution
 from yawn.worker.models import Worker, Queue
 from yawn.worker.executor import Manager, Result
-from yawn.workflow.models import WorkflowName, Workflow, Run
+from yawn.workflow.models import Workflow
 from yawn.utilities import logger
 from yawn.utilities.cron import Crontab
 from yawn.utilities.database import close_on_exception
@@ -32,17 +29,14 @@ class Main:
     worker = None
     timeout = 60  # seconds
 
-    def __init__(self, concurrency, name=None, queues: list = None):
+    def __init__(self, concurrency, name, queues: list):
         self.concurrency = concurrency
         self.results = collections.deque()
-        self.name = name or '{} {}'.format(socket.gethostname(), os.getpid())
-        if queues:
-            self.queue_ids = []
-            for name in queues:
-                queue, created = Queue.objects.get_or_create(name=name)
-                self.queue_ids.append(queue.id)
-        else:
-            self.queue_ids = [1]
+        self.name = name
+        self.queue_ids = []
+        for name in queues:
+            queue, created = Queue.objects.get_or_create(name=name)
+            self.queue_ids.append(queue.id)
 
     def run(self):
         """
@@ -52,12 +46,15 @@ class Main:
             Because this is simple and maybe even more efficient!
         """
         self.handle_signals()
-        self.executor = executor.Manager()
+        self.executor = Manager()
         self.state = State.running
-        logger.warning('Starting YAWN worker with concurrency=%s', self.concurrency)
+        logger.warning('\nStarting YAWN worker with concurrency=%s', self.concurrency)
 
         while True:
             if self.state == State.running:
+
+                # update own status and check for lost workers
+                self.update_worker()
 
                 # check for tasks that should be queued
                 self.schedule_workflows()
@@ -67,11 +64,8 @@ class Main:
 
                 self.mark_terminated()
 
-                # update own status and check for lost workers
-                self.check_stranded()
-
             elif not self.executor.get_running_ids():
-                # shudown: exit loop once all tasks are finished
+                # shutdown: exit loop once all tasks are finished
                 break
 
             # check status on running tasks
@@ -89,15 +83,15 @@ class Main:
         - SIGTERM kills running tasks, saves to the database, and exits
         """
 
-        def handle_sigterm():
+        def handle_sigterm(*args):
             self.state = State.terminate
             # kill running tasks
             self.executor.mark_terminated(self.executor.get_running_ids())
-            logger.warning('Received SIGTERM, killing running tasks and exiting.')
+            logger.warning('\nReceived SIGTERM, killing running tasks and exiting.')
 
-        def handle_sigint():
+        def handle_sigint(*args):
             self.state = State.shutdown
-            logger.warning('Received SIGINT, shutting down after all tasks have finished.')
+            logger.warning('\nReceived SIGINT, shutting down after all tasks have finished.')
             logger.warning('Press CTL-C again to shut down immediately.')
             signal.signal(signal.SIGINT, handle_sigterm)
 
@@ -131,11 +125,11 @@ class Main:
 
         with transaction.atomic():
 
-            task = workflows.Task.first_queued(self.queue_ids)
+            task = Task.first_queued(self.queue_ids)
             if not task:
                 return  # there are no tasks ready to run
 
-            execution = task.start_execution(execution_host=self.name)
+            execution = task.start_execution(self.worker)
 
         self.executor.start_subprocess(
             execution_id=execution.id,
@@ -145,7 +139,7 @@ class Main:
         )
 
     @close_on_exception
-    def check_stranded(self):
+    def update_worker(self):
         """
         Look for executors where the connection has broken and tasks need to be re-submitted.
         """
@@ -178,21 +172,21 @@ class Main:
         for _ in range(len(self.results)):
             with transaction.atomic():
                 result = self.results[0]
-                execution = Execution.objects.get(id=result.execution_id)
-                execution.update(
-                    exit_code=result.returncode,
-                    stdout=result.stdout,
-                    stderr=result.stderr
-                )
-                # pop after doing the update so it will retry if the db was disconnected
+                if result.stdout or result.stderr:
+                    Execution.update_output(result.execution_id, result.stdout, result.stderr)
+                if result.returncode:
+                    execution = Execution.objects.get(id=result.execution_id)
+                    execution.mark_finished(result.returncode)
+                # pop after doing the updates have completed successfully
+                # in the case of an exception before here, the updates will be retried
                 self.results.popleft()
 
     @close_on_exception
     def mark_terminated(self):
         """Kill any tasks marked for termination by the user"""
-        killed_execution_ids = workflows.Execution.objects.filter(
+        killed_execution_ids = Execution.objects.filter(
             id__in=self.executor.get_running_ids(),
-            status=workflows.Execution.KILLED,
+            status=Execution.KILLED,
         ).values_list('id', flat=True)
         if killed_execution_ids:
             self.executor.mark_terminated(killed_execution_ids)

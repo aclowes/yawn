@@ -12,7 +12,11 @@ logger = logging.getLogger(__name__)
 
 
 class Result:
-    """Returned to communicate the status of a process"""
+    """
+    Returned to communicate the status of a process
+
+    In practice has stdout/stderr OR returncode, not both
+    """
     stdout = None
     stderr = None
     returncode = None

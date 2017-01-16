@@ -1,4 +1,4 @@
-import 'whatwg-fetch'
+import 'whatwg-fetch';
 
 function getCsrfCookie() {
   return (document.cookie || '').split(';').reduce((accumulator, cookie) => {
@@ -17,28 +17,29 @@ export default {
       'Accepts': 'application/json',
     };
     if (body) {
-      // Request.mode = 'cors' provides some cross-origin protection
+      // Request.mode = 'cors' (the default) provides some cross-origin protection
       headers['X-CSRFToken'] = getCsrfCookie();
       headers['Content-Type'] = 'application/json';
       body = JSON.stringify(body);
     }
-    let responseObj;
 
     fetch(url, {
       method: method,
       headers, body
-    }).then(function (response) {
-      responseObj = response;
-      return response.json()
-    }).then(function (payload) {
-      // if (payload === undefined) return;  // caught exception
 
-      if (responseObj.status >= 200 && responseObj.status < 300) {
-        // return the object list, a list endpoint
-        callback(payload.results || payload, null);
+    }).then(function (response) {
+      if (response.ok) {
+        response.json().then((payload) => {
+          // return the object list if response.results is defined:
+          callback(payload.results || payload, null);
+        });
       } else {
-        callback(null, JSON.stringify(payload));
+        response.text().then((error) => {
+          // todo figure out the rest framework error json and parse it if possible
+          callback(null, error);
+        });
       }
+
     }).catch((error) => {
       callback(null, error.message);
     })

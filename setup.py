@@ -110,7 +110,7 @@ setup(
     # pip to create the appropriate form of executable for the target platform.
     entry_points={
         'console_scripts': [
-            'yawn=yawn:main',
+            'yawn=yawn.manage:main',
         ],
     },
 )

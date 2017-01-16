@@ -6,8 +6,8 @@ from yawn.utilities import cron
 
 
 class WorkflowName(models.Model):
-    name = models.SlugField(allow_unicode=True)
-    current_version = models.ForeignKey('Workflow', null=True)
+    name = models.SlugField(allow_unicode=True, unique=True)
+    current_version = models.OneToOneField('Workflow', null=True, related_name='is_current')
 
     def new_version(self, **kwargs):
         """Create a new version of a workflow"""
@@ -68,6 +68,9 @@ class Workflow(models.Model):
                 task.enqueue()
         return run
 
+    def __str__(self):
+        return '{} v{}'.format(self.name.name, self.version)
+
 
 class Run(models.Model):
     RUNNING = 'running'
@@ -94,3 +97,6 @@ class Run(models.Model):
             self.status = self.FAILED
 
         self.save()
+
+    def __str__(self):
+        return 'Workflow {} Run {}'.format(self.workflow_id, self.id)

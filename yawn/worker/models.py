@@ -1,4 +1,5 @@
 from datetime import timedelta
+from functools import lru_cache
 
 from django.db import models
 from django.db.models import functions
@@ -44,17 +45,25 @@ class Worker(models.Model):
                 logger.warning('Marking %s as lost', execution)
                 execution.mark_finished(lost=True)
 
+    def __str__(self):
+        return self.name
+
 
 class Queue(models.Model):
     """Arbitrary tag defining where tasks run."""
 
     name = models.SlugField(unique=True, allow_unicode=True)
 
+    _default = None
+
     def __str__(self):
         return self.name
 
-
-DEFAULT_QUEUE = 1
+    @classmethod
+    def get_default_queue(cls):
+        if not cls._default:
+            cls._default = Queue.objects.get_or_create(name='default')[0]
+        return cls._default
 
 
 class Message(models.Model):

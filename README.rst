@@ -8,12 +8,37 @@ are inspirations for this one; particularly Celery_ and Airflow_.
 .. _Celery: http://www.celeryproject.org/
 .. _Airflow: https://airflow.incubator.apache.org/
 
+Principles
+----------
+
+What is different from existing tools and why?
+
+Code separation
+  YAWN is separate from your code. You are responsible for how your code is released
+  and what version of your code gets run.
+
+State
+  YAWN makes it hard to give state to your workflows and tasks. Your application
+  is responsible for getting the inputs and saving the results of your tasks.
+  The only inputs to a task that differentiate it from another run are the
+  environment variables you give it. You can use the builtin YAWN_WORKFLOW_RUN_ID
+  or a custom date or record id to work with.
+
+Versioning
+  The workflow is versioned, so you know what tasks were in each workflow run.
+
+Stack
+  YAWN combines the message queue and internal state into a single relational
+  database, so its easier to reason about what is happening. It uses the new
+  `SELECT ... FOR UPDATE SKIP LOCKED` statement to efficiently select from the queue
+  table.
+
 Components
 ----------
 
-- Webservers provide a user interface.
-- Workers schedule and execute tasks.
-- A Postgres 9.5+ database stores state.
+- Web server provides a user interface.
+- Worker schedules and executes tasks.
+- Postgres 9.5+ database stores state.
 
 Concepts
 --------
@@ -41,24 +66,11 @@ Execution
   A single run of a Task, capturing the exit code and standard output
   and error.
 
-Usage
------
-
-Create config file (`yawn.cfg`) specifying the Postgres 9.5+ database to connect to::
-
-  DATABASE_HOST=localhost
-  DATABASE_PORT=5432
-  DATABASE_USER=
-  DATABASE_PASSWORD=
-
-Install the package using PIP and run the webserver and worker separately::
-
-  pip install https://github.com/aclowes/yawn
-  yawn webserver
-  yawn worker
-
 Examples
 --------
+
+![Workflow screenshot](
+https://cloud.githubusercontent.com/assets/910316/21969288/fe40baf0-db51-11e6-97f2-7e6875c1e575.png)
 
 Contributing
 ------------
@@ -85,3 +97,9 @@ Run the tests::
 
 .. _create-react-app: https://github.com/facebookincubator/create-react-app
 .. _Django: https://airflow.incubator.apache.org/
+
+TODO
+----
+
+- WSGI + static file server wrapped in a ``yawn webserver`` command
+- Config file for database connection, etc

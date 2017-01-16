@@ -13,11 +13,21 @@ class RunViewSet(viewsets.GenericViewSet,
     """
     Run endpoint, only GET(list,detail) and PATCH(detail)
     """
-    queryset = Run.objects.all().prefetch_related('task_set__template')
 
     serializer_class = RunSerializer
-
     permission_classes = (AllowAny,)
+    queryset = Run.objects.prefetch_related('task_set__template')
+
+    def get_queryset(self):
+        """
+        Optionally restricts the returned purchases to a given user,
+        by filtering against a `username` query parameter in the URL.
+        """
+        queryset = self.queryset.all()
+        workflow = self.request.query_params.get('workflow', None)
+        if workflow is not None:
+            queryset = queryset.filter(workflow_id=workflow)
+        return queryset
 
 
 class TaskViewSet(viewsets.GenericViewSet,

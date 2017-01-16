@@ -3,13 +3,13 @@ from django.db import transaction
 from django.db.models import functions
 from django.contrib.postgres import fields
 
-from yawn.worker.models import Worker, Queue, Message, DEFAULT_QUEUE
+from yawn.worker.models import Worker, Queue, Message
 from yawn.utilities import logger
 
 
 class Template(models.Model):
     workflow = models.ForeignKey('Workflow', models.PROTECT, editable=False)
-    queue = models.ForeignKey(Queue, models.PROTECT, default=DEFAULT_QUEUE)
+    queue = models.ForeignKey(Queue, models.PROTECT)
     name = models.SlugField(allow_unicode=True, db_index=False)
 
     max_retries = models.IntegerField(default=0)
@@ -27,6 +27,12 @@ class Template(models.Model):
 
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        # can't set the default above because the value isn't serializable for migrations
+        if not self.queue_id:
+            self.queue = Queue.get_default_queue()
+        super().save(*args, **kwargs)
 
 
 class Task(models.Model):
@@ -50,10 +56,10 @@ class Task(models.Model):
         """Get the first task for the given queue names, or None"""
         messages = list(Message.objects.raw(
             # this means retried tasks will go to the top of the queue
-            """SELECT * FROM yawn_message WHERE queue_id IN (%s)
+            """SELECT * FROM yawn_message WHERE queue_id IN %s
             ORDER BY id LIMIT 1 FOR UPDATE SKIP LOCKED""",
             # psycopg2 handles tuple & list params differently, check the docs:
-            params=(list(queue_ids))
+            params=(tuple(queue_ids),)
         ))
         if not messages:
             return None
@@ -131,13 +137,17 @@ class Execution(models.Model):
     def __str__(self):
         return '{exec.id} {exec.status}'.format(exec=self)
 
-    def update_output(self, stdout='', stderr=''):
-        query = Execution.objects.filter(id=self.id)
-        # use concatenation to efficiently update the fields
-        if stdout:
-            query.update(stdout=functions.Concat('stdout', models.Value(stdout)))
-        if stderr:
-            query.update(stderr=functions.Concat('stderr', models.Value(stderr)))
+    @classmethod
+    def update_output(cls, execution_id, stdout, stderr):
+        """
+        Append to stdout & stderror.
+        Use concatenation to efficiently update the fields
+        """
+        query = Execution.objects.filter(id=execution_id)
+        query.update(
+            stdout=functions.Concat('stdout', models.Value(stdout or '')),
+            stderr=functions.Concat('stderr', models.Value(stderr or ''))
+        )
 
     def mark_finished(self, exit_code=None, lost=False):
         """

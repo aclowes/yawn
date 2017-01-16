@@ -1,6 +1,7 @@
 import React from 'react';
-import {Table, Alert} from 'react-bootstrap';
+import {Table, Alert, Tooltip, OverlayTrigger, Glyphicon} from 'react-bootstrap';
 import {Link} from 'react-router';
+import {startCase} from 'lodash';
 
 import API from "./API";
 
@@ -20,8 +21,21 @@ export default class WorkflowDetailHistory extends React.Component {
     return this.state.runs.map((run, index) => {
       const date = (run.scheduled_time || run.submitted_time).substr(0, 10);
       const type = run.scheduled_time ? 'Scheduled' : 'Manual';
-      const run_name = `${date} (${type})`;
-      return <td key={run.id}>{run_name}</td>
+      const tooltip = (
+        <Tooltip id={run.id}>
+          {type}<br/>
+          {date}<br/>
+          {startCase(run.status)}
+        </Tooltip>
+      );
+
+      return (
+        <OverlayTrigger key={run.id} overlay={tooltip} placement="bottom">
+          <th className={run.status}>
+            #{index}
+          </th>
+        </OverlayTrigger>
+      )
     })
   }
 
@@ -31,13 +45,25 @@ export default class WorkflowDetailHistory extends React.Component {
     const taskRuns = this.state.runs.map((run) =>
       run.tasks.find((task) => task.name === template.name)
     );
-    return taskRuns.map((task) => (
-      <td key={task.id}>
-        <Link to={`/tasks/${task.id}`}>
-          {task.status}
-        </Link>
-      </td>
-    ))
+    return taskRuns.map((task) => {
+      const glyph = {
+        waiting: 'glass',
+        queued: 'download-alt',
+        running: 'refresh',
+        succeeded: 'ok',
+        failed: 'remove',
+      }[task.status];
+      const tooltip = <Tooltip id={task.id}>{startCase(task.status)}</Tooltip>;
+      return (
+        <td key={task.id} className={task.status}>
+          <OverlayTrigger overlay={tooltip} placement="right">
+            <Link to={`/tasks/${task.id}`}>
+              <Glyphicon glyph={glyph}/>
+            </Link>
+          </OverlayTrigger>
+        </td>
+      )
+    })
   }
 
   renderRows() {
@@ -63,7 +89,11 @@ export default class WorkflowDetailHistory extends React.Component {
         <Table bordered condensed>
           <thead>
           <tr>
-            <td/>
+            <th className="text-center">Task</th>
+            <th className="text-center" colSpan={this.state.runs.length}>Run</th>
+          </tr>
+          <tr>
+            <th/>
             {this.renderRunHeaders()}
           </tr>
           </thead>
