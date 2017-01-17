@@ -3,6 +3,8 @@ import os
 import pytest
 import yaml
 
+from yawn.workflow.models import WorkflowName
+
 
 @pytest.fixture()
 def data():
@@ -63,4 +65,17 @@ def test_more_invalid_fields(client, data):
     assert 'Invalid parameter value' in response.data['parameters'][1]
     assert 'non_field_errors' in response.data['tasks']
 
-# test workflow already exists, no change
+
+def test_list_workflow_names(client):
+    name = WorkflowName.objects.create(name='workflow1')
+    version1 = name.new_version()
+    version2 = name.new_version()
+    response = client.get('/api/names/')
+    assert response.status_code == 200
+    assert response.data['results'][0]['name'] == name.name
+    response = client.get('/api/names/{}/'.format(name.id))
+    assert response.status_code == 200
+    assert response.data['current_version_id'] == version2.id
+    assert response.data['current_version'] == version2.version
+    assert response.data['task_count'] == 0
+    assert response.data['versions'] == [version1.id, version2.id]

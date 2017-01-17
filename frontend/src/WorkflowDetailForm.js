@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   Checkbox, FormGroup, FormControl, ControlLabel,
-  Button, Alert
+  Button, Alert, Pagination
 } from 'react-bootstrap';
 
 import API from './API'
@@ -35,9 +35,28 @@ export default class WorkflowDetailForm extends React.Component {
     this.state = {
       editable: false,
       error: null,
+      versions: [],
       ...formValues(this.props.workflow)
     };
   }
+
+  componentDidMount() {
+    API.get(`/api/names/${this.props.workflow.name_id}/`, (payload, error) => {
+      this.setState({versions: payload.versions, error})
+    });
+  }
+
+  componentWillReceiveProps(nextProps) {
+    // the version changed...
+    if (nextProps.workflow !== this.props.workflow) {
+      this.setState({...formValues(nextProps.workflow)});
+    }
+  }
+
+  selectVersion = (eventKey) => {
+    const version = this.state.versions[eventKey - 1];
+    this.props.router.push(`/workflows/${version}`);
+  };
 
   toggleEditable = () => {
     this.setState({editable: !this.state.editable});
@@ -87,7 +106,15 @@ export default class WorkflowDetailForm extends React.Component {
             <dt>Name</dt>
             <dd>{this.props.workflow.name}</dd>
             <dt>Version</dt>
-            <dd>{this.props.workflow.version}</dd>
+            <dd>{}
+              <Pagination
+                ellipsis
+                bsSize="small"
+                items={this.state.versions.length}
+                maxButtons={10}
+                activePage={this.props.workflow.version}
+                onSelect={this.selectVersion}/>
+            </dd>
             <dt>Schedule Active</dt>
             <dd>{this.state.schedule_active ? 'True' : 'False'}</dd>
             <dt>Schedule</dt>

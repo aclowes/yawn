@@ -49,7 +49,7 @@ class Task(models.Model):
     status = models.TextField(choices=STATUS_CHOICES, default=WAITING)
 
     def __str__(self):
-        return '{task.id} {task.status}'.format(task=self)
+        return 'Task #{task.id} - {task.status}'.format(task=self)
 
     @classmethod
     def first_queued(cls, queue_ids: list):
@@ -135,13 +135,13 @@ class Execution(models.Model):
     stderr = models.TextField(default='', blank=True)
 
     def __str__(self):
-        return '{exec.id} {exec.status}'.format(exec=self)
+        return 'Execution {exec.id} - {exec.status}'.format(exec=self)
 
     @classmethod
     def update_output(cls, execution_id, stdout, stderr):
         """
-        Append to stdout & stderror.
-        Use concatenation to efficiently update the fields
+        Append to stdout & stderr.
+        Use concatenation to efficiently update the fields.
         """
         query = Execution.objects.filter(id=execution_id)
         query.update(

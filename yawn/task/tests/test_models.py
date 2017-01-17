@@ -97,12 +97,13 @@ def test_execution_output(run):
     worker = Worker.objects.create(name='worker1')
     execution = task1.start_execution(worker)
 
-    execution.update_output(stdout='foo', stderr='blah')
+    execution.update_output(execution.id, 'foo', 'blah')
     execution.refresh_from_db()
     assert execution.stdout == 'foo'
     assert execution.stderr == 'blah'
 
-    execution.update_output(stdout='bar')
+    # only provide one, check it also works
+    execution.update_output(execution.id, 'bar', None)
     execution.refresh_from_db()
     assert execution.stdout == 'foobar'
     assert execution.stderr == 'blah'

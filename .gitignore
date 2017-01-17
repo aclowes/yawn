@@ -3,10 +3,13 @@
 
 # build
 *.egg-info/
-*/build/
+*build/
+*coverage/
 
 # node packages
-*/node_modules/
+*node_modules/
 
-# python cache
+# caches
 *.cache/
+.DS_Store
+*__pycache__/

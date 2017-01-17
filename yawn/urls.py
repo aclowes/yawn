@@ -3,10 +3,11 @@ from rest_framework import routers
 
 from yawn.task.views import RunViewSet, TaskViewSet, ExecutionViewSet
 from yawn.worker.views import QueueViewSet, WorkerViewSet
-from yawn.workflow.views import WorkflowViewSet
+from yawn.workflow.views import WorkflowViewSet, WorkflowNameViewSet
 
 router = routers.DefaultRouter()
 router.include_format_suffixes = False
+router.register(r'names', WorkflowNameViewSet)
 router.register(r'workflows', WorkflowViewSet)
 router.register(r'runs', RunViewSet)
 router.register(r'tasks', TaskViewSet)

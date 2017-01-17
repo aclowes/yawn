@@ -11,10 +11,21 @@ export default class WorkflowDetailHistory extends React.Component {
     this.state = {runs: null, error: null};
   }
 
-  componentDidMount() {
-    API.get(`/api/runs/?workflow=${this.props.workflow.id}`, (payload, error) => {
+  loadRuns(workflow_id) {
+    API.get(`/api/runs/?workflow=${workflow_id}`, (payload, error) => {
       this.setState({runs: payload, error});
     });
+  }
+
+  componentDidMount() {
+    this.loadRuns(this.props.workflow.id);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    // the version changed...
+    if (nextProps.workflow !== this.props.workflow) {
+      this.loadRuns(nextProps.workflow.id);
+    }
   }
 
   renderRunHeaders() {

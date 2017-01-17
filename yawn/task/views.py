@@ -20,8 +20,7 @@ class RunViewSet(viewsets.GenericViewSet,
 
     def get_queryset(self):
         """
-        Optionally restricts the returned purchases to a given user,
-        by filtering against a `username` query parameter in the URL.
+        Optionally filter to the runs for a given workflow
         """
         queryset = self.queryset.all()
         workflow = self.request.query_params.get('workflow', None)

@@ -11,6 +11,24 @@ from yawn.workflow.models import Workflow, WorkflowName
 from yawn.task.models import Template
 
 
+class WorkflowNameSerializer(serializers.ModelSerializer):
+    current_version = serializers.IntegerField(source='current_version.version')
+    current_version_id = serializers.IntegerField()
+    task_count = serializers.IntegerField()
+    schedule = serializers.CharField(source='current_version.schedule')
+    schedule_active = serializers.BooleanField(source='current_version.schedule_active')
+    versions = serializers.SerializerMethodField()
+
+    class Meta:
+        model = WorkflowName
+        fields = '__all__'
+
+    def get_versions(self, obj):
+        """Provide a full list of versions, only on detail"""
+        if self.context['view'].action == 'retrieve':
+            return list(obj.workflow_set.order_by('id').values_list('id', flat=True))
+
+
 class TemplateSerializer(serializers.ModelSerializer):
     queue = serializers.SlugRelatedField(slug_field='name', queryset=Queue.objects.all())
     upstream = serializers.ListField(
@@ -23,12 +41,13 @@ class TemplateSerializer(serializers.ModelSerializer):
 
 class WorkflowSerializer(serializers.ModelSerializer):
     name = serializers.RegexField(source='name.name', regex=slug_unicode_re)
+    name_id = serializers.IntegerField(read_only=True)
     tasks = TemplateSerializer(many=True, allow_empty=False, source='template_set')
 
     class Meta:
         model = Workflow
         fields = '__all__'
-        read_only_fields = ('next_run',)
+        read_only_fields = ('next_run', 'name_id')
 
     @transaction.atomic
     def create(self, validated_data):

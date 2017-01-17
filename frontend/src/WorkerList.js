@@ -39,17 +39,21 @@ export default class WorkerList extends React.Component {
         </tr>
       )
     } else {
-      return this.state.workers.map((worker) => (
-        <tr key={worker.id}>
-          <td><Link to={`/workers/${worker.id}`}>{worker.name}</Link></td>
-          <td>{worker.status}</td>
-          <td>{worker.start_timestamp}</td>
-          <td>{worker.last_heartbeat}</td>
-          <td>
-            <Button onClick={() => this.terminateWorker(worker.id)} disabled>Terminate</Button>
-          </td>
-        </tr>
-      ))
+      return this.state.workers.map((worker) => {
+        const terminate = () => this.terminateWorker(worker.id);
+        return (
+          <tr key={worker.id}>
+            <td><Link to={`/workers/${worker.id}`}>{worker.name}</Link></td>
+            <td>{worker.status}</td>
+            <td>{worker.start_timestamp}</td>
+            <td>{worker.last_heartbeat}</td>
+            <td>
+              <Button bsSize="small" onClick={terminate} disabled>
+                Terminate</Button>
+            </td>
+          </tr>
+        )
+      })
     }
   }
 

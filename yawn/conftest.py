@@ -17,9 +17,14 @@ django.setup()
 @pytest.fixture(scope='session')
 def setup_django():
     """Provide a test database and django configuration"""
+    from yawn.worker.models import Queue
+
     verbosity = 1
     interactive = False  # whether to ask before deleting
     old_config = runner.setup_databases(verbosity, interactive)
+
+    # create the default queue outside the transaction
+    Queue.get_default_queue()
 
     yield
 

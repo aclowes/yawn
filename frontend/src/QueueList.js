@@ -39,15 +39,19 @@ export default class QueueList extends React.Component {
         </tr>
       )
     } else {
-      return this.state.queues.map((queue) => (
-        <tr key={queue.id}>
-          <td><Link to={`/queues/${queue.id}`}>{queue.name}</Link></td>
-          <td>{queue.message_count}</td>
-          <td>
-            <Button onClick={() => this.purgeQueue(queue.id)}>Purge</Button>
-          </td>
-        </tr>
-      ))
+      return this.state.queues.map((queue) => {
+        const terminate = () => this.purgeQueue(queue.id);
+        return (
+          <tr key={queue.id}>
+            <td><Link to={`/queues/${queue.id}`}>{queue.name}</Link></td>
+            <td>{queue.message_count}</td>
+            <td>
+              <Button bsSize="small" onClick={terminate}>
+                Purge</Button>
+            </td>
+          </tr>
+        )
+      })
     }
   }
 

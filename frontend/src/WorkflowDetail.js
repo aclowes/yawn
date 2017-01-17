@@ -14,9 +14,19 @@ export default class WorkflowDetail extends React.Component {
   }
 
   componentDidMount() {
-    API.get(`/api/workflows/${this.props.params.id}/`, (payload, error) => {
+    this.loadWorkflow(this.props.params.id);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.params.id !== this.props.params.id) {
+      this.loadWorkflow(nextProps.params.id)
+    }
+  }
+
+  loadWorkflow(version) {
+    API.get(`/api/workflows/${version}/`, (payload, error) => {
       this.setState({workflow: payload, error: error});
-    })
+    });
   }
 
   render() {
@@ -25,7 +35,7 @@ export default class WorkflowDetail extends React.Component {
       return (
         <PanelGroup>
           <Panel header="Details">
-            <WorkflowDetailForm workflow={workflow}/>
+            <WorkflowDetailForm workflow={workflow} router={this.props.router}/>
           </Panel>
           <Panel header="Tasks">
             <WorkflowDetailGraph workflow={workflow}/>

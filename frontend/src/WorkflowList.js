@@ -11,7 +11,7 @@ export default class WorkflowList extends React.Component {
   }
 
   componentDidMount() {
-    API.get('/api/workflows/', (payload, error) => {
+    API.get('/api/names/', (payload, error) => {
       this.setState({workflows: payload, error});
     })
   }
@@ -26,10 +26,10 @@ export default class WorkflowList extends React.Component {
     } else {
       return this.state.workflows.map((workflow) => (
         <tr key={workflow.id}>
-          <td><Link to={`/workflows/${workflow.id}`}>{workflow.name}</Link></td>
+          <td><Link to={`/workflows/${workflow.current_version_id}`}>{workflow.name}</Link></td>
           <td>{workflow.schedule_active ? 'True' : 'False'}</td>
           <td>{workflow.schedule || '(none)'}</td>
-          <td>{workflow.tasks.length}</td>
+          <td>{workflow.task_count}</td>
         </tr>
       ))
     }
@@ -44,7 +44,7 @@ export default class WorkflowList extends React.Component {
           <thead>
           <tr>
             <th>Name</th>
-            <th>Active</th>
+            <th>Schedule Active</th>
             <th>Schedule</th>
             <th>Tasks</th>
           </tr>

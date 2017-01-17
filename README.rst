@@ -14,8 +14,9 @@ Principles
 What is different from existing tools and why?
 
 Code separation
-  YAWN is separate from your code. You are responsible for how your code is released
-  and what version of your code gets run.
+  YAWN runs commands you specify as a sub-processes, so there is no co-mingling of your python code
+  with the YAWN code. You are responsible for how your code is released and what version of your
+  code gets run.
 
 State
   YAWN makes it hard to give state to your workflows and tasks. Your application
@@ -69,8 +70,11 @@ Execution
 Examples
 --------
 
-![Workflow screenshot](
-https://cloud.githubusercontent.com/assets/910316/21969288/fe40baf0-db51-11e6-97f2-7e6875c1e575.png)
+Run `yawn examples` to populate two workflows into the database.
+
+Here is a screenshot of the page for a single workflow:
+
+.. image:: https://cloud.githubusercontent.com/assets/910316/21969288/fe40baf0-db51-11e6-97f2-7e6875c1e575.png
 
 Contributing
 ------------
@@ -82,7 +86,7 @@ To develop on YAWN, fork the repository and checkout a local copy::
 Install the backend Django_ dependencies and run its server::
 
   pip install -e .[test]
-  ./manage.py runserver
+  yawn runserver
 
 Install the frontend create-react-app_ dependencies and run its server::
 
@@ -95,6 +99,11 @@ Run the tests::
   pytest
   npm test
 
+Run the worker::
+
+  yawn examples
+  yawn worker
+
 .. _create-react-app: https://github.com/facebookincubator/create-react-app
 .. _Django: https://airflow.incubator.apache.org/
 
@@ -103,3 +112,4 @@ TODO
 
 - WSGI + static file server wrapped in a ``yawn webserver`` command
 - Config file for database connection, etc
+- Python API / wrapper for creating workflows, submitting tasks

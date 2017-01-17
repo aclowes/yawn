@@ -61,7 +61,10 @@ class Manager:
         :param timeout: maximum number of seconds the process should be allowed to run for
         """
         process_environment = os.environ.copy()
-        process_environment.update(environment)
+        for key, value in environment.items():
+            # all variables must be strings, be explicit so it fail in our code
+            process_environment[key] = str(value)
+
         logger.info('Starting execution #%s', execution_id)
 
         process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
@@ -104,8 +107,17 @@ class Manager:
             execution = self.pipes[fd]
             # Popen gives us io.BufferedReader; use read1 to get a single read
             data = fd.read1(1024)
+            # keep reading up to 3 more bytes until we get a full UTF-8 character
+            for _ in range(3):
+                try:
+                    data = data.decode('utf-8')
+                    break
+                except UnicodeDecodeError:
+                    data += fd.read1(1)
+            else:
+                logger.error('Unable to decode byte data! Throwing it away.')
 
-            if data == b'':
+            if data == '':
                 # the pipe is closed
                 fd.close()
                 del self.pipes[fd]

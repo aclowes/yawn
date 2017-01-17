@@ -131,6 +131,7 @@ class Main:
 
             execution = task.start_execution(self.worker)
 
+        logger.info('Starting task %s execution %s', task.id, execution.id)
         self.executor.start_subprocess(
             execution_id=execution.id,
             command=execution.task.template.command,
@@ -174,8 +175,10 @@ class Main:
                 result = self.results[0]
                 if result.stdout or result.stderr:
                     Execution.update_output(result.execution_id, result.stdout, result.stderr)
-                if result.returncode:
+                if result.returncode is not None:
                     execution = Execution.objects.get(id=result.execution_id)
+                    logger.info('Task %s execution %s exited with code {}',
+                                execution.task.id, execution.id, result.returncode)
                     execution.mark_finished(result.returncode)
                 # pop after doing the updates have completed successfully
                 # in the case of an exception before here, the updates will be retried

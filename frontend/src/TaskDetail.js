@@ -1,5 +1,5 @@
 import React from 'react';
-import {PanelGroup, Panel, Alert, Pagination} from 'react-bootstrap';
+import {PanelGroup, Panel, Alert, Pagination, Button} from 'react-bootstrap';
 import {Link} from 'react-router';
 
 import API from "./API";
@@ -16,6 +16,19 @@ export default class TaskDetail extends React.Component {
       this.setState({task: payload, error, execution});
     });
   }
+
+  enqueue = () => {
+    API.patch(`/api/tasks/${this.props.params.id}/`, {enqueue: true}, (payload, error) => {
+      this.setState({task: payload, error});
+    });
+  };
+
+  terminate = () => {
+    const execution = this.state.task.executions[this.state.execution - 1];
+    API.patch(`/api/tasks/${this.props.params.id}/`, {terminate: execution.id}, (payload, error) => {
+      this.setState({task: payload, error});
+    });
+  };
 
   selectExecution = (eventKey) => {
     this.setState({
@@ -39,12 +52,12 @@ export default class TaskDetail extends React.Component {
         <dt>Execution</dt>
         <dd>
           <Pagination
-          ellipsis
-          bsSize="small"
-          items={this.state.task.executions.length}
-          maxButtons={10}
-          activePage={this.state.execution}
-          onSelect={this.selectExecution}/>
+            ellipsis
+            bsSize="small"
+            items={this.state.task.executions.length}
+            maxButtons={10}
+            activePage={this.state.execution}
+            onSelect={this.selectExecution}/>
         </dd>
         <dt>Status</dt>
         <dd>{execution.status}</dd>
@@ -90,19 +103,27 @@ export default class TaskDetail extends React.Component {
                 <dt>Workflow</dt>
                 <dd>
                   <Link to={`/workflows/${task.workflow.id}`}>
-                    {task.workflow.name}
+                    {task.workflow.name} - v{task.workflow.version}
                   </Link>
                 </dd>
                 <dt>Task Name</dt>
                 <dd>{task.name}</dd>
+                <dt>Command</dt>
+                <dd>{JSON.stringify(task.command)}</dd>
+                <dt>Max Retries</dt>
+                <dd>{task.max_retries}</dd>
+                <dt>Timeout</dt>
+                <dd>{task.timeout} {task.timeout ? 'seconds' : '(none)'}</dd>
                 <dt>Status</dt>
                 <dd>{task.status}</dd>
                 <dt>Queued Executions</dt>
                 <dd>{this.renderMessages()}</dd>
               </dl>
+              <Button onClick={this.enqueue}>Run</Button>
             </Panel>
             <Panel header="Executions">
               {this.renderExecution()}
+              <Button onClick={this.terminate}>Terminate</Button>
             </Panel>
           </PanelGroup>
         </div>
