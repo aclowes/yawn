@@ -14,13 +14,13 @@ def manager():
 
 def test_read_output(manager):
     execution_id = 1
-    command = ['bash', '-c', 'echo starting && sleep 0.5 && echo stopping 1>&2']
+    command = 'echo starting && sleep 0.5 && echo stopping 1>&2'
     manager.start_subprocess(execution_id, command, environment={}, timeout=None)
 
     # stdout is ready
     results = manager.read_output(timeout=0.4)
     assert len(results) == 1
-    assert results[0].stdout == b'starting\n'
+    assert results[0].stdout == 'starting\n'
     assert results[0].stderr is None
     assert results[0].returncode is None
     assert results[0].execution_id == execution_id
@@ -29,7 +29,7 @@ def test_read_output(manager):
     results = manager.read_output(timeout=1)
     assert len(results) == 1
     assert results[0].stdout is None
-    assert results[0].stderr == b'stopping\n'
+    assert results[0].stderr == 'stopping\n'
     assert results[0].returncode is None
     assert results[0].execution_id == execution_id
 
@@ -43,7 +43,7 @@ def test_read_output(manager):
 
 
 def test_timeout(manager):
-    command = ['sleep', '10']
+    command = 'sleep 10'
     manager.start_subprocess(1, command, environment={}, timeout=-1)
 
     manager.read_output()  # first read kills, but the pipes are still open
@@ -57,7 +57,7 @@ def test_timeout(manager):
 
 @mock.patch('yawn.worker.executor.os.killpg')
 def test_timeout_already_exited(mock_kill, manager):
-    command = ['true']
+    command = 'true'
     manager.start_subprocess(1, command, environment={}, timeout=-1)
 
     results = manager.read_output(timeout=1)

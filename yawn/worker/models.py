@@ -35,14 +35,14 @@ class Worker(models.Model):
             status=Worker.ACTIVE, last_heartbeat__lt=functions.Now() - timedelta(seconds=timeout)
         )
         for worker in lost:
-            logger.warning('Marking %s as lost', worker)
+            logger.warning('Marking %r as lost', worker)
             worker.status = Worker.LOST
             worker.save()
 
             executions = worker.execution_set.filter(status=Execution.RUNNING)
 
             for execution in executions:
-                logger.warning('Marking %s as lost', execution)
+                logger.warning('Marking %r as lost', execution)
                 execution.mark_finished(lost=True)
 
     def __str__(self):

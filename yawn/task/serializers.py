@@ -1,8 +1,8 @@
 from rest_framework import serializers
 
-from yawn.task.models import Task, Execution, Template
+from yawn.task.models import Task, Execution
 from yawn.worker.serializers import MessageSerializer, WorkerSerializer
-from yawn.workflow.models import Workflow, Run
+from yawn.workflow.models import Workflow
 
 
 class SimpleWorkflowSerializer(serializers.ModelSerializer):
@@ -20,16 +20,6 @@ class TaskSerializer(serializers.ModelSerializer):
     class Meta:
         model = Task
         exclude = ('run', 'template')
-
-
-class RunSerializer(serializers.ModelSerializer):
-    tasks = TaskSerializer(many=True, source='task_set', read_only=True)
-    workflow = serializers.HyperlinkedRelatedField(view_name='workflow-detail', read_only=True)
-
-    class Meta:
-        model = Run
-        fields = '__all__'
-        read_only_fields = ('submitted_time', 'scheduled_time')
 
 
 class ExecutionDetailSerializer(serializers.ModelSerializer):
@@ -60,7 +50,7 @@ class TaskDetailSerializer(TaskSerializer):
 
     max_retries = serializers.IntegerField(source='template.max_retries')
     timeout = serializers.IntegerField(source='template.timeout')
-    command = serializers.ListField(source='template.command', child=serializers.CharField())
+    command = serializers.CharField(source='template.command')
 
     # actions
     terminate = serializers.IntegerField(write_only=True)

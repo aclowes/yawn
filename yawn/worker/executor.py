@@ -48,7 +48,7 @@ class Manager:
         self.pipes = dict()  # type: typing.Dict[typing.io, Execution]
         self.running = dict()  # type: typing.Dict[int, Execution]
 
-    def start_subprocess(self, execution_id: int, command: list, environment: dict, timeout: int) -> None:
+    def start_subprocess(self, execution_id: int, command: str, environment: dict, timeout: int) -> None:
         """
         Start a subprocess:
         - extend the parent process's environment with custom environment variables
@@ -68,7 +68,7 @@ class Manager:
         logger.info('Starting execution #%s', execution_id)
 
         process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-                                   preexec_fn=os.setpgrp, env=process_environment)
+                                   preexec_fn=os.setpgrp, env=process_environment, shell=True)
 
         # store references to the process and file descriptors
         execution = Execution(process, execution_id, timeout)

@@ -2,8 +2,8 @@ from django.db.models import Count
 from rest_framework import viewsets
 from rest_framework.permissions import AllowAny
 
-from yawn.workflow.serializers import WorkflowSerializer, WorkflowNameSerializer
-from yawn.workflow.models import Workflow, WorkflowName
+from yawn.workflow.serializers import WorkflowSerializer, WorkflowNameSerializer, RunSerializer
+from yawn.workflow.models import Workflow, WorkflowName, Run
 
 
 class WorkflowNameViewSet(viewsets.ReadOnlyModelViewSet):
@@ -36,3 +36,27 @@ class WorkflowViewSet(viewsets.GenericViewSet,
 
     serializer_class = WorkflowSerializer
     permission_classes = (AllowAny,)
+
+
+class RunViewSet(viewsets.GenericViewSet,
+                 viewsets.mixins.ListModelMixin,
+                 viewsets.mixins.RetrieveModelMixin,
+                 viewsets.mixins.CreateModelMixin,
+                 viewsets.mixins.UpdateModelMixin):
+    """
+    Run endpoint: GET(list,detail), POST(list) and PATCH(detail)
+    """
+
+    serializer_class = RunSerializer
+    permission_classes = (AllowAny,)
+    queryset = Run.objects.prefetch_related('task_set__template')
+
+    def get_queryset(self):
+        """
+        Optionally filter to the runs for a given workflow
+        """
+        queryset = self.queryset.all()
+        workflow = self.request.query_params.get('workflow', None)
+        if workflow is not None:
+            queryset = queryset.filter(workflow_id=workflow)
+        return queryset

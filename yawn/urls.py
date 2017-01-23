@@ -1,9 +1,9 @@
 from django.conf.urls import include, url
 from rest_framework import routers
 
-from yawn.task.views import RunViewSet, TaskViewSet, ExecutionViewSet
+from yawn.task.views import TaskViewSet, ExecutionViewSet
 from yawn.worker.views import QueueViewSet, WorkerViewSet
-from yawn.workflow.views import WorkflowViewSet, WorkflowNameViewSet
+from yawn.workflow.views import WorkflowViewSet, WorkflowNameViewSet, RunViewSet
 
 router = routers.DefaultRouter()
 router.include_format_suffixes = False

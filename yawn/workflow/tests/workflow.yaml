@@ -1,7 +1,7 @@
 name: Example
 parameters:
-  # no whitespace allowed!
-  current_environment: production
+  ENVIRONMENT: production
+  CALCULATION_DATE: '2017-01-01'
 schedule: 0 0 *
 schedule_active: True
 
@@ -10,8 +10,9 @@ tasks:
   queue: default
   max_retries: 1
   timeout: 30
-  command: [echo, 'true', string]
+  command: python my_awesome_program.py $ENVIRONMENT
 - name: task_2
   queue: default
-  command: [echo, 'false', '1']
-  upstream: [task_1]
+  command: echo $CALCULATION_DATE | grep 2017
+  upstream:
+  - task_1

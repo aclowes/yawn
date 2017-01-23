@@ -6,8 +6,9 @@ from django.db import transaction
 from django.db.models import NOT_PROVIDED
 from rest_framework import serializers
 
+from yawn.task.serializers import TaskSerializer
 from yawn.worker.models import Queue
-from yawn.workflow.models import Workflow, WorkflowName
+from yawn.workflow.models import Workflow, WorkflowName, Run
 from yawn.task.models import Template
 
 
@@ -153,3 +154,19 @@ def compare_fields(instance, new_data, ignore_fields):
             return False
 
     return True
+
+
+class RunSerializer(serializers.ModelSerializer):
+    tasks = TaskSerializer(many=True, source='task_set', read_only=True)
+    workflow_id = serializers.IntegerField()
+
+    class Meta:
+        model = Run
+        fields = '__all__'
+        read_only_fields = ('submitted_time', 'scheduled_time', 'status', 'workflow')
+
+    def create(self, validated_data):
+        workflow = Workflow.objects.get(id=validated_data['workflow_id'])
+        run = workflow.submit_run(validated_data['parameters'])
+        run.refresh_from_db()  # load submitted_time...
+        return run

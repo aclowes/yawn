@@ -1,7 +1,6 @@
 from django.db import models
 from django.db import transaction
 from django.db.models import functions
-from django.contrib.postgres import fields
 
 from yawn.worker.models import Worker, Queue, Message
 from yawn.utilities import logger
@@ -12,11 +11,9 @@ class Template(models.Model):
     queue = models.ForeignKey(Queue, models.PROTECT)
     name = models.SlugField(allow_unicode=True, db_index=False)
 
+    command = models.TextField()
     max_retries = models.IntegerField(default=0)
     timeout = models.IntegerField(null=True)  # seconds
-
-    # the command string, first argument is a callable
-    command = fields.ArrayField(models.TextField())
 
     # self-reference for upstream tasks
     upstream = models.ManyToManyField(
@@ -49,7 +46,7 @@ class Task(models.Model):
     status = models.TextField(choices=STATUS_CHOICES, default=WAITING)
 
     def __str__(self):
-        return 'Task #{task.id} - {task.status}'.format(task=self)
+        return '#{task.id} ({task.status})'.format(task=self)
 
     @classmethod
     def first_queued(cls, queue_ids: list):
@@ -135,7 +132,7 @@ class Execution(models.Model):
     stderr = models.TextField(default='', blank=True)
 
     def __str__(self):
-        return 'Execution {exec.id} - {exec.status}'.format(exec=self)
+        return '#{exec.id} ({exec.status})'.format(exec=self)
 
     @classmethod
     def update_output(cls, execution_id, stdout, stderr):
