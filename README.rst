@@ -20,14 +20,14 @@ Code separation
 
 State separation
   Environment variables are the only state that can be passed to your commands. Your application
-  should get most of its state from externally, and key off just a date or record ID.
+  should key off just a date or record ID and get more complex state from its data sources.
 
 Versioning
   The workflow configuration and every run is versioned, so you have a complete history.
 
 Broker
   YAWN uses Postgres to store internal state and as a message queue. Using only Postgres allows
-  for simple setup and configuration. YAWN uses the new `SELECT ... FOR UPDATE SKIP LOCKED`
+  for simple setup and configuration. YAWN uses the new ``SELECT ... FOR UPDATE SKIP LOCKED``
   statement to efficiently select from the queue table.
 
 Components
@@ -53,7 +53,7 @@ Run
   A manually triggered or scheduled run of a Workflow.
 
 Execution
-  A single run of a Task, capturing the exit code and standard output and error.
+  A single execution of a Task's command, capturing the exit code and standard output and error.
 
 Queue
   A first-in, first-out list of Tasks to execute.
@@ -65,7 +65,7 @@ Worker
 Examples
 --------
 
-Run `yawn examples` to populate two workflows into the database.
+Run ``yawn examples`` to populate two workflows into the database.
 
 Here is a screenshot of the page for a single workflow:
 
@@ -192,3 +192,6 @@ TODO
 - WSGI + static file server wrapped in a ``yawn webserver`` command
 - Config file for database connection, etc
 - Python API / wrapper for creating workflows, submitting tasks
+- submit run in UI
+- edit parameters on run?
+- show env given to the execution?
