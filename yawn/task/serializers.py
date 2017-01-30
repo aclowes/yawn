@@ -41,7 +41,8 @@ class ExecutionListSerializer(serializers.ModelSerializer):
 
     def get_minutes_running(self, obj):
         if obj.stop_timestamp:
-            return (obj.stop_timestamp - obj.start_timestamp).minutes
+            runtime = (obj.stop_timestamp - obj.start_timestamp).total_seconds()
+            return '{:.0f}m {:.2f}s'.format(runtime // 60, runtime % 60)
 
 
 class TaskDetailSerializer(TaskSerializer):

@@ -158,11 +158,11 @@ class Execution(models.Model):
             self.status = Execution.LOST
             self.task.enqueue()
 
-        if exit_code == 0:
+        elif exit_code == 0:
             self.task.status = Task.SUCCEEDED
             self.status = Execution.SUCCEEDED
 
-        elif exit_code is not None:
+        else:
             # queue another run if there are remaining retries
             # (current execution is not in count b/c it hasn't been saved yet)
             failed_count = self.task.execution_set.filter(status=Task.FAILED).count()
@@ -179,5 +179,6 @@ class Execution(models.Model):
                 self.task.update_downstream()
             self.task.run.update_status()
 
+        self.stop_timestamp = functions.Now()
         # need to be careful not to overwrite stdout/stderr
-        self.save(update_fields=['status'])
+        self.save(update_fields=['status', 'stop_timestamp'])

@@ -1,6 +1,7 @@
 import os
 import socket
 
+import logging
 from django.core.management.base import BaseCommand
 
 from yawn.worker.main import Main
@@ -17,6 +18,13 @@ class Command(BaseCommand):
                             help='Space-separated list of queues to consume from')
 
     def handle(self, *args, **options):
+        log_level = logging.INFO
+        if options['verbosity'] == 0:
+            log_level = logging.ERROR
+        if options['verbosity'] > 1:
+            log_level = logging.DEBUG
+        logging.basicConfig(level=log_level, format='%(message)s')
+
         worker = Main(
             options['concurrency'],
             options['name'],

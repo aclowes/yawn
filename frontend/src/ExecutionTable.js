@@ -36,7 +36,7 @@ export default class ExecutionTable extends React.Component {
           <th>Task</th>
           <th>Status</th>
           <th>Start Time</th>
-          <th>Minutes Running</th>
+          <th>Runtime</th>
         </tr>
         </thead>
         <tbody>

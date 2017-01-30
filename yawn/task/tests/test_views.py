@@ -36,3 +36,16 @@ def test_patch_task_enqueue(client, run):
     response = client.patch(url, {'enqueue': True})
     assert response.status_code == 200, response.data
     assert len(response.data['messages']) == 2
+
+
+def test_get_execution(client, run):
+    task = run.task_set.first()
+    worker = Worker.objects.create(name='worker1')
+    execution = task.start_execution(worker)
+    execution.mark_finished(exit_code=0)
+    response = client.get('/api/executions/')
+    assert response.status_code == 200, response.data
+    executions = response.data['results']
+    assert len(executions) == 1
+    assert executions[0]['status'] == execution.SUCCEEDED
+    assert executions[0]['minutes_running'][:2] == '0m'

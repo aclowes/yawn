@@ -48,7 +48,7 @@ class Main:
         self.handle_signals()
         self.executor = Manager()
         self.state = State.running
-        logger.warning('\nStarting YAWN worker with concurrency=%s', self.concurrency)
+        logger.warning('Starting YAWN worker with concurrency=%s', self.concurrency)
 
         while True:
             if self.state == State.running:
@@ -87,11 +87,11 @@ class Main:
             self.state = State.terminate
             # kill running tasks
             self.executor.mark_terminated(self.executor.get_running_ids())
-            logger.warning('\nReceived SIGTERM, killing running tasks and exiting.')
+            logger.warning('Received SIGTERM, killing running tasks and exiting.')
 
         def handle_sigint(*args):
             self.state = State.shutdown
-            logger.warning('\nReceived SIGINT, shutting down after all tasks have finished.')
+            logger.warning('Received SIGINT, shutting down after all tasks have finished.')
             logger.warning('Press CTL-C again to shut down immediately.')
             signal.signal(signal.SIGINT, handle_sigterm)
 
@@ -177,7 +177,7 @@ class Main:
                     Execution.update_output(result.execution_id, result.stdout, result.stderr)
                 if result.returncode is not None:
                     execution = Execution.objects.get(id=result.execution_id)
-                    logger.info('Task %s execution %s exited with code {}',
+                    logger.info('Task %s execution %s exited with code %s',
                                 execution.task.id, execution.id, result.returncode)
                     execution.mark_finished(result.returncode)
                 # pop after doing the updates have completed successfully
