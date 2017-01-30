@@ -7,7 +7,8 @@ from yawn.worker.serializers import WorkerSerializer, QueueSerializer
 
 
 class WorkerViewSet(viewsets.GenericViewSet,
-                    viewsets.mixins.ListModelMixin):
+                    viewsets.mixins.ListModelMixin,
+                    viewsets.mixins.RetrieveModelMixin):
     """
     Worker endpoint, GET(list)
     """

@@ -1,6 +1,5 @@
 import React from 'react';
 import {Panel, PanelGroup, Alert} from 'react-bootstrap';
-//import {Link} from 'react-router';
 
 import API from "./API";
 import WorkflowDetailGraph from "./WorkflowDetailGraph";
@@ -10,7 +9,7 @@ import WorkflowDetailForm from "./WorkflowDetailForm";
 export default class WorkflowDetail extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {workflow: null};
+    this.state = {workflow: null, error: null};
   }
 
   componentDidMount() {
@@ -25,7 +24,7 @@ export default class WorkflowDetail extends React.Component {
 
   loadWorkflow(version) {
     API.get(`/api/workflows/${version}/`, (payload, error) => {
-      this.setState({workflow: payload, error: error});
+      this.setState({workflow: payload, error});
     });
   }
 

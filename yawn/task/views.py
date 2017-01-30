@@ -30,3 +30,13 @@ class ExecutionViewSet(viewsets.GenericViewSet,
     serializer_class = ExecutionListSerializer
 
     permission_classes = (AllowAny,)
+
+    def get_queryset(self):
+        """
+        Optionally filter to the executions for a given worker
+        """
+        queryset = self.queryset.all()
+        worker = self.request.query_params.get('worker', None)
+        if worker is not None:
+            queryset = queryset.filter(worker_id=worker)
+        return queryset.order_by('-id')

@@ -8,6 +8,7 @@ import WorkflowDetail from './WorkflowDetail';
 import TaskDetail from "./TaskDetail";
 import QueueList from "./QueueList";
 import WorkerList from "./WorkerList";
+import WorkerDetail from "./WorkerDetail";
 import ExecutionList from "./ExecutionList";
 
 const NotFound = React.createClass({
@@ -24,6 +25,7 @@ ReactDOM.render(
       <Route path="workflows/:id" component={WorkflowDetail}/>
       <Route path="tasks/:id" component={TaskDetail}/>
       <Route path="workers" component={WorkerList}/>
+      <Route path="workers/:id" component={WorkerDetail}/>
       <Route path="executions" component={ExecutionList}/>
       <Route path="queues" component={QueueList}/>
       <Route path="*" component={NotFound}/>
