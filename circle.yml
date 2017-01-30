@@ -1,0 +1,12 @@
+machine:
+  python:
+    version: 3.5.2
+
+dependencies:
+  override:
+  - pip install -e .[test]
+  - cd frontend && npm install
+
+test:
+  override:
+  - pytest
