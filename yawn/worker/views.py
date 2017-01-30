@@ -2,15 +2,14 @@ from django.db.models import Count
 from rest_framework import viewsets
 from rest_framework.permissions import AllowAny
 
-from yawn.worker.models import Worker, Queue, Message
+from yawn.worker.models import Worker, Queue
 from yawn.worker.serializers import WorkerSerializer, QueueSerializer
 
 
 class WorkerViewSet(viewsets.GenericViewSet,
-                    viewsets.mixins.ListModelMixin,
-                    viewsets.mixins.UpdateModelMixin):
+                    viewsets.mixins.ListModelMixin):
     """
-    Worker endpoint, GET(list) and PATCH to terminate
+    Worker endpoint, GET(list)
     """
     queryset = Worker.objects.all()
 

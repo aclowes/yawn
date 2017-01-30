@@ -1,5 +1,5 @@
 import React from 'react';
-import {Table, Alert, Button} from 'react-bootstrap';
+import {Table, Alert} from 'react-bootstrap';
 import {Link} from 'react-router';
 
 import API from "./API";
@@ -16,21 +16,6 @@ export default class WorkerList extends React.Component {
     });
   }
 
-  terminateWorker(id) {
-    API.patch(`/api/workers/${id}/`, {terminate: true}, (payload, error) => {
-      if (error) {
-        this.setState({error});
-      } else {
-        // insert the updated worker record
-        this.setState({
-          workers: this.state.workers.map((worker) => {
-            return worker.id === payload.id ? payload : worker;
-          })
-        });
-      }
-    });
-  }
-
   renderRows() {
     if (this.state.workers === null) {
       return (
@@ -40,17 +25,12 @@ export default class WorkerList extends React.Component {
       )
     } else {
       return this.state.workers.map((worker) => {
-        const terminate = () => this.terminateWorker(worker.id);
         return (
           <tr key={worker.id}>
             <td><Link to={`/workers/${worker.id}`}>{worker.name}</Link></td>
             <td>{worker.status}</td>
             <td>{worker.start_timestamp}</td>
             <td>{worker.last_heartbeat}</td>
-            <td>
-              <Button bsSize="small" onClick={terminate} disabled>
-                Terminate</Button>
-            </td>
           </tr>
         )
       })
@@ -69,7 +49,6 @@ export default class WorkerList extends React.Component {
             <th>Status</th>
             <th>Start Time</th>
             <th>Last Heartbeat</th>
-            <th>Actions</th>
           </tr>
           </thead>
           <tbody>

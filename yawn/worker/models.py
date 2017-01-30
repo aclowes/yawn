@@ -1,5 +1,4 @@
 from datetime import timedelta
-from functools import lru_cache
 
 from django.db import models
 from django.db.models import functions
