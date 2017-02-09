@@ -6,8 +6,6 @@ import yaml
 from django.utils.dateparse import parse_datetime
 
 from yawn.workflow.models import WorkflowName
-# to make the fixture available:
-from yawn.task.tests.test_models import run
 
 
 @pytest.fixture()

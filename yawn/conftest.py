@@ -57,6 +57,21 @@ def client():
     from rest_framework.test import APIClient
 
     user = User.objects.create_user('test_user')
-    client = APIClient()
-    client.force_authenticate(user)
-    return client
+    api_client = APIClient()
+    api_client.force_authenticate(user)
+    return api_client
+
+
+@pytest.fixture()
+def run():
+    """Setup a workflow and run to test with"""
+    from yawn.workflow.models import WorkflowName
+    from yawn.task.models import Template
+
+    name = WorkflowName.objects.create(name='workflow1')
+    workflow = name.new_version(parameters={'parent': True, 'child': False})
+    task1 = Template.objects.create(workflow=workflow, name='task1', command=[''])
+    task2 = Template.objects.create(workflow=workflow, name='task2', command=[''])
+    task2.upstream.add(task1)
+
+    return workflow.submit_run(parameters={'child': True})

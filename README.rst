@@ -33,9 +33,14 @@ Broker
 Components
 ----------
 
-- Web server provides a user interface.
-- Worker schedules and executes tasks.
-- Postgres 9.5+ database stores state.
+Web Servers
+  The website provides a user interface to view the workflows and tasks running within them.
+  It allows you to run an existing workflow or re-run a failed task. The web server also provides
+  a REST API to programatically create and run workflows.
+
+Workers
+  The worker schedules and executes tasks. The worker uses ``subprocess.Popen`` to run tasks and
+  capture stdout and stderr.
 
 Concepts
 --------
@@ -45,12 +50,12 @@ Workflow
   acyclic graph (DAG). Workflows can be scheduled to run on a regular basis and they are versioned
   so they can change over time.
 
-Task
-  A shell command that specifies the upstream tasks it depends on, the number times to retry, and a
-  timeout.
-
 Run
   A manually triggered or scheduled run of a Workflow.
+
+Task
+  A shell command that specifies the upstream tasks it depends on, the number times to retry, and a
+  timeout. The task is given environment variables configured in the workflow and run.
 
 Execution
   A single execution of a Task's command, capturing the exit code and standard output and error.
@@ -186,12 +191,4 @@ Load some examples and run the worker to process them::
 .. _create-react-app: https://github.com/facebookincubator/create-react-app
 .. _Django: https://airflow.incubator.apache.org/
 
-TODO
-----
 
-- WSGI + static file server wrapped in a ``yawn webserver`` command
-- Config file for database connection, etc
-- Python API / wrapper for creating workflows, submitting tasks
-- submit run in UI
-- edit parameters on run?
-- show env given to the execution?

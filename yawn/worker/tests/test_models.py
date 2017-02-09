@@ -1,4 +1,4 @@
-from yawn.task.models import Template, Task, Execution
+from yawn.task.models import Template, Task, Execution  # NOQA
 from yawn.worker.models import Worker
 from yawn.workflow.models import WorkflowName
 

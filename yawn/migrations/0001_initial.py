@@ -10,7 +10,6 @@ import yawn.utilities.cron
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
@@ -21,7 +20,9 @@ class Migration(migrations.Migration):
             name='Execution',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('status', models.TextField(choices=[('running', 'running'), ('succeeded', 'succeeded'), ('failed', 'failed'), ('killed', 'killed'), ('lost', 'lost')], default='running')),
+                ('status', models.TextField(
+                    choices=[('running', 'running'), ('succeeded', 'succeeded'), ('failed', 'failed'),
+                             ('killed', 'killed'), ('lost', 'lost')], default='running')),
                 ('start_timestamp', models.DateTimeField(default=django.db.models.functions.base.Now)),
                 ('stop_timestamp', models.DateTimeField(null=True)),
                 ('exit_code', models.IntegerField(null=True)),
@@ -48,7 +49,9 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('submitted_time', models.DateTimeField()),
                 ('scheduled_time', models.DateTimeField(null=True)),
-                ('status', models.TextField(choices=[('running', 'running'), ('succeeded', 'succeeded'), ('failed', 'failed')], default='running')),
+                ('status',
+                 models.TextField(choices=[('running', 'running'), ('succeeded', 'succeeded'), ('failed', 'failed')],
+                                  default='running')),
                 ('parameters', django.contrib.postgres.fields.jsonb.JSONField(default=dict)),
             ],
         ),
@@ -56,7 +59,10 @@ class Migration(migrations.Migration):
             name='Task',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('status', models.TextField(choices=[('waiting', 'waiting'), ('queued', 'queued'), ('running', 'running'), ('succeeded', 'succeeded'), ('failed', 'failed'), ('upstream_failed', 'upstream_failed')], default='waiting')),
+                ('status', models.TextField(
+                    choices=[('waiting', 'waiting'), ('queued', 'queued'), ('running', 'running'),
+                             ('succeeded', 'succeeded'), ('failed', 'failed'), ('upstream_failed', 'upstream_failed')],
+                    default='waiting')),
                 ('run', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='yawn.Run')),
             ],
         ),
@@ -77,7 +83,8 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.TextField()),
-                ('status', models.TextField(choices=[('active', 'active'), ('exited', 'exited'), ('lost', 'lost')], default='active')),
+                ('status', models.TextField(choices=[('active', 'active'), ('exited', 'exited'), ('lost', 'lost')],
+                                            default='active')),
                 ('start_timestamp', models.DateTimeField(default=django.db.models.functions.base.Now)),
                 ('last_heartbeat', models.DateTimeField(default=django.db.models.functions.base.Now)),
             ],
@@ -98,7 +105,9 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.SlugField(allow_unicode=True, unique=True)),
-                ('current_version', models.OneToOneField(null=True, on_delete=django.db.models.deletion.CASCADE, related_name='is_current', to='yawn.Workflow')),
+                ('current_version',
+                 models.OneToOneField(null=True, on_delete=django.db.models.deletion.CASCADE, related_name='is_current',
+                                      to='yawn.Workflow')),
             ],
         ),
         migrations.AddField(

@@ -1,6 +1,4 @@
 from yawn.worker.models import Worker
-# to make the fixture available:
-from yawn.task.tests.test_models import run
 
 
 def test_get_task(client, run):

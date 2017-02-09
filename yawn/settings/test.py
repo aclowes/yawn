@@ -1,4 +1,4 @@
-from .base import *
+from .base import *  # NOQA
 
 SECRET_KEY = 'secret key for tests'
 
