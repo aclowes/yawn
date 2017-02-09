@@ -4,7 +4,7 @@ More documentation at https://packaging.python.org/en/latest/distributing.html
 """
 
 # Always prefer setuptools over distutils
-from setuptools import setup, find_packages
+from setuptools import setup
 # To use a consistent encoding
 from codecs import open
 from os import path
@@ -85,8 +85,8 @@ setup(
     extras_require={
         # 'dev': ['check-manifest'],
         'test': [
-            'coverage',
             'pytest',
+            'pytest-cov',
             'flake8',
             'pyyaml',
         ],

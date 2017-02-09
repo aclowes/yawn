@@ -1,6 +1,6 @@
 import enum
 import signal
-import typing
+import typing  # NOQA
 import collections
 
 from django.db import transaction
@@ -8,7 +8,7 @@ from django.db.models import functions
 
 from yawn.task.models import Task, Execution
 from yawn.worker.models import Worker, Queue
-from yawn.worker.executor import Manager, Result
+from yawn.worker.executor import Manager, Result  # NOQA
 from yawn.workflow.models import Workflow
 from yawn.utilities import logger
 from yawn.utilities.cron import Crontab

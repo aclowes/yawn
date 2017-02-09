@@ -13,24 +13,8 @@ A & B succeed, submit C(upstream_failed)
 A & B succeed, don't submit C(failed)
 A succeeded but B failed, mark C and D upstream_failed
 """
-import pytest
-
 from yawn.worker.models import Queue, Worker
-from yawn.task.models import Template, Task, Execution
-from yawn.workflow.models import WorkflowName
-
-
-@pytest.fixture()
-def run():
-    """Setup a workflow and run to test with"""
-    name = WorkflowName.objects.create(name='workflow1')
-    workflow = name.new_version(parameters={'parent': True, 'child': False})
-    task1 = Template.objects.create(workflow=workflow, name='task1', command=[''])
-    task2 = Template.objects.create(workflow=workflow, name='task2', command=[''])
-    task2.upstream.add(task1)
-
-    run = workflow.submit_run(parameters={'child': True})
-    return run
+from yawn.task.models import Task, Execution
 
 
 def test_first_queued(run):

@@ -96,4 +96,3 @@ def test_statuses():
     task2.save()
     run.update_status()
     assert run.status == Run.SUCCEEDED
-
