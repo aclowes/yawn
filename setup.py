@@ -85,8 +85,8 @@ setup(
     extras_require={
         # 'dev': ['check-manifest'],
         'test': [
-            'coverage',
             'pytest',
+            'pytest-cov',
             'flake8',
             'pyyaml',
         ],
