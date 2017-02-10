@@ -2,10 +2,11 @@
 .idea/
 
 # build
-*.egg-info/
+yawns.egg-info/
 *build/
+*dist/
 .coverage
-coverage/
+*coverage/
 
 # node packages
 *node_modules/

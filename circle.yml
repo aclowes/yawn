@@ -1,18 +1,20 @@
 machine:
   python:
     version: 3.5.2
+  node:
+    version: 6.1.0
 
 dependencies:
   cache_directories:
     - frontend/node_modules
   override:
     - pip install -e .[test]
-    - cd frontend && npm install
+    - cd frontend && yarn install
 
 test:
   override:
     - pytest --cov=yawn yawn
     - flake8 yawn
-    - cd frontend && npm test -- --coverage
+    - cd frontend && yarn test -- --coverage
   post:
     - bash <(curl -s https://codecov.io/bash)
