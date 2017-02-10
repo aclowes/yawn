@@ -8,6 +8,11 @@ are inspirations for this one; particularly Celery_ and Airflow_.
 .. _Celery: http://www.celeryproject.org/
 .. _Airflow: https://airflow.incubator.apache.org/
 
+.. image:: https://circleci.com/gh/aclowes/yawn/tree/master.svg?style=svg
+  :target: https://circleci.com/gh/aclowes/yawn/tree/master
+.. image:: https://codecov.io/gh/aclowes/yawn/branch/master/graph/badge.svg
+  :target: https://codecov.io/gh/aclowes/yawn
+
 Principles
 ----------
 
