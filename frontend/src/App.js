@@ -5,7 +5,7 @@ import 'bootswatch/united/bootstrap.css';
 import './App.css';
 import {YawnNavItem} from './utilities';
 
-class App extends React.Component {
+export default class App extends React.Component {
 
   render() {
     return (
@@ -35,5 +35,3 @@ class App extends React.Component {
     );
   }
 }
-
-export default App;

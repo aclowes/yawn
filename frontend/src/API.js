@@ -10,47 +10,47 @@ function getCsrfCookie() {
   }, '');
 }
 
-export default {
+function request(url, method, body, callback) {
+  const headers = {
+    'Accepts': 'application/json',
+  };
+  if (body) {
+    // Request.mode = 'cors' (the default) provides some cross-origin protection
+    headers['X-CSRFToken'] = getCsrfCookie();
+    headers['Content-Type'] = 'application/json';
+    body = JSON.stringify(body);
+  }
 
-  generic(url, method, body, callback) {
-    const headers = {
-      'Accepts': 'application/json',
-    };
-    if (body) {
-      // Request.mode = 'cors' (the default) provides some cross-origin protection
-      headers['X-CSRFToken'] = getCsrfCookie();
-      headers['Content-Type'] = 'application/json';
-      body = JSON.stringify(body);
+  fetch(url, {
+    method: method,
+    headers, body
+
+  }).then(function (response) {
+    if (response.ok) {
+      response.json().then((payload) => {
+        // return the object list if response.results is defined:
+        callback(payload.results || payload, null);
+      });
+    } else {
+      response.text().then((error) => {
+        // todo figure out the rest framework error json and parse it if possible
+        callback(null, error);
+      });
     }
 
-    fetch(url, {
-      method: method,
-      headers, body
+  }).catch((error) => {
+    callback(null, error.message);
+  })
+}
 
-    }).then(function (response) {
-      if (response.ok) {
-        response.json().then((payload) => {
-          // return the object list if response.results is defined:
-          callback(payload.results || payload, null);
-        });
-      } else {
-        response.text().then((error) => {
-          // todo figure out the rest framework error json and parse it if possible
-          callback(null, error);
-        });
-      }
+export default class API {
 
-    }).catch((error) => {
-      callback(null, error.message);
-    })
-  },
+  static get(url, callback) {
+    request(url, 'GET', null, callback)
+  }
 
-  get(url, callback) {
-    this.generic(url, 'GET', null, callback)
-  },
-
-  patch(url, body, callback) {
-    this.generic(url, 'PATCH', body, callback)
-  },
+  static patch(url, body, callback) {
+    request(url, 'PATCH', body, callback)
+  }
 
 };

@@ -1,0 +1,63 @@
+exports[`test homepage renders 1`] = `
+<div>
+  <nav
+    className="navbar navbar-default">
+    <div
+      className="container">
+      <div
+        className="navbar-header">
+        <span
+          className="navbar-brand">
+          YAWN
+        </span>
+      </div>
+      <ul
+        className="nav navbar-nav"
+        role={null}>
+        <li
+          className="active"
+          role="presentation"
+          style={undefined}>
+          <a
+            href="/"
+            onClick={[Function]}>
+            Workflows
+          </a>
+        </li>
+        <li
+          className=""
+          role="presentation"
+          style={undefined}>
+          <a
+            href="/workers"
+            onClick={[Function]}>
+            Workers
+          </a>
+        </li>
+        <li
+          className=""
+          role="presentation"
+          style={undefined}>
+          <a
+            href="/executions"
+            onClick={[Function]}>
+            Executions
+          </a>
+        </li>
+        <li
+          className=""
+          role="presentation"
+          style={undefined}>
+          <a
+            href="/queues"
+            onClick={[Function]}>
+            Queues
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <div
+    className="container" />
+</div>
+`;

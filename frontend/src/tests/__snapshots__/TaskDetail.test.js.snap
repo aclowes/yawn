@@ -1,0 +1,178 @@
+exports[`test TaskDetail failure 1`] = `
+<div>
+  <div
+    className="alert alert-danger"
+    role="alert">
+    some error message
+  </div>
+  Loading...
+</div>
+`;
+
+exports[`test TaskDetail loading 1`] = `
+<div>
+  Loading...
+</div>
+`;
+
+exports[`test TaskDetail success 1`] = `
+<div>
+  <div
+    className="panel-group">
+    <div
+      className="panel panel-default"
+      id={undefined}>
+      <div
+        className="panel-heading">
+        Details
+      </div>
+      <div
+        className="panel-body">
+        <dl
+          className="dl-horizontal">
+          <dt>
+            Workflow
+          </dt>
+          <dd>
+            <a
+              onClick={[Function]}
+              style={Object {}}>
+              Simple Workflow Example
+               - v
+              1
+            </a>
+          </dd>
+          <dt>
+            Task Name
+          </dt>
+          <dd>
+            start
+          </dd>
+          <dt>
+            Command
+          </dt>
+          <dd>
+            \"echo Starting...\"
+          </dd>
+          <dt>
+            Max Retries
+          </dt>
+          <dd>
+            0
+          </dd>
+          <dt>
+            Timeout
+          </dt>
+          <dd>
+             
+            (none)
+          </dd>
+          <dt>
+            Status
+          </dt>
+          <dd>
+            succeeded
+          </dd>
+          <dt>
+            Queued Executions
+          </dt>
+          <dd />
+        </dl>
+        <button
+          className="btn btn-default"
+          disabled={false}
+          onClick={[Function]}
+          type="button">
+          Run
+        </button>
+      </div>
+    </div>
+    <div
+      className="panel panel-default"
+      id={undefined}>
+      <div
+        className="panel-heading">
+        Executions
+      </div>
+      <div
+        className="panel-body">
+        <dl
+          className="dl-horizontal">
+          <dt>
+            Execution
+          </dt>
+          <dd>
+            <ul
+              className="pagination pagination-sm">
+              <li
+                className="active"
+                style={undefined}>
+                <a
+                  href="#"
+                  onClick={[Function]}
+                  role="button">
+                  1
+                </a>
+              </li>
+            </ul>
+          </dd>
+          <dt>
+            Status
+          </dt>
+          <dd>
+            succeeded
+          </dd>
+          <dt>
+            Worker
+          </dt>
+          <dd>
+            <a
+              onClick={[Function]}
+              style={Object {}}>
+              graybeard.local 35405
+            </a>
+          </dd>
+          <dt>
+            Start Time
+          </dt>
+          <dd>
+            2017-01-30T03:26:38.211839Z
+          </dd>
+          <dt>
+            Stop Time
+          </dt>
+          <dd />
+          <dt>
+            Exit Code
+          </dt>
+          <dd />
+          <dt>
+            Standard Output
+          </dt>
+          <dd>
+            <pre>
+              Starting...
+              
+            </pre>
+          </dd>
+          <dt>
+            Standard Error
+          </dt>
+          <dd>
+            <pre>
+              
+            </pre>
+          </dd>
+        </dl>
+        <button
+          className="btn btn-default"
+          disabled={false}
+          onClick={[Function]}
+          type="button">
+          Terminate
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+`;

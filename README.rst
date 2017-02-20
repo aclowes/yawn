@@ -56,7 +56,7 @@ Workflow
   so they can change over time.
 
 Run
-  A manually triggered or scheduled run of a Workflow.
+  An instance of a workflow, manually triggered or scheduled.
 
 Task
   A shell command that specifies the upstream tasks it depends on, the number times to retry, and a

@@ -1,0 +1,223 @@
+exports[`test WorkflowDetail failure 1`] = `
+<div>
+  <div
+    className="alert alert-danger"
+    role="alert">
+    some error message
+  </div>
+  Loading...
+</div>
+`;
+
+exports[`test WorkflowDetail loading 1`] = `
+<div>
+  Loading...
+</div>
+`;
+
+exports[`test WorkflowDetail success 1`] = `
+<div
+  className="panel-group">
+  <div
+    className="panel panel-default"
+    id={undefined}>
+    <div
+      className="panel-heading">
+      Details
+    </div>
+    <div
+      className="panel-body">
+      <div>
+        <dl
+          className="dl-horizontal">
+          <dt>
+            Name
+          </dt>
+          <dd>
+            Simple Workflow Example
+          </dd>
+          <dt>
+            Version
+          </dt>
+          <dd>
+            <ul
+              className="pagination pagination-sm">
+              <li
+                className="active"
+                style={undefined}>
+                <a
+                  href="#"
+                  onClick={[Function]}
+                  role="button">
+                  1
+                </a>
+              </li>
+            </ul>
+          </dd>
+          <dt>
+            Schedule Active
+          </dt>
+          <dd>
+            False
+          </dd>
+          <dt>
+            Schedule
+          </dt>
+          <dd />
+          <dt>
+            Next Run
+          </dt>
+          <dd />
+          <dt>
+            Parameters
+          </dt>
+          <dd>
+            <pre>
+              MY_OBJECT_ID=1
+              SOME_SETTING=false
+            </pre>
+          </dd>
+        </dl>
+        <button
+          className="btn btn-default"
+          disabled={false}
+          onClick={[Function]}
+          type="button">
+          Edit
+        </button>
+      </div>
+    </div>
+  </div>
+  <div
+    className="panel panel-default"
+    id={undefined}>
+    <div
+      className="panel-heading">
+      Tasks
+    </div>
+    <div
+      className="panel-body">
+      <svg />
+    </div>
+  </div>
+  <div
+    className="panel panel-default"
+    id={undefined}>
+    <div
+      className="panel-heading">
+      Runs
+    </div>
+    <div
+      className="panel-body">
+      <table
+        className="table table-bordered table-condensed">
+        <thead>
+          <tr>
+            <th
+              className="text-center">
+              Task
+            </th>
+            <th
+              className="text-center"
+              colSpan={1}>
+              Run
+            </th>
+          </tr>
+          <tr>
+            <th />
+            <th
+              aria-describedby={1}
+              className="succeeded"
+              onBlur={[Function]}
+              onClick={null}
+              onFocus={[Function]}
+              onMouseOut={[Function]}
+              onMouseOver={[Function]}>
+              #
+              0
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              start
+            </td>
+            <td
+              className="succeeded">
+              <a
+                aria-describedby={1}
+                onBlur={[Function]}
+                onClick={[Function]}
+                onFocus={[Function]}
+                onMouseOut={[Function]}
+                onMouseOver={[Function]}
+                style={Object {}}>
+                <span
+                  className="glyphicon glyphicon-ok" />
+              </a>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              task2
+            </td>
+            <td
+              className="succeeded">
+              <a
+                aria-describedby={2}
+                onBlur={[Function]}
+                onClick={[Function]}
+                onFocus={[Function]}
+                onMouseOut={[Function]}
+                onMouseOver={[Function]}
+                style={Object {}}>
+                <span
+                  className="glyphicon glyphicon-ok" />
+              </a>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              task3
+            </td>
+            <td
+              className="succeeded">
+              <a
+                aria-describedby={3}
+                onBlur={[Function]}
+                onClick={[Function]}
+                onFocus={[Function]}
+                onMouseOut={[Function]}
+                onMouseOver={[Function]}
+                style={Object {}}>
+                <span
+                  className="glyphicon glyphicon-ok" />
+              </a>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              done
+            </td>
+            <td
+              className="succeeded">
+              <a
+                aria-describedby={4}
+                onBlur={[Function]}
+                onClick={[Function]}
+                onFocus={[Function]}
+                onMouseOut={[Function]}
+                onMouseOver={[Function]}
+                style={Object {}}>
+                <span
+                  className="glyphicon glyphicon-ok" />
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+`;

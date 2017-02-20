@@ -1,0 +1,124 @@
+exports[`test WorkerDetail failure 1`] = `
+<div>
+  <div
+    className="alert alert-danger"
+    role="alert">
+    some error message
+  </div>
+  Loading...
+</div>
+`;
+
+exports[`test WorkerDetail loading 1`] = `
+<div>
+  Loading...
+</div>
+`;
+
+exports[`test WorkerDetail success 1`] = `
+<div
+  className="panel-group">
+  <div
+    className="panel panel-default"
+    id={undefined}>
+    <div
+      className="panel-heading">
+      Details
+    </div>
+    <div
+      className="panel-body">
+      <dl
+        className="dl-horizontal">
+        <dt>
+          Name
+        </dt>
+        <dd>
+          alec-graybeard.local 36470
+        </dd>
+        <dt>
+          Status
+        </dt>
+        <dd>
+          exited
+        </dd>
+        <dt>
+          Start Timestamp
+        </dt>
+        <dd>
+          2017-01-30T04:13:47.966080Z
+        </dd>
+        <dt>
+          Last Heartbeat
+        </dt>
+        <dd>
+          2017-01-30T04:15:10.845289Z
+        </dd>
+      </dl>
+    </div>
+  </div>
+  <div
+    className="panel panel-default"
+    id={undefined}>
+    <div
+      className="panel-heading">
+      Executions
+    </div>
+    <div
+      className="panel-body">
+      <table
+        className="table table-striped table-bordered table-condensed table-hover">
+        <thead>
+          <tr>
+            <th>
+              Worker
+            </th>
+            <th>
+              Workflow
+            </th>
+            <th>
+              Task
+            </th>
+            <th>
+              Status
+            </th>
+            <th>
+              Start Time
+            </th>
+            <th>
+              Runtime
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <a
+                onClick={[Function]}
+                style={Object {}}>
+                alec-graybeard.local 36561
+              </a>
+            </td>
+            <td>
+              Simple Workflow Example
+            </td>
+            <td>
+              <a
+                onClick={[Function]}
+                style={Object {}}>
+                done
+              </a>
+            </td>
+            <td>
+              succeeded
+            </td>
+            <td>
+              2017-01-30T04:17:03.806599Z
+            </td>
+            <td />
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+`;
