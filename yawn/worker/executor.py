@@ -24,6 +24,10 @@ class Result:
     def __init__(self, execution_id):
         self.execution_id = execution_id
 
+    def __str__(self):
+        return 'Result(id={}, stdout={}, stderr={}, returncode={})'.format(
+            self.execution_id, bool(self.stdout), bool(self.stderr), self.returncode)
+
 
 class Execution:
     """Internal process tracker"""

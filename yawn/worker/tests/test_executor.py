@@ -49,9 +49,10 @@ def test_timeout(manager):
     command = 'sleep 10'
     manager.start_subprocess(1, command, environment={}, timeout=-1)
 
-    manager.read_output()  # first read kills, but the pipes are still open
+    results = manager.read_output()  # first read kills, but the pipes are still open
+    assert results == []
 
-    results = manager.read_output()
+    results = manager.read_output(timeout=1)
     assert len(results) == 1
     assert results[0].stdout is None
     assert results[0].stderr is None
