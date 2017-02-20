@@ -14,32 +14,35 @@ def manager():
 
 def test_read_output(manager):
     execution_id = 1
-    command = 'echo starting && sleep 0.5 && echo stopping 1>&2'
+    command = 'echo starting && sleep 0.1 && echo stopping 1>&2'
     manager.start_subprocess(execution_id, command, environment={}, timeout=None)
 
     # stdout is ready
-    results = manager.read_output(timeout=0.4)
+    results = manager.read_output(timeout=1)
     assert len(results) == 1
     assert results[0].stdout == 'starting\n'
     assert results[0].stderr is None
     assert results[0].returncode is None
     assert results[0].execution_id == execution_id
 
-    # stderr is ready, stdout gets closed
+    # sleep to ensure the returncode is ready
+    time.sleep(1)
+
+    # stderr is ready
     results = manager.read_output(timeout=1)
     assert len(results) == 1
     assert results[0].stdout is None
     assert results[0].stderr == 'stopping\n'
-    assert results[0].returncode is None
     assert results[0].execution_id == execution_id
 
-    # stderr gets closed and result is available
-    results = manager.read_output()
-    assert len(results) == 1
-    assert results[0].stdout is None
-    assert results[0].stderr is None
-    assert results[0].returncode == 0
-    assert results[0].execution_id == execution_id
+    # grhh... sometime it exits later, on circleci it often exits concurrently
+    if results[0].returncode is not None:
+        assert results[0].returncode == 0
+    else:
+        results = manager.read_output(timeout=1)
+        assert len(results) == 1
+        assert results[0].execution_id == execution_id
+        assert results[0].returncode == 0
 
 
 def test_timeout(manager):
