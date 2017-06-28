@@ -1,15 +1,19 @@
-exports[`test WorkerList failure 1`] = `
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`WorkerList failure 1`] = `
 <div>
   <h3>
     Workers
   </h3>
   <div
     className="alert alert-danger"
-    role="alert">
+    role="alert"
+  >
     some error message
   </div>
   <table
-    className="table table-striped table-bordered table-condensed table-hover">
+    className="table table-striped table-bordered table-condensed table-hover"
+  >
     <thead>
       <tr>
         <th>
@@ -29,7 +33,8 @@ exports[`test WorkerList failure 1`] = `
     <tbody>
       <tr>
         <td
-          colSpan="3">
+          colSpan="3"
+        >
           Loading...
         </td>
       </tr>
@@ -38,13 +43,14 @@ exports[`test WorkerList failure 1`] = `
 </div>
 `;
 
-exports[`test WorkerList loading 1`] = `
+exports[`WorkerList loading 1`] = `
 <div>
   <h3>
     Workers
   </h3>
   <table
-    className="table table-striped table-bordered table-condensed table-hover">
+    className="table table-striped table-bordered table-condensed table-hover"
+  >
     <thead>
       <tr>
         <th>
@@ -64,7 +70,8 @@ exports[`test WorkerList loading 1`] = `
     <tbody>
       <tr>
         <td
-          colSpan="3">
+          colSpan="3"
+        >
           Loading...
         </td>
       </tr>
@@ -73,13 +80,14 @@ exports[`test WorkerList loading 1`] = `
 </div>
 `;
 
-exports[`test WorkerList success 1`] = `
+exports[`WorkerList success 1`] = `
 <div>
   <h3>
     Workers
   </h3>
   <table
-    className="table table-striped table-bordered table-condensed table-hover">
+    className="table table-striped table-bordered table-condensed table-hover"
+  >
     <thead>
       <tr>
         <th>
@@ -101,7 +109,8 @@ exports[`test WorkerList success 1`] = `
         <td>
           <a
             onClick={[Function]}
-            style={Object {}}>
+            style={Object {}}
+          >
             alec-graybeard.local 36470
           </a>
         </td>

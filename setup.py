@@ -1,3 +1,4 @@
+#! /usr/bin/python
 """
 This setup.py is based on https://github.com/pypa/sampleproject
 More documentation at https://packaging.python.org/en/latest/distributing.html
@@ -76,6 +77,8 @@ setup(
         'psycopg2>=2.5',
         'django>=1.9',
         'djangorestframework>=3.4',
+        'whitenoise>=3.0',
+        'gunicorn>=19',
     ],
 
     # List additional groups of dependencies here (e.g. development

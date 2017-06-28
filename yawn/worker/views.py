@@ -12,7 +12,7 @@ class WorkerViewSet(viewsets.GenericViewSet,
     """
     Worker endpoint, GET(list)
     """
-    queryset = Worker.objects.all()
+    queryset = Worker.objects.all().order_by('id')
 
     serializer_class = WorkerSerializer
 
@@ -26,7 +26,7 @@ class QueueViewSet(viewsets.GenericViewSet,
     """
     Queue endpoint GET(list,detail), PATCH to clear all messages
     """
-    queryset = Queue.objects.all().annotate(Count('message'))
+    queryset = Queue.objects.all().annotate(Count('message')).order_by('id')
 
     serializer_class = QueueSerializer
 

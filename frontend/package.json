@@ -3,17 +3,17 @@
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
-    "react-scripts": "0.9.0",
-    "react-test-renderer": "^15.4.2"
+    "react-scripts": "^1.0.7",
+    "react-test-renderer": "^15.6.1"
   },
   "dependencies": {
     "bootswatch": "^3.3.7",
     "dagre-d3": "^0.4.17",
-    "react": "^15.4.2",
-    "react-bootstrap": "^0.30.7",
-    "react-dom": "^15.4.1",
-    "react-router": "^3.0.0",
-    "whatwg-fetch": "^2.0.1"
+    "react": "^15.6.1",
+    "react-bootstrap": "^0.30.10",
+    "react-dom": "^15.6.1",
+    "react-router": "^3.0.5",
+    "whatwg-fetch": "^2.0.3"
   },
   "scripts": {
     "start": "react-scripts start",

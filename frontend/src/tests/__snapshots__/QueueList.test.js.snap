@@ -1,15 +1,19 @@
-exports[`test QueueList failure 1`] = `
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`QueueList failure 1`] = `
 <div>
   <h3>
     Queues
   </h3>
   <div
     className="alert alert-danger"
-    role="alert">
+    role="alert"
+  >
     some error message
   </div>
   <table
-    className="table table-striped table-bordered table-condensed table-hover">
+    className="table table-striped table-bordered table-condensed table-hover"
+  >
     <thead>
       <tr>
         <th>
@@ -26,7 +30,8 @@ exports[`test QueueList failure 1`] = `
     <tbody>
       <tr>
         <td
-          colSpan="3">
+          colSpan="3"
+        >
           Loading...
         </td>
       </tr>
@@ -35,13 +40,14 @@ exports[`test QueueList failure 1`] = `
 </div>
 `;
 
-exports[`test QueueList loading 1`] = `
+exports[`QueueList loading 1`] = `
 <div>
   <h3>
     Queues
   </h3>
   <table
-    className="table table-striped table-bordered table-condensed table-hover">
+    className="table table-striped table-bordered table-condensed table-hover"
+  >
     <thead>
       <tr>
         <th>
@@ -58,7 +64,8 @@ exports[`test QueueList loading 1`] = `
     <tbody>
       <tr>
         <td
-          colSpan="3">
+          colSpan="3"
+        >
           Loading...
         </td>
       </tr>
@@ -67,13 +74,14 @@ exports[`test QueueList loading 1`] = `
 </div>
 `;
 
-exports[`test QueueList success 1`] = `
+exports[`QueueList success 1`] = `
 <div>
   <h3>
     Queues
   </h3>
   <table
-    className="table table-striped table-bordered table-condensed table-hover">
+    className="table table-striped table-bordered table-condensed table-hover"
+  >
     <thead>
       <tr>
         <th>
@@ -92,7 +100,8 @@ exports[`test QueueList success 1`] = `
         <td>
           <a
             onClick={[Function]}
-            style={Object {}}>
+            style={Object {}}
+          >
             default
           </a>
         </td>
@@ -104,7 +113,8 @@ exports[`test QueueList success 1`] = `
             className="btn btn-sm btn-default"
             disabled={false}
             onClick={[Function]}
-            type="button">
+            type="button"
+          >
             Purge
           </button>
         </td>

@@ -15,7 +15,7 @@ class WorkflowNameViewSet(viewsets.ReadOnlyModelViewSet):
     Used to list the workflows and power version switcher.
     """
     queryset = WorkflowName.objects.select_related('current_version').annotate(
-        task_count=Count('current_version__template'))
+        task_count=Count('current_version__template')).order_by('id')
 
     serializer_class = WorkflowNameSerializer
     permission_classes = (AllowAny,)
@@ -32,7 +32,7 @@ class WorkflowViewSet(viewsets.GenericViewSet,
     The POST action is unusual as it checks for an existing, identical
     workflow and return it if found instead of creating a new object.
     """
-    queryset = Workflow.objects.select_related('name')
+    queryset = Workflow.objects.select_related('name').order_by('id')
 
     serializer_class = WorkflowSerializer
     permission_classes = (AllowAny,)
@@ -49,13 +49,13 @@ class RunViewSet(viewsets.GenericViewSet,
 
     serializer_class = RunSerializer
     permission_classes = (AllowAny,)
-    queryset = Run.objects.prefetch_related('task_set__template')
+    queryset = Run.objects.prefetch_related('task_set__template').order_by('id')
 
     def get_queryset(self):
         """
         Optionally filter to the runs for a given workflow
         """
-        queryset = self.queryset.all()
+        queryset = self.queryset
         workflow = self.request.query_params.get('workflow', None)
         if workflow is not None:
             queryset = queryset.filter(workflow_id=workflow)

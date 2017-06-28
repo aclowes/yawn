@@ -1,34 +1,42 @@
-exports[`test WorkerDetail failure 1`] = `
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`WorkerDetail failure 1`] = `
 <div>
   <div
     className="alert alert-danger"
-    role="alert">
+    role="alert"
+  >
     some error message
   </div>
   Loading...
 </div>
 `;
 
-exports[`test WorkerDetail loading 1`] = `
+exports[`WorkerDetail loading 1`] = `
 <div>
   Loading...
 </div>
 `;
 
-exports[`test WorkerDetail success 1`] = `
+exports[`WorkerDetail success 1`] = `
 <div
-  className="panel-group">
+  className="panel-group"
+>
   <div
     className="panel panel-default"
-    id={undefined}>
+    id={undefined}
+  >
     <div
-      className="panel-heading">
+      className="panel-heading"
+    >
       Details
     </div>
     <div
-      className="panel-body">
+      className="panel-body"
+    >
       <dl
-        className="dl-horizontal">
+        className="dl-horizontal"
+      >
         <dt>
           Name
         </dt>
@@ -58,15 +66,19 @@ exports[`test WorkerDetail success 1`] = `
   </div>
   <div
     className="panel panel-default"
-    id={undefined}>
+    id={undefined}
+  >
     <div
-      className="panel-heading">
+      className="panel-heading"
+    >
       Executions
     </div>
     <div
-      className="panel-body">
+      className="panel-body"
+    >
       <table
-        className="table table-striped table-bordered table-condensed table-hover">
+        className="table table-striped table-bordered table-condensed table-hover"
+      >
         <thead>
           <tr>
             <th>
@@ -94,7 +106,8 @@ exports[`test WorkerDetail success 1`] = `
             <td>
               <a
                 onClick={[Function]}
-                style={Object {}}>
+                style={Object {}}
+              >
                 alec-graybeard.local 36561
               </a>
             </td>
@@ -104,7 +117,8 @@ exports[`test WorkerDetail success 1`] = `
             <td>
               <a
                 onClick={[Function]}
-                style={Object {}}>
+                style={Object {}}
+              >
                 done
               </a>
             </td>
