@@ -11,7 +11,7 @@ class TaskViewSet(viewsets.GenericViewSet,
     """
     GET a task, and its executions. PATCH to re-run or terminate.
     """
-    queryset = Task.objects.all().prefetch_related(
+    queryset = Task.objects.all().order_by('id').prefetch_related(
         'execution_set__worker').select_related('template__workflow__name')
 
     serializer_class = TaskDetailSerializer
@@ -24,7 +24,7 @@ class ExecutionViewSet(viewsets.GenericViewSet,
     """
     GET a list of Executions
     """
-    queryset = Execution.objects.all().select_related(
+    queryset = Execution.objects.all().order_by('id').select_related(
         'worker', 'task__template__workflow__name')
 
     serializer_class = ExecutionListSerializer
@@ -35,7 +35,7 @@ class ExecutionViewSet(viewsets.GenericViewSet,
         """
         Optionally filter to the executions for a given worker
         """
-        queryset = self.queryset.all()
+        queryset = self.queryset
         worker = self.request.query_params.get('worker', None)
         if worker is not None:
             queryset = queryset.filter(worker_id=worker)
