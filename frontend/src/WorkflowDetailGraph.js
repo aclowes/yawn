@@ -1,6 +1,7 @@
 import React from 'react';
+// importing from /dist/ because something in dagre-d3 isn't webpack compatible
+import * as dagreD3 from 'dagre-d3/dist/dagre-d3'
 import Graph from 'graphlib/lib/graph'
-import render from 'dagre-d3/lib/render'
 import d3 from 'd3'
 
 export default class WorkflowDetailGraph extends React.Component {
@@ -16,7 +17,7 @@ export default class WorkflowDetailGraph extends React.Component {
   componentDidMount() {
     /* After rendering, draw the graph */
     const workflow = this.props.workflow;
-    const renderer = new render();
+    const renderer = new dagreD3.render();
     const graph = new Graph().setGraph({});
 
     workflow.tasks.forEach(function (task) {
