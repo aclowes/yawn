@@ -8,7 +8,7 @@ from yawn.worker.main import Main
 
 
 class Command(BaseCommand):
-    help = 'Execute tasks'
+    help = 'Run the worker to execute tasks'
 
     def add_arguments(self, parser):
         name_default = '{} {}'.format(socket.gethostname(), os.getpid())
