@@ -1,35 +1,43 @@
-exports[`test WorkflowDetail failure 1`] = `
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`WorkflowDetail failure 1`] = `
 <div>
   <div
     className="alert alert-danger"
-    role="alert">
+    role="alert"
+  >
     some error message
   </div>
   Loading...
 </div>
 `;
 
-exports[`test WorkflowDetail loading 1`] = `
+exports[`WorkflowDetail loading 1`] = `
 <div>
   Loading...
 </div>
 `;
 
-exports[`test WorkflowDetail success 1`] = `
+exports[`WorkflowDetail success 1`] = `
 <div
-  className="panel-group">
+  className="panel-group"
+>
   <div
     className="panel panel-default"
-    id={undefined}>
+    id={undefined}
+  >
     <div
-      className="panel-heading">
+      className="panel-heading"
+    >
       Details
     </div>
     <div
-      className="panel-body">
+      className="panel-body"
+    >
       <div>
         <dl
-          className="dl-horizontal">
+          className="dl-horizontal"
+        >
           <dt>
             Name
           </dt>
@@ -41,14 +49,17 @@ exports[`test WorkflowDetail success 1`] = `
           </dt>
           <dd>
             <ul
-              className="pagination pagination-sm">
+              className="pagination pagination-sm"
+            >
               <li
                 className="active"
-                style={undefined}>
+                style={undefined}
+              >
                 <a
                   href="#"
                   onClick={[Function]}
-                  role="button">
+                  role="button"
+                >
                   1
                 </a>
               </li>
@@ -82,7 +93,8 @@ exports[`test WorkflowDetail success 1`] = `
           className="btn btn-default"
           disabled={false}
           onClick={[Function]}
-          type="button">
+          type="button"
+        >
           Edit
         </button>
       </div>
@@ -90,49 +102,58 @@ exports[`test WorkflowDetail success 1`] = `
   </div>
   <div
     className="panel panel-default"
-    id={undefined}>
+    id={undefined}
+  >
     <div
-      className="panel-heading">
+      className="panel-heading"
+    >
       Tasks
     </div>
     <div
-      className="panel-body">
+      className="panel-body"
+    >
       <svg />
     </div>
   </div>
   <div
     className="panel panel-default"
-    id={undefined}>
+    id={undefined}
+  >
     <div
-      className="panel-heading">
+      className="panel-heading"
+    >
       Runs
     </div>
     <div
-      className="panel-body">
+      className="panel-body"
+    >
       <table
-        className="table table-bordered table-condensed">
+        className="table table-bordered table-condensed"
+      >
         <thead>
           <tr>
             <th
-              className="text-center">
+              className="text-center"
+            >
               Task
             </th>
             <th
               className="text-center"
-              colSpan={1}>
+              colSpan={1}
+            >
               Run
             </th>
           </tr>
           <tr>
             <th />
             <th
-              aria-describedby={1}
               className="succeeded"
               onBlur={[Function]}
               onClick={null}
               onFocus={[Function]}
               onMouseOut={[Function]}
-              onMouseOver={[Function]}>
+              onMouseOver={[Function]}
+            >
               #
               0
             </th>
@@ -144,17 +165,19 @@ exports[`test WorkflowDetail success 1`] = `
               start
             </td>
             <td
-              className="succeeded">
+              className="succeeded"
+            >
               <a
-                aria-describedby={1}
                 onBlur={[Function]}
                 onClick={[Function]}
                 onFocus={[Function]}
                 onMouseOut={[Function]}
                 onMouseOver={[Function]}
-                style={Object {}}>
+                style={Object {}}
+              >
                 <span
-                  className="glyphicon glyphicon-ok" />
+                  className="glyphicon glyphicon-ok"
+                />
               </a>
             </td>
           </tr>
@@ -163,17 +186,19 @@ exports[`test WorkflowDetail success 1`] = `
               task2
             </td>
             <td
-              className="succeeded">
+              className="succeeded"
+            >
               <a
-                aria-describedby={2}
                 onBlur={[Function]}
                 onClick={[Function]}
                 onFocus={[Function]}
                 onMouseOut={[Function]}
                 onMouseOver={[Function]}
-                style={Object {}}>
+                style={Object {}}
+              >
                 <span
-                  className="glyphicon glyphicon-ok" />
+                  className="glyphicon glyphicon-ok"
+                />
               </a>
             </td>
           </tr>
@@ -182,17 +207,19 @@ exports[`test WorkflowDetail success 1`] = `
               task3
             </td>
             <td
-              className="succeeded">
+              className="succeeded"
+            >
               <a
-                aria-describedby={3}
                 onBlur={[Function]}
                 onClick={[Function]}
                 onFocus={[Function]}
                 onMouseOut={[Function]}
                 onMouseOver={[Function]}
-                style={Object {}}>
+                style={Object {}}
+              >
                 <span
-                  className="glyphicon glyphicon-ok" />
+                  className="glyphicon glyphicon-ok"
+                />
               </a>
             </td>
           </tr>
@@ -201,17 +228,19 @@ exports[`test WorkflowDetail success 1`] = `
               done
             </td>
             <td
-              className="succeeded">
+              className="succeeded"
+            >
               <a
-                aria-describedby={4}
                 onBlur={[Function]}
                 onClick={[Function]}
                 onFocus={[Function]}
                 onMouseOut={[Function]}
                 onMouseOver={[Function]}
-                style={Object {}}>
+                style={Object {}}
+              >
                 <span
-                  className="glyphicon glyphicon-ok" />
+                  className="glyphicon glyphicon-ok"
+                />
               </a>
             </td>
           </tr>

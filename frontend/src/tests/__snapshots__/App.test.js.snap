@@ -1,56 +1,71 @@
-exports[`test homepage renders 1`] = `
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`homepage renders 1`] = `
 <div>
   <nav
-    className="navbar navbar-default">
+    className="navbar navbar-default"
+  >
     <div
-      className="container">
+      className="container"
+    >
       <div
-        className="navbar-header">
+        className="navbar-header"
+      >
         <span
-          className="navbar-brand">
+          className="navbar-brand"
+        >
           YAWN
         </span>
       </div>
       <ul
         className="nav navbar-nav"
-        role={null}>
+        role={null}
+      >
         <li
           className="active"
           role="presentation"
-          style={undefined}>
+          style={undefined}
+        >
           <a
             href="/"
-            onClick={[Function]}>
+            onClick={[Function]}
+          >
             Workflows
           </a>
         </li>
         <li
           className=""
           role="presentation"
-          style={undefined}>
+          style={undefined}
+        >
           <a
             href="/workers"
-            onClick={[Function]}>
+            onClick={[Function]}
+          >
             Workers
           </a>
         </li>
         <li
           className=""
           role="presentation"
-          style={undefined}>
+          style={undefined}
+        >
           <a
             href="/executions"
-            onClick={[Function]}>
+            onClick={[Function]}
+          >
             Executions
           </a>
         </li>
         <li
           className=""
           role="presentation"
-          style={undefined}>
+          style={undefined}
+        >
           <a
             href="/queues"
-            onClick={[Function]}>
+            onClick={[Function]}
+          >
             Queues
           </a>
         </li>
@@ -58,6 +73,7 @@ exports[`test homepage renders 1`] = `
     </div>
   </nav>
   <div
-    className="container" />
+    className="container"
+  />
 </div>
 `;
