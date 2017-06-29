@@ -1,7 +1,6 @@
 import re
 from operator import itemgetter
 
-from django.core.validators import slug_unicode_re
 from django.db import transaction
 from django.db.models import NOT_PROVIDED
 from rest_framework import serializers
@@ -33,7 +32,7 @@ class WorkflowNameSerializer(serializers.ModelSerializer):
 class TemplateSerializer(serializers.ModelSerializer):
     queue = serializers.SlugRelatedField(slug_field='name', queryset=Queue.objects.all())
     upstream = serializers.ListField(
-        child=serializers.SlugField(), default=[], source='upstream.all')
+        child=serializers.CharField(), default=[], source='upstream.all')
 
     class Meta:
         model = Template
@@ -41,7 +40,7 @@ class TemplateSerializer(serializers.ModelSerializer):
 
 
 class WorkflowSerializer(serializers.ModelSerializer):
-    name = serializers.RegexField(source='name.name', regex=slug_unicode_re)
+    name = serializers.CharField(source='name.name')
     name_id = serializers.IntegerField(read_only=True)
     tasks = TemplateSerializer(many=True, allow_empty=False, source='template_set')
 

@@ -135,7 +135,7 @@ class Main:
         self.executor.start_subprocess(
             execution_id=execution.id,
             command=execution.task.template.command,
-            environment=execution.task.run.parameters,
+            environment=execution.task.run.parameters if execution.task.run else {},
             timeout=execution.task.template.timeout
         )
 

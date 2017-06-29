@@ -51,7 +51,7 @@ class Worker(models.Model):
 class Queue(models.Model):
     """Arbitrary tag defining where tasks run."""
 
-    name = models.SlugField(unique=True, allow_unicode=True)
+    name = models.TextField(unique=True)
 
     _default = None
 

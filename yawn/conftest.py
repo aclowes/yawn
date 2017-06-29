@@ -71,8 +71,8 @@ def run():
 
     name = WorkflowName.objects.create(name='workflow1')
     workflow = name.new_version(parameters={'parent': True, 'child': False})
-    task1 = Template.objects.create(workflow=workflow, name='task1', command=[''])
-    task2 = Template.objects.create(workflow=workflow, name='task2', command=[''])
+    task1 = Template.objects.create(workflow=workflow, name='task1', command='')
+    task2 = Template.objects.create(workflow=workflow, name='task2', command='')
     task2.upstream.add(task1)
 
     return workflow.submit_run(parameters={'child': True})

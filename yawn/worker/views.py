@@ -12,7 +12,7 @@ class WorkerViewSet(viewsets.GenericViewSet,
     """
     Worker endpoint, GET(list)
     """
-    queryset = Worker.objects.all().order_by('id')
+    queryset = Worker.objects.all().order_by('-id')
 
     serializer_class = WorkerSerializer
 

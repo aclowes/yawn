@@ -14,7 +14,7 @@ A & B succeed, don't submit C(failed)
 A succeeded but B failed, mark C and D upstream_failed
 """
 from yawn.worker.models import Queue, Worker
-from yawn.task.models import Task, Execution
+from yawn.task.models import Task, Execution, Template
 
 
 def test_first_queued(run):
@@ -91,3 +91,15 @@ def test_execution_output(run):
     execution.refresh_from_db()
     assert execution.stdout == 'foobar'
     assert execution.stderr == 'blah'
+
+
+def test_task_without_workflow():
+    template = Template.objects.create(name='task1', command='')
+    task = Task.objects.create(template=template)
+    worker = Worker.objects.create(name='worker1')
+
+    # asserts that a task can be run without having a workflow associated
+    execution = task.start_execution(worker)
+    execution.mark_finished(exit_code=0)
+    task.refresh_from_db()
+    assert task.status == Task.SUCCEEDED

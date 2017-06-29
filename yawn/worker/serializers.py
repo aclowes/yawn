@@ -25,7 +25,7 @@ class QueueSerializer(serializers.ModelSerializer):
 
 
 class MessageSerializer(serializers.ModelSerializer):
-    queue = serializers.SlugField(source='queue.name')
+    queue = serializers.CharField(source='queue.name')
 
     class Meta:
         model = Message

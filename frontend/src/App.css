@@ -8,6 +8,12 @@
     margin: 0;
 }
 
+pre {
+  margin: 0;
+  padding: 5px;
+  display: inline-block;
+}
+
 /* Status Colors */
 
 .waiting {

@@ -61,7 +61,9 @@ exports[`TaskDetail success 1`] = `
             Command
           </dt>
           <dd>
-            "echo Starting..."
+            <pre>
+              echo Starting...
+            </pre>
           </dd>
           <dt>
             Max Retries
