@@ -16,7 +16,7 @@ export default class ExecutionTable extends React.Component {
       return this.props.executions.map((execution) => (
         <tr key={execution.id}>
           <td><Link to={`/workers/${execution.worker.id}`}>{execution.worker.name}</Link></td>
-          <td>{execution.task.workflow.name}</td>
+          <td>{execution.task.workflow && execution.task.workflow.name}</td>
           <td><Link to={`/tasks/${execution.task.id}`}>{execution.task.name}</Link></td>
           <td>{execution.status}</td>
           <td>{execution.start_timestamp}</td>

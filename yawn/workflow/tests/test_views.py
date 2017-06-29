@@ -47,12 +47,12 @@ def test_create_workflow_versions(client, data):
 
 
 def test_invalid_fields(client, data):
-    data['name'] = 'not a slug'
+    data['name'] = ''
     data['parameters'] = 'not a dict'
     data['tasks'][1]['upstream'].append('invalid_task')
     response = client.post('/api/workflows/', data)
     assert response.status_code == 400, response.data
-    assert 'required pattern' in response.data['name'][0]
+    assert 'This field may not be blank' in response.data['name'][0]
     assert 'must be a dictionary' in response.data['parameters'][0]
     assert 'upstream task(s) invalid_task' in response.data['tasks'][0]
 

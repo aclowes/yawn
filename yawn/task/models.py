@@ -7,9 +7,9 @@ from yawn.utilities import logger
 
 
 class Template(models.Model):
-    workflow = models.ForeignKey('Workflow', models.PROTECT, editable=False)
+    workflow = models.ForeignKey('Workflow', models.PROTECT, editable=False, null=True)
     queue = models.ForeignKey(Queue, models.PROTECT)
-    name = models.SlugField(allow_unicode=True, db_index=False)
+    name = models.TextField()
 
     command = models.TextField()
     max_retries = models.IntegerField(default=0)
@@ -41,7 +41,7 @@ class Task(models.Model):
     UPSTREAM_FAILED = 'upstream_failed'
     STATUS_CHOICES = [(x, x) for x in (WAITING, QUEUED, RUNNING, SUCCEEDED, FAILED, UPSTREAM_FAILED)]
 
-    run = models.ForeignKey('Run', models.PROTECT)
+    run = models.ForeignKey('Run', models.PROTECT, null=True)
     template = models.ForeignKey(Template, models.PROTECT)
     status = models.TextField(choices=STATUS_CHOICES, default=WAITING)
 
@@ -177,7 +177,8 @@ class Execution(models.Model):
             self.task.save()
             with transaction.atomic():
                 self.task.update_downstream()
-            self.task.run.update_status()
+            if self.task.run:
+                self.task.run.update_status()
 
         self.stop_timestamp = functions.Now()
         # need to be careful not to overwrite stdout/stderr

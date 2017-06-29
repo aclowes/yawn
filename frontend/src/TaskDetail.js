@@ -42,6 +42,15 @@ export default class TaskDetail extends React.Component {
     ))
   }
 
+  renderWorkflowLink() {
+    const task = this.state.task;
+    if (task.workflow) return (
+      <Link to={`/workflows/${task.workflow.id}`}>
+        {task.workflow.name} - v{task.workflow.version}
+      </Link>
+    )
+  }
+
   renderExecution() {
     if (this.state.execution === 0) {
       return <div>No executions</div>
@@ -63,7 +72,7 @@ export default class TaskDetail extends React.Component {
         <dd>{execution.status}</dd>
         <dt>Worker</dt>
         <dd>
-          <Link to={`/worker/${execution.worker.id}`}>
+          <Link to={`/workers/${execution.worker.id}`}>
             {execution.worker.name}
           </Link>
         </dd>
@@ -102,14 +111,14 @@ export default class TaskDetail extends React.Component {
               <dl className="dl-horizontal">
                 <dt>Workflow</dt>
                 <dd>
-                  <Link to={`/workflows/${task.workflow.id}`}>
-                    {task.workflow.name} - v{task.workflow.version}
-                  </Link>
+                  {this.renderWorkflowLink()}
                 </dd>
                 <dt>Task Name</dt>
                 <dd>{task.name}</dd>
                 <dt>Command</dt>
-                <dd>{JSON.stringify(task.command)}</dd>
+                <dd>
+                  <pre>{task.command}</pre>
+                </dd>
                 <dt>Max Retries</dt>
                 <dd>{task.max_retries}</dd>
                 <dt>Timeout</dt>

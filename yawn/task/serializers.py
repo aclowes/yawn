@@ -6,7 +6,7 @@ from yawn.workflow.models import Workflow
 
 
 class SimpleWorkflowSerializer(serializers.ModelSerializer):
-    name = serializers.SlugField(source='name.name', read_only=True)
+    name = serializers.CharField(source='name.name', read_only=True)
 
     class Meta:
         model = Workflow
@@ -14,7 +14,7 @@ class SimpleWorkflowSerializer(serializers.ModelSerializer):
 
 
 class TaskSerializer(serializers.ModelSerializer):
-    name = serializers.SlugField(source='template.name', read_only=True)
+    name = serializers.CharField(source='template.name', read_only=True)
     workflow = SimpleWorkflowSerializer(source='template.workflow', read_only=True)
 
     class Meta:

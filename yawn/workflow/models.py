@@ -6,7 +6,7 @@ from yawn.utilities import cron
 
 
 class WorkflowName(models.Model):
-    name = models.SlugField(allow_unicode=True, unique=True)
+    name = models.TextField(unique=True)
     current_version = models.OneToOneField('Workflow', null=True, related_name='is_current')
 
     def new_version(self, **kwargs):
