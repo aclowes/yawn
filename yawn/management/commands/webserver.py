@@ -15,7 +15,7 @@ class DefaultFileServer(DjangoWhiteNoise):
         and we return index.html, and then react-router interprets the path.
         """
         path = decode_path_info(environ['PATH_INFO'])
-        if path.startswith('/api/'):
+        if path.startswith('/api'):
             return self.application(environ, start_response)
         static_file = self.files.get(path)
         if static_file is None:
