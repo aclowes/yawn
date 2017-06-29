@@ -92,6 +92,7 @@ setup(
             'pytest-cov',
             'flake8',
             'pyyaml',
+            'pytest-catchlog',
         ],
     },
 

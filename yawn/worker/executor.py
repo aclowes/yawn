@@ -1,5 +1,4 @@
 import errno
-import logging
 import os
 import signal
 import subprocess
@@ -8,7 +7,7 @@ import selectors
 import time
 import typing
 
-logger = logging.getLogger(__name__)
+from yawn.utilities import logger
 
 
 class Result:

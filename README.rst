@@ -180,13 +180,13 @@ Install the backend Django_ dependencies and run its server. Your database shoul
 Install the frontend create-react-app_ dependencies and run its server::
 
   cd frontend
-  npm install
-  npm start
+  yarn install
+  yarn start
 
 Run the tests::
 
   pytest
-  npm test
+  yarn test
 
 Load some examples and run the worker to process them::
 

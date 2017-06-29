@@ -11,11 +11,11 @@ import WorkerList from "./WorkerList";
 import WorkerDetail from "./WorkerDetail";
 import ExecutionList from "./ExecutionList";
 
-const NotFound = React.createClass({
+class NotFound extends React.Component {
   render() {
     return <h3>Not Found (404)</h3>
   }
-});
+}
 
 ReactDOM.render(
   <Router history={browserHistory}>
