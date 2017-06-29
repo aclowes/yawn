@@ -63,7 +63,7 @@ export default class TaskDetail extends React.Component {
         <dd>{execution.status}</dd>
         <dt>Worker</dt>
         <dd>
-          <Link to={`/worker/${execution.worker.id}`}>
+          <Link to={`/workers/${execution.worker.id}`}>
             {execution.worker.name}
           </Link>
         </dd>

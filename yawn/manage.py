@@ -12,16 +12,15 @@ def main():
     # check if yawn is in installed apps, and bail if it is not
     if 'yawn' not in settings.INSTALLED_APPS:
         print("Please check your DJANGO_SETTINGS_MODULE environment variable.\n"
-              "Make sure 'yawn' must be in your INSTALLED_APPS.\n"
+              "Make sure 'yawn' is in your INSTALLED_APPS.\n"
               "Generally, your settings file should start with 'from yawn.settings.base import *'")
         sys.exit(1)
 
-    print('\nYAWN workflow management tool')
-
+    print('YAWN workflow management tool')
     if os.environ['DJANGO_SETTINGS_MODULE'] == 'yawn.settings.debug':
         print('  Running in DEBUG mode')
 
-    # run the django manage.py commandline
+    # run the django manage.py command line
     execute_from_command_line(sys.argv)
 
 
