@@ -21,7 +21,8 @@ class Command(BaseCommand):
         task2 = Template.objects.create(workflow=workflow, name='task2', command='echo Working on $MY_OBJECT_ID')
         task2.upstream.add(task1)
         task3 = Template.objects.create(workflow=workflow, name='task3',
-                                        command='echo Another busy thing && sleep 20')
+                                        command='yawn exec yawn.management.tests.test_exec '
+                                                'ExampleClass "thing to log"')
         task3.upstream.add(task1)
         task4 = Template.objects.create(workflow=workflow, name='done', command='echo Finished!')
         task4.upstream.add(task2, task3)
