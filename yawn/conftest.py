@@ -19,6 +19,7 @@ def setup_django():
     """Provide a test database and django configuration"""
     from yawn.worker.models import Queue
 
+    # these are positional arguments, written out for clarity
     verbosity = 1
     interactive = False  # whether to ask before deleting
     old_config = runner.setup_databases(verbosity, interactive)
