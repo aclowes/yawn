@@ -13,37 +13,37 @@ are inspirations for this one; particularly Celery_ and Airflow_.
 .. image:: https://codecov.io/gh/aclowes/yawn/branch/master/graph/badge.svg
   :target: https://codecov.io/gh/aclowes/yawn
 
-Principles
-----------
+Principle Differences
+---------------------
 
-What is different from existing tools and why?
+YAWN is inspired by, but different from Celery and Airflow because it:
 
-Code separation
-  YAWN runs your commands as sub-processes, so there is no co-mingling of your python code
-  with the YAWN code. You are responsible for how your code is released and what version of your
-  code gets run.
+* Runs each task in a separate subprocess, like Airflow but unlike Celery, which avoids polution of
+  a shared python interpreter and makes memory usage easier to reason about.
 
-State separation
-  Environment variables are the only state that can be passed to your commands. Your application
-  should key off just a date or record ID and get more complex state from its data sources.
+* Uses PostgreSQL as the message broker and database, alleviating the need for a separate broker like
+  Redis or RabbitMQ. This avoids the `visibility timeout`_ issue when using Redis as a Celery broker.
+  YAWN uses the new ``SELECT ... FOR UPDATE SKIP LOCKED`` statement to efficiently select from the
+  queue table.
 
-Versioning
-  The workflow configuration and every run is versioned, so you have a complete history.
+.. _visibility timeout: http://docs.celeryproject.org/en/latest/getting-started/brokers/redis.html#id1
 
-Broker
-  YAWN uses Postgres to store internal state and as a message queue. Using only Postgres allows
-  for simple setup and configuration. YAWN uses the new ``SELECT ... FOR UPDATE SKIP LOCKED``
-  statement to efficiently select from the queue table.
+* Stores the command, environment variables, stdout and stderror for each task execution,
+  so its easier to see the logs and history of what happened. Re-running a task does not overwrite
+  the previous run.
+
+* Does not support inputs or outputs other than the command line and environment variables, with the
+  intention that client applications should handle state instead.
 
 Components
 ----------
 
-Web Servers
+Web Server
   The website provides a user interface to view the workflows and tasks running within them.
   It allows you to run an existing workflow or re-run a failed task. The web server also provides
-  a REST API to programatically create and run workflows.
+  a REST API to remotely create and run workflows.
 
-Workers
+Worker
   The worker schedules and executes tasks. The worker uses ``subprocess.Popen`` to run tasks and
   capture stdout and stderr.
 
@@ -72,10 +72,29 @@ Worker
   A process that reads from a set of Queues and executes the associated Tasks, recording the
   results in an Execution.
 
-Examples
---------
+Installation
+------------
 
-Run ``yawn examples`` to populate two workflows into the database.
+To get started using YAWN::
+
+    # install the package - someone has yawn :-(
+    pip install yawns
+
+    # install postgres and create the yawn database
+    # the default settings localhost and no password
+    createdb yawn
+
+    # setup the tables by running db migrations
+    yawn migrate
+
+    # create some sample workflows
+    yawn examples
+
+    # start the webserver on port 8000
+    yawn webserver
+
+    # open a new terminal and start the worker
+    yawn worker
 
 Here is a screenshot of the page for a single workflow:
 
