@@ -1,6 +1,5 @@
 import React from 'react';
 import {Table, Alert, Button} from 'react-bootstrap';
-import {Link} from 'react-router';
 
 import API from "./API";
 

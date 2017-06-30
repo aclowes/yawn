@@ -53,7 +53,6 @@ def test_timeout(manager):
     assert results == []
 
     results = manager.read_output(timeout=1)
-
     if not results:
         # sometimes its not quite ready?
         results = manager.read_output(timeout=1)
@@ -70,6 +69,10 @@ def test_timeout_already_exited(mock_kill, manager):
     manager.start_subprocess(1, command, environment={}, timeout=-1)
 
     results = manager.read_output(timeout=1)
+    if not results:
+        # sometimes its not quite ready?
+        results = manager.read_output(timeout=1)
+
     assert len(results) == 1
     assert results[0].stdout is None
     assert results[0].stderr is None
