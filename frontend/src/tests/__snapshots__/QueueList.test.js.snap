@@ -98,12 +98,7 @@ exports[`QueueList success 1`] = `
     <tbody>
       <tr>
         <td>
-          <a
-            onClick={[Function]}
-            style={Object {}}
-          >
-            default
-          </a>
+          default
         </td>
         <td>
           0

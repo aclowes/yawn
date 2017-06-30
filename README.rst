@@ -193,6 +193,12 @@ Load some examples and run the worker to process them::
   yawn examples
   yawn worker
 
+Release the built version, test installing it::
+
+  (cd frontend/ && yarn build)
+  ./setup.py sdist upload -r https://test.pypi.org/legacy/
+  pip install -i https://testpypi.python.org/pypi yawns
+
 .. _create-react-app: https://github.com/facebookincubator/create-react-app
 .. _Django: https://airflow.incubator.apache.org/
 

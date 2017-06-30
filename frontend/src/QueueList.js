@@ -1,6 +1,5 @@
 import React from 'react';
 import {Table, Alert, Button} from 'react-bootstrap';
-import {Link} from 'react-router';
 
 import API from "./API";
 
@@ -43,7 +42,7 @@ export default class QueueList extends React.Component {
         const terminate = () => this.purgeQueue(queue.id);
         return (
           <tr key={queue.id}>
-            <td><Link to={`/queues/${queue.id}`}>{queue.name}</Link></td>
+            <td>{queue.name}</td>
             <td>{queue.message_count}</td>
             <td>
               <Button bsSize="small" onClick={terminate}>
