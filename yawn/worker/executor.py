@@ -44,7 +44,6 @@ class Manager:
     """
 
     def __init__(self):
-        """"""
         self.selector = selectors.DefaultSelector()
 
         # dict mapping file descriptors to the owning subprocess
@@ -103,6 +102,7 @@ class Manager:
             # https://www.python.org/dev/peps/pep-0475/
             if exc.args[0] != errno.EINTR:
                 raise
+            logger.warning('Received select.error: %s', exc)
             read_ready = []
 
         # read from each ready file descriptor
@@ -145,14 +145,13 @@ class Manager:
                                 execution.id, type(exc))
 
             # check if the process has exited
-            try:
-                execution.process.wait(timeout=0)
-            except subprocess.TimeoutExpired:
-                continue  # we'll try again later
+            exit_code = execution.process.poll()
+            if exit_code is None:
+                continue  # we'll check again later
 
             # we may not have read everything available, so only cleanup after all pipes are closed
             open_pipes = {execution.process.stdout, execution.process.stderr} & set(self.pipes.keys())
-            if not open_pipes and execution.process.returncode is not None:
+            if not open_pipes:
                 result = all_results.setdefault(execution.id, Result(execution.id))
                 result.returncode = execution.process.returncode
                 run_time = time.monotonic() - execution.start_time
