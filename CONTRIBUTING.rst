@@ -1,21 +1,44 @@
 Contributing
 ============
 
-Getting Started
----------------
+To develop on YAWN, fork the repository and checkout a local copy::
 
-* Fork the repository
+  git clone https://github.com/<you>/yawn
 
-* Write code
+Install the backend Django_ dependencies and run its server. Your database should be at
+``postgres://localhost:5432/yawn`` by default. The ``yawn`` command is a wrapper on Django's
+``manage.py``::
 
-* Submit a pull request
+  pip install -e .[test]
+  createdb yawn
+  yawn migrate
+  yawn runserver
 
-* Get acknowledged in the changelog
+Install the frontend create-react-app_ dependencies and run its server::
+
+  cd frontend
+  yarn install
+  yarn start
+
+Run the tests::
+
+  pytest
+  yarn test
+
+Load some examples and run the worker to process them::
+
+  yawn examples
+  yawn worker
+
+.. _create-react-app: https://github.com/facebookincubator/create-react-app
+.. _Django: https://www.djangoproject.com/
 
 Best Practices
 --------------
 
 * Write tests and keep coverage > 80%
+* Submit a pull requests
+* Get acknowledged in the changelog
 
 Documentation
 -------------
@@ -25,3 +48,14 @@ Read about reStructuredText_ and the `components in common`_ between it and Mark
 
 .. _reStructuredText: http://docutils.sourceforge.net/docs/user/rst/quickref.html
 .. _components in common: https://gist.github.com/dupuy/1855764
+
+Making a Release
+----------------
+
+Build the frontend code, then bundle and release a source tarball. Finally, test
+installing it::
+
+  (cd frontend/ && yarn build)
+  ./setup.py sdist upload -r https://test.pypi.org/legacy/
+  pip install -i https://testpypi.python.org/pypi yawns
+
