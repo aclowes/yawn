@@ -1,6 +1,5 @@
 from django.db.models import Count
 from rest_framework import viewsets
-from rest_framework.permissions import AllowAny
 
 from yawn.worker.models import Worker, Queue
 from yawn.worker.serializers import WorkerSerializer, QueueSerializer

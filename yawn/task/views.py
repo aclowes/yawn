@@ -1,5 +1,4 @@
 from rest_framework import viewsets
-from rest_framework.permissions import AllowAny
 
 from yawn.task.models import Task, Execution
 from yawn.task.serializers import TaskDetailSerializer, ExecutionListSerializer

@@ -1,6 +1,5 @@
 from django.db.models import Count
 from rest_framework import viewsets
-from rest_framework.permissions import AllowAny
 
 from yawn.workflow.serializers import WorkflowSerializer, WorkflowNameSerializer, RunSerializer
 from yawn.workflow.models import Workflow, WorkflowName, Run
