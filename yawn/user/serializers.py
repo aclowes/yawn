@@ -14,10 +14,11 @@ class UserSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         # support refreshing the token:
-        if validated_data['refresh_token'] is True:
-            instance.auth_token.delete()
+        if validated_data.pop('refresh_token', False):
+            if hasattr(instance, 'auth_token'):
+                instance.auth_token.delete()
             instance.auth_token = Token.objects.create(user=instance)
-        return instance
+        return super().update(instance, validated_data)
 
 
 class LoginSerializer(serializers.Serializer):

@@ -17,63 +17,102 @@ exports[`homepage renders 1`] = `
           YAWN
         </span>
       </div>
-      <ul
-        className="nav navbar-nav"
-        role={null}
-      >
-        <li
-          className="active"
-          role="presentation"
-          style={undefined}
+      <div>
+        <ul
+          className="nav navbar-nav"
+          role={null}
         >
-          <a
-            href="/"
-            onClick={[Function]}
+          <li
+            className=""
+            role="presentation"
+            style={undefined}
           >
-            Workflows
-          </a>
-        </li>
-        <li
-          className=""
-          role="presentation"
-          style={undefined}
+            <a
+              href="/workflows"
+              onClick={[Function]}
+            >
+              Workflows
+            </a>
+          </li>
+          <li
+            className=""
+            role="presentation"
+            style={undefined}
+          >
+            <a
+              href="/executions"
+              onClick={[Function]}
+            >
+              Executions
+            </a>
+          </li>
+          <li
+            className=""
+            role="presentation"
+            style={undefined}
+          >
+            <a
+              href="/workers"
+              onClick={[Function]}
+            >
+              Workers
+            </a>
+          </li>
+          <li
+            className=""
+            role="presentation"
+            style={undefined}
+          >
+            <a
+              href="/queues"
+              onClick={[Function]}
+            >
+              Queues
+            </a>
+          </li>
+          <li
+            className=""
+            role="presentation"
+            style={undefined}
+          >
+            <a
+              href="/users"
+              onClick={[Function]}
+            >
+              Users
+            </a>
+          </li>
+        </ul>
+        <ul
+          className="nav navbar-nav navbar-right"
+          role={null}
         >
-          <a
-            href="/workers"
-            onClick={[Function]}
+          <li
+            className=""
+            role="presentation"
+            style={undefined}
           >
-            Workers
-          </a>
-        </li>
-        <li
-          className=""
-          role="presentation"
-          style={undefined}
-        >
-          <a
-            href="/executions"
-            onClick={[Function]}
-          >
-            Executions
-          </a>
-        </li>
-        <li
-          className=""
-          role="presentation"
-          style={undefined}
-        >
-          <a
-            href="/queues"
-            onClick={[Function]}
-          >
-            Queues
-          </a>
-        </li>
-      </ul>
+            <a
+              href="#"
+              onClick={[Function]}
+              role="button"
+            >
+              Logout 
+            </a>
+          </li>
+        </ul>
+      </div>
     </div>
   </nav>
   <div
     className="container"
-  />
+  >
+    <div
+      className="alert alert-danger"
+      role="alert"
+    >
+      some error message
+    </div>
+  </div>
 </div>
 `;

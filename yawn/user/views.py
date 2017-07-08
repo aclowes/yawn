@@ -1,8 +1,7 @@
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
-from rest_framework import viewsets
+from rest_framework import viewsets, status
 from rest_framework.decorators import list_route
-from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 
@@ -31,7 +30,7 @@ class UserViewSet(viewsets.GenericViewSet,
         credentials.is_valid(raise_exception=True)
         user = authenticate(request, **credentials.data)
         if not user:
-            raise ValidationError({'detail': 'Login failed'})
+            return Response({'detail': 'Login failed'}, status.HTTP_401_UNAUTHORIZED)
 
         login(request, user)
         return Response({'detail': 'Login succeeded'})

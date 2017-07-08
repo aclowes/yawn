@@ -16,8 +16,6 @@ class TaskViewSet(viewsets.GenericViewSet,
 
     serializer_class = TaskDetailSerializer
 
-    permission_classes = (AllowAny,)
-
 
 class ExecutionViewSet(viewsets.GenericViewSet,
                        viewsets.mixins.ListModelMixin):
@@ -28,8 +26,6 @@ class ExecutionViewSet(viewsets.GenericViewSet,
         'worker', 'task__template__workflow__name')
 
     serializer_class = ExecutionListSerializer
-
-    permission_classes = (AllowAny,)
 
     def get_queryset(self):
         """

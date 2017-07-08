@@ -1,6 +1,6 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import {browserHistory} from 'react-router'
+//import {browserHistory} from 'react-router'
 
 import WorkerDetail from '../WorkerDetail';
 import {mockAPI} from './mocks'

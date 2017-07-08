@@ -18,7 +18,7 @@ export default class App extends React.Component {
         // redirect to login page if not authenticated
         this.props.router.push('/login');
       } else {
-        if (this.props.location.pathname === '/login') {
+        if (window.location.pathname === '/login') {
           // return to the homepage; not sure why we're here if we're logged in
           this.props.router.push('/');
         }

@@ -37,6 +37,10 @@ class Execution:
         self.start_time = time.monotonic()
         self.deadline = self.start_time + timeout if timeout else None
 
+    def __str__(self):
+        return 'Result(id={}, stdout={}, stderr={}, returncode={})'.format(
+            self.id, bool(self.process.stdout), bool(self.process.stderr), self.process.returncode)
+
 
 class Manager:
     """
@@ -55,7 +59,7 @@ class Manager:
         Start a subprocess:
         - extend the parent process's environment with custom environment variables
         - track stdout and stderr file descriptors for later reading
-        - set process group to facilitate killing the subprocess if needed
+        - set process group to facilitate killing any children of the command
 
         :param execution_id: the ID of the Execution instance being run
         :param command: a list of arguments, first argument must be an executable
@@ -110,6 +114,12 @@ class Manager:
             execution = self.pipes[fd]
             # Popen gives us io.BufferedReader; use read1 to get a single read
             data = fd.read1(1024)
+            if data == b'':
+                # the pipe is closed
+                fd.close()
+                del self.pipes[fd]
+                continue
+
             # keep reading up to 3 more bytes until we get a full UTF-8 character
             for _ in range(3):
                 try:
@@ -120,16 +130,11 @@ class Manager:
             else:
                 logger.error('Unable to decode byte data! Throwing it away.')
 
-            if data == '':
-                # the pipe is closed
-                fd.close()
-                del self.pipes[fd]
+            result = all_results.setdefault(execution.id, Result(execution.id))
+            if fd == execution.process.stdout:
+                result.stdout = data
             else:
-                result = all_results.setdefault(execution.id, Result(execution.id))
-                if fd == execution.process.stdout:
-                    result.stdout = data
-                else:
-                    result.stderr = data
+                result.stderr = data
 
         # check if each running process needs cleanup
         for execution in list(self.running.values()):
@@ -142,7 +147,7 @@ class Manager:
                     logger.info('Terminated execution #%s', execution.id)
                 except (ProcessLookupError, PermissionError) as exc:
                     logger.info('Execution #%s was marked to kill but has already exited (%s)',
-                                execution.id, type(exc))
+                                execution.id, exc.__class__.__name__)
 
             # check if the process has exited
             exit_code = execution.process.poll()

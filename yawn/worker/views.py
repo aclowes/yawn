@@ -16,8 +16,6 @@ class WorkerViewSet(viewsets.GenericViewSet,
 
     serializer_class = WorkerSerializer
 
-    permission_classes = (AllowAny,)
-
 
 class QueueViewSet(viewsets.GenericViewSet,
                    viewsets.mixins.ListModelMixin,
@@ -29,5 +27,3 @@ class QueueViewSet(viewsets.GenericViewSet,
     queryset = Queue.objects.all().annotate(Count('message')).order_by('id')
 
     serializer_class = QueueSerializer
-
-    permission_classes = (AllowAny,)
