@@ -4,6 +4,7 @@ from rest_framework import routers
 from yawn.task.views import TaskViewSet, ExecutionViewSet
 from yawn.worker.views import QueueViewSet, WorkerViewSet
 from yawn.workflow.views import WorkflowViewSet, WorkflowNameViewSet, RunViewSet
+from yawn.user.views import UserViewSet
 
 router = routers.DefaultRouter()
 router.include_format_suffixes = False
@@ -14,10 +15,11 @@ router.register(r'tasks', TaskViewSet)
 router.register(r'queues', QueueViewSet)
 router.register(r'workers', WorkerViewSet)
 router.register(r'executions', ExecutionViewSet)
+router.register(r'users', UserViewSet)
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
 urlpatterns = [
     url(r'^api/', include(router.urls)),
-    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+    url(r'^api-auth/', include('rest_framework.urls'))
 ]

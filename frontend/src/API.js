@@ -11,6 +11,7 @@ function getCsrfCookie() {
 }
 
 function request(url, method, body, callback) {
+  let response_obj;
   const headers = {
     'Accepts': 'application/json',
   };
@@ -23,22 +24,21 @@ function request(url, method, body, callback) {
 
   fetch(url, {
     method: method,
+    credentials: 'include',
     headers, body
-
   }).then(function (response) {
-    if (response.ok) {
-      response.json().then((payload) => {
-        // return the object list if response.results is defined:
-        callback(payload.results || payload, null);
-      });
+    response_obj = response;
+    return response.json()
+  }).then(function (payload) {
+    if (response_obj.ok) {
+      // return the object list if response.results is defined:
+      callback(payload.results || payload, null, response_obj.status);
     } else {
-      response.text().then((error) => {
-        // todo figure out the rest framework error json and parse it if possible
-        callback(null, error);
-      });
+      // the default rest framework error is in 'detail'
+      callback(null, payload.detail || payload, response_obj.status);
     }
-
-  }).catch((error) => {
+  }).catch(function (error) {
+    // if we can't connect, etc
     callback(null, error.message);
   })
 }
@@ -51,6 +51,10 @@ export default class API {
 
   static patch(url, body, callback) {
     request(url, 'PATCH', body, callback)
+  }
+
+  static delete(url, body, callback) {
+    request(url, 'DELETE', body, callback)
   }
 
 };
