@@ -1,20 +1,19 @@
 import React from 'react';
-import renderer from 'react-test-renderer';
-//import {browserHistory} from 'react-router'
+import ReactTestRenderer from 'react-test-renderer';
 
 import WorkerDetail from '../WorkerDetail';
 import {mockAPI} from './mocks'
 
 it('WorkerDetail loading', () => {
   mockAPI([null]);
-  const component = renderer.create(<WorkerDetail params={{id: 1}}/>);
+  const component = ReactTestRenderer.create(<WorkerDetail params={{id: 1}}/>);
   let tree = component.toJSON();
   expect(tree).toMatchSnapshot();
 });
 
 it('WorkerDetail failure', () => {
   mockAPI();
-  const component = renderer.create(<WorkerDetail params={{id: 1}}/>);
+  const component = ReactTestRenderer.create(<WorkerDetail params={{id: 1}}/>);
   let tree = component.toJSON();
   expect(tree).toMatchSnapshot();
 });
@@ -50,7 +49,7 @@ it('WorkerDetail success', () => {
       "minutes_running": null
     }]
   ]);
-  const component = renderer.create(<WorkerDetail params={{id: 1}}/>);
+  const component = ReactTestRenderer.create(<WorkerDetail params={{id: 1}}/>);
   let tree = component.toJSON();
   expect(tree).toMatchSnapshot();
 });

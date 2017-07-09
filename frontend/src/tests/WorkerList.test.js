@@ -1,20 +1,19 @@
 import React from 'react';
-import renderer from 'react-test-renderer';
-import {browserHistory} from 'react-router'
+import ReactTestRenderer from 'react-test-renderer';
 
 import WorkerList from '../WorkerList';
 import {mockAPI} from './mocks'
 
 it('WorkerList loading', () => {
   mockAPI([null]);
-  const component = renderer.create(<WorkerList />);
+  const component = ReactTestRenderer.create(<WorkerList />);
   let tree = component.toJSON();
   expect(tree).toMatchSnapshot();
 });
 
 it('WorkerList failure', () => {
   mockAPI();
-  const component = renderer.create(<WorkerList />);
+  const component = ReactTestRenderer.create(<WorkerList />);
   let tree = component.toJSON();
   expect(tree).toMatchSnapshot();
 });
@@ -27,7 +26,7 @@ it('WorkerList success', () => {
     "start_timestamp": "2017-01-30T04:13:47.966080Z",
     "last_heartbeat": "2017-01-30T04:15:10.845289Z"
   }]]);
-  const component = renderer.create(<WorkerList />);
+  const component = ReactTestRenderer.create(<WorkerList />);
   let tree = component.toJSON();
   expect(tree).toMatchSnapshot();
 });

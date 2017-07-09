@@ -1,20 +1,19 @@
 import React from 'react';
-import renderer from 'react-test-renderer';
-import {browserHistory} from 'react-router'
+import ReactTestRenderer from 'react-test-renderer';
 
 import WorkflowList from '../WorkflowList';
 import {mockAPI} from './mocks'
 
 it('WorkflowList loading', () => {
   mockAPI([null]);
-  const component = renderer.create(<WorkflowList />);
+  const component = ReactTestRenderer.create(<WorkflowList />);
   let tree = component.toJSON();
   expect(tree).toMatchSnapshot();
 });
 
 it('WorkflowList failure', () => {
   mockAPI();
-  const component = renderer.create(<WorkflowList />);
+  const component = ReactTestRenderer.create(<WorkflowList />);
   let tree = component.toJSON();
   expect(tree).toMatchSnapshot();
 });
@@ -30,7 +29,7 @@ it('WorkflowList success', () => {
     "versions": null,
     "name": "Big Ol' Workflow Example"
   }]]);
-  const component = renderer.create(<WorkflowList />);
+  const component = ReactTestRenderer.create(<WorkflowList />);
   let tree = component.toJSON();
   expect(tree).toMatchSnapshot();
 });

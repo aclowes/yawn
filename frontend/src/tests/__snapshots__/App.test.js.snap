@@ -98,6 +98,7 @@ exports[`homepage renders 1`] = `
               role="button"
             >
               Logout 
+              (test user)
             </a>
           </li>
         </ul>
@@ -106,13 +107,6 @@ exports[`homepage renders 1`] = `
   </nav>
   <div
     className="container"
-  >
-    <div
-      className="alert alert-danger"
-      role="alert"
-    >
-      some error message
-    </div>
-  </div>
+  />
 </div>
 `;

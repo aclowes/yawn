@@ -34,11 +34,15 @@ export function mockFetch(responses) {
 export function mockAPI(responses = []) {
   const availableResponses = responses;
   API.get = jest.fn((url, callback) => {
-    let response = availableResponses.shift()
+    let response = availableResponses.shift();
     if (response === undefined) {
       callback(null, 'some error message')
     } else {
       callback(response, null)
     }
   });
+  API.patch = API.delete = jest.fn((url, data, callback) => {
+    // just ignore the data
+    API.get(url, callback);
+  })
 }
