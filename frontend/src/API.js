@@ -10,7 +10,7 @@ function getCsrfCookie() {
   }, '');
 }
 
-function request(url, method, body, callback) {
+export function request(url, method, body, callback) {
   let response_obj;
   const headers = {
     'Accepts': 'application/json',
@@ -28,18 +28,25 @@ function request(url, method, body, callback) {
     headers, body
   }).then(function (response) {
     response_obj = response;
-    return response.json()
-  }).then(function (payload) {
-    if (response_obj.ok) {
-      // return the object list if response.results is defined:
-      callback(payload.results || payload, null, response_obj.status);
+    if (response.headers.get('Content-Type') === 'application/json') {
+      response.json().then(function (payload) {
+        if (response_obj.ok) {
+          // return the object list if response.results is defined:
+          callback(payload.results || payload, null, response_obj.status);
+        } else {
+          // the default rest framework error is in 'detail'
+          callback(null, payload.detail || payload, response_obj.status);
+        }
+      })
     } else {
-      // the default rest framework error is in 'detail'
-      callback(null, payload.detail || payload, response_obj.status);
+      // try getting the response text
+      response_obj.text().then(function (error) {
+        callback(null, error, response_obj.status);
+      })
     }
   }).catch(function (error) {
     // if we can't connect, etc
-    callback(null, error.message);
+    callback(null, error.message || error);
   })
 }
 
