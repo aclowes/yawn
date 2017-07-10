@@ -1,0 +1,112 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UserList failure 1`] = `
+<div>
+  <h3>
+    Users
+  </h3>
+  <div
+    className="alert alert-danger"
+    role="alert"
+  >
+    some error message
+  </div>
+  <table
+    className="table table-striped table-bordered table-condensed table-hover"
+  >
+    <thead>
+      <tr>
+        <th>
+          Username
+        </th>
+        <th>
+          Email
+        </th>
+        <th>
+          Token
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td
+          colSpan="3"
+        >
+          Loading...
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+`;
+
+exports[`UserList loading 1`] = `
+<div>
+  <h3>
+    Users
+  </h3>
+  <table
+    className="table table-striped table-bordered table-condensed table-hover"
+  >
+    <thead>
+      <tr>
+        <th>
+          Username
+        </th>
+        <th>
+          Email
+        </th>
+        <th>
+          Token
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td
+          colSpan="3"
+        >
+          Loading...
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+`;
+
+exports[`UserList success 1`] = `
+<div>
+  <h3>
+    Users
+  </h3>
+  <table
+    className="table table-striped table-bordered table-condensed table-hover"
+  >
+    <thead>
+      <tr>
+        <th>
+          Username
+        </th>
+        <th>
+          Email
+        </th>
+        <th>
+          Token
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <a
+            onClick={[Function]}
+            style={Object {}}
+          />
+        </td>
+        <td />
+        <td />
+      </tr>
+    </tbody>
+  </table>
+</div>
+`;

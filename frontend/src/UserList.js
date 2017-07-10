@@ -1,5 +1,6 @@
 import React from 'react';
-import {Table, Alert, Button} from 'react-bootstrap';
+import {Table, Alert} from 'react-bootstrap';
+import {Link} from 'react-router';
 
 import API from "./API";
 
@@ -15,21 +16,6 @@ export default class UserList extends React.Component {
     });
   }
 
-  purgeUser(id) {
-    API.patch(`/api/users/${id}/`, {purge: true}, (payload, error) => {
-      if (error) {
-        this.setState({error});
-      } else {
-        // insert the updated user record
-        this.setState({
-          users: this.state.users.map((user) => {
-            return user.id === payload.id ? payload : user;
-          })
-        });
-      }
-    });
-  }
-
   renderRows() {
     if (this.state.users === null) {
       return (
@@ -39,12 +25,11 @@ export default class UserList extends React.Component {
       )
     } else {
       return this.state.users.map((user) => {
-        const terminate = () => this.purgeUser(user.id);
         return (
           <tr key={user.id}>
-            <td>{user.username}</td>
+            <td><Link to={`/users/${user.id}`}>{user.username}</Link></td>
             <td>{user.email}</td>
-            <td>{user.message_count}</td>
+            <td>{user.token}</td>
           </tr>
         )
       })
@@ -59,9 +44,9 @@ export default class UserList extends React.Component {
         <Table striped bordered condensed hover>
           <thead>
           <tr>
-            <th>Name</th>
-            <th>Message Count</th>
-            <th>Actions</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Token</th>
           </tr>
           </thead>
           <tbody>

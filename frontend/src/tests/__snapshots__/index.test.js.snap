@@ -2,6 +2,6 @@
 
 exports[`404 renders 1`] = `
 <h3>
-  Not Found (404)
+  Page Not Found (404)
 </h3>
 `;
