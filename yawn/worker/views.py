@@ -1,6 +1,5 @@
 from django.db.models import Count
 from rest_framework import viewsets
-from rest_framework.permissions import AllowAny
 
 from yawn.worker.models import Worker, Queue
 from yawn.worker.serializers import WorkerSerializer, QueueSerializer
@@ -16,8 +15,6 @@ class WorkerViewSet(viewsets.GenericViewSet,
 
     serializer_class = WorkerSerializer
 
-    permission_classes = (AllowAny,)
-
 
 class QueueViewSet(viewsets.GenericViewSet,
                    viewsets.mixins.ListModelMixin,
@@ -29,5 +26,3 @@ class QueueViewSet(viewsets.GenericViewSet,
     queryset = Queue.objects.all().annotate(Count('message')).order_by('id')
 
     serializer_class = QueueSerializer
-
-    permission_classes = (AllowAny,)

@@ -49,6 +49,15 @@ Read about reStructuredText_ and the `components in common`_ between it and Mark
 .. _reStructuredText: http://docutils.sourceforge.net/docs/user/rst/quickref.html
 .. _components in common: https://gist.github.com/dupuy/1855764
 
+Debugging Javascript Tests
+--------------------------
+
+To open a CLI debugger inside a JS test, add the line ``debugger;`` inside a test
+and run the following command to enter the debugger, where ``App.test.js`` specifies
+the test to run::
+
+  CI=1 node debug node_modules/react-scripts/scripts/test.js --runInBand --em src/tests/App.test.js
+
 Making a Release
 ----------------
 

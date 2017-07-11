@@ -1,20 +1,19 @@
 import React from 'react';
-import renderer from 'react-test-renderer';
-import {browserHistory} from 'react-router'
+import ReactTestRenderer from 'react-test-renderer';
 
 import TaskDetail from '../TaskDetail';
 import {mockAPI} from './mocks'
 
 it('TaskDetail loading', () => {
   mockAPI([null]);
-  const component = renderer.create(<TaskDetail params={{id: 1}}/>);
+  const component = ReactTestRenderer.create(<TaskDetail params={{id: 1}}/>);
   let tree = component.toJSON();
   expect(tree).toMatchSnapshot();
 });
 
 it('TaskDetail failure', () => {
   mockAPI();
-  const component = renderer.create(<TaskDetail params={{id: 1}}/>);
+  const component = ReactTestRenderer.create(<TaskDetail params={{id: 1}}/>);
   let tree = component.toJSON();
   expect(tree).toMatchSnapshot();
 });
@@ -48,7 +47,7 @@ it('TaskDetail success', () => {
       "status": "succeeded"
     }
   ]);
-  const component = renderer.create(<TaskDetail params={{id: 1}}/>);
+  const component = ReactTestRenderer.create(<TaskDetail params={{id: 1}}/>);
   let tree = component.toJSON();
   expect(tree).toMatchSnapshot();
 });

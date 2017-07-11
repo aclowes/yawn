@@ -1,20 +1,19 @@
 import React from 'react';
-import renderer from 'react-test-renderer';
-import {browserHistory} from 'react-router'
+import ReactTestRenderer from 'react-test-renderer';
 
 import WorkflowDetail from '../WorkflowDetail';
 import {mockAPI} from './mocks'
 
 it('WorkflowDetail loading', () => {
   mockAPI([null]);
-  const component = renderer.create(<WorkflowDetail params={{id: 1}}/>);
+  const component = ReactTestRenderer.create(<WorkflowDetail params={{id: 1}}/>);
   let tree = component.toJSON();
   expect(tree).toMatchSnapshot();
 });
 
 it('WorkflowDetail failure', () => {
   mockAPI();
-  const component = renderer.create(<WorkflowDetail params={{id: 1}}/>);
+  const component = ReactTestRenderer.create(<WorkflowDetail params={{id: 1}}/>);
   let tree = component.toJSON();
   expect(tree).toMatchSnapshot();
 });
@@ -108,7 +107,7 @@ it('WorkflowDetail success', () => {
     }]
   ])
   ;
-  const component = renderer.create(<WorkflowDetail params={{id: 1}}/>);
+  const component = ReactTestRenderer.create(<WorkflowDetail params={{id: 1}}/>);
   let tree = component.toJSON();
   expect(tree).toMatchSnapshot();
 });

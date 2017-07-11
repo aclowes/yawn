@@ -13,8 +13,12 @@ dependencies:
 
 test:
   override:
-    - pytest --cov=yawn yawn
+    - pytest --cov=yawn --junitxml=$CIRCLE_TEST_REPORTS/pytest.xml yawn
     - flake8 yawn
-    - cd frontend && yarn test -- --coverage
+    - cd frontend && env JEST_JUNIT_OUTPUT=$CIRCLE_TEST_REPORTS/jest.xml
+      yarn test -- --coverage --testResultsProcessor jest-junit --runInBand
+    # build, although it doesn't go anywhere:
+    - cd frontend/ && yarn build
+    - ./setup.py sdist
   post:
     - bash <(curl -s https://codecov.io/bash)

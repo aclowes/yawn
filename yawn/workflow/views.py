@@ -1,6 +1,5 @@
 from django.db.models import Count
 from rest_framework import viewsets
-from rest_framework.permissions import AllowAny
 
 from yawn.workflow.serializers import WorkflowSerializer, WorkflowNameSerializer, RunSerializer
 from yawn.workflow.models import Workflow, WorkflowName, Run
@@ -18,7 +17,6 @@ class WorkflowNameViewSet(viewsets.ReadOnlyModelViewSet):
         task_count=Count('current_version__template')).order_by('id')
 
     serializer_class = WorkflowNameSerializer
-    permission_classes = (AllowAny,)
 
 
 class WorkflowViewSet(viewsets.GenericViewSet,
@@ -35,7 +33,6 @@ class WorkflowViewSet(viewsets.GenericViewSet,
     queryset = Workflow.objects.select_related('name').order_by('id')
 
     serializer_class = WorkflowSerializer
-    permission_classes = (AllowAny,)
 
 
 class RunViewSet(viewsets.GenericViewSet,
@@ -48,7 +45,7 @@ class RunViewSet(viewsets.GenericViewSet,
     """
 
     serializer_class = RunSerializer
-    permission_classes = (AllowAny,)
+
     queryset = Run.objects.prefetch_related('task_set__template').order_by('id')
 
     def get_queryset(self):

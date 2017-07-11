@@ -1,37 +1,63 @@
 import React from 'react';
-import {Navbar, Nav} from 'react-bootstrap';  //NavDropdown, MenuItem
+import {Nav, NavItem} from 'react-bootstrap';
 
 import 'bootswatch/united/bootstrap.css';
 import './App.css';
-import {YawnNavItem} from './utilities';
+import API from './API'
+import {YawnNavBar, YawnNavItem} from './utilities';
 
 export default class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {user: null, error: null};
+  }
+
+  componentDidMount() {
+    API.get(`/api/users/me/`, (payload, error, status) => {
+      if (status === 403) {
+        // redirect to login page if not authenticated
+        this.props.router.push('/login');
+      } else {
+        if (window.location.pathname === '/login') {
+          // return to the homepage; not sure why we're here if we're logged in
+          this.props.router.push('/');
+        }
+        this.setState({user: payload, error});
+      }
+    });
+  }
+
+  logout = (event) => {
+    event.preventDefault();
+    API.delete(`/api/users/logout/`, {}, (payload, error) => {
+      this.setState({user: null, error});
+      this.props.router.push('/login');
+    });
+  };
+
+  renderToolbar() {
+    const user = this.state.user && `(${this.state.user.username})`;
+    return (
+      <div>
+        <Nav>
+          <YawnNavItem href="/workflows">Workflows</YawnNavItem>
+          <YawnNavItem href="/executions">Executions</YawnNavItem>
+          <YawnNavItem href="/workers">Workers</YawnNavItem>
+          <YawnNavItem href="/queues">Queues</YawnNavItem>
+          <YawnNavItem href="/users">Users</YawnNavItem>
+        </Nav>
+        <Nav pullRight>
+          <NavItem onClick={this.logout}>Logout {user}</NavItem>
+        </Nav>
+      </div>
+    )
+  }
 
   render() {
     return (
-      <div>
-        <Navbar>
-          <Navbar.Header>
-            <Navbar.Brand>YAWN</Navbar.Brand>
-          </Navbar.Header>
-          <Nav>
-            <YawnNavItem href="/">Workflows</YawnNavItem>
-            <YawnNavItem href="/workers">Workers</YawnNavItem>
-            <YawnNavItem href="/executions">Executions</YawnNavItem>
-            <YawnNavItem href="/queues">Queues</YawnNavItem>
-            {/*<NavDropdown eventKey={3} title="Dropdown" id="basic-nav-dropdown">*/}
-            {/*<MenuItem eventKey={3.1}>Action</MenuItem>*/}
-            {/*<MenuItem eventKey={3.2}>Another action</MenuItem>*/}
-            {/*<MenuItem eventKey={3.3}>Something else here</MenuItem>*/}
-            {/*<MenuItem divider/>*/}
-            {/*<MenuItem eventKey={3.3}>Separated link</MenuItem>*/}
-            {/*</NavDropdown>*/}
-          </Nav>
-        </Navbar>
-        <div className="container">
-          {this.props.children}
-        </div>
-      </div>
+      <YawnNavBar toolbar={this.renderToolbar()} error={this.state.error}>
+        {this.props.children}
+      </YawnNavBar>
     );
   }
 }

@@ -57,7 +57,7 @@ def client():
     from django.contrib.auth.models import User
     from rest_framework.test import APIClient
 
-    user = User.objects.create_user('test_user')
+    user = User.objects.create_user('test_user', is_staff=True)
     api_client = APIClient()
     api_client.force_authenticate(user)
     return api_client

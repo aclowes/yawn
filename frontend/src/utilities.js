@@ -1,5 +1,5 @@
 import React from 'react';
-import {NavItem} from 'react-bootstrap';
+import {Alert, Navbar, NavItem} from 'react-bootstrap';
 import {browserHistory} from 'react-router';
 
 export class YawnNavItem extends React.Component {
@@ -18,6 +18,26 @@ export class YawnNavItem extends React.Component {
       >
         {this.props.children}
       </NavItem>
+    );
+  }
+}
+
+
+export class YawnNavBar extends React.Component {
+  render() {
+    return (
+      <div>
+        <Navbar>
+          <Navbar.Header>
+            <Navbar.Brand>YAWN</Navbar.Brand>
+          </Navbar.Header>
+          {this.props.toolbar}
+        </Navbar>
+        <div className="container">
+          {this.props.error && <Alert bsStyle="danger">{this.props.error}</Alert>}
+          {this.props.children}
+        </div>
+      </div>
     );
   }
 }

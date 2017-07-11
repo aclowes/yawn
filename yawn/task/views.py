@@ -1,5 +1,4 @@
 from rest_framework import viewsets
-from rest_framework.permissions import AllowAny
 
 from yawn.task.models import Task, Execution
 from yawn.task.serializers import TaskDetailSerializer, ExecutionListSerializer
@@ -16,8 +15,6 @@ class TaskViewSet(viewsets.GenericViewSet,
 
     serializer_class = TaskDetailSerializer
 
-    permission_classes = (AllowAny,)
-
 
 class ExecutionViewSet(viewsets.GenericViewSet,
                        viewsets.mixins.ListModelMixin):
@@ -28,8 +25,6 @@ class ExecutionViewSet(viewsets.GenericViewSet,
         'worker', 'task__template__workflow__name')
 
     serializer_class = ExecutionListSerializer
-
-    permission_classes = (AllowAny,)
 
     def get_queryset(self):
         """

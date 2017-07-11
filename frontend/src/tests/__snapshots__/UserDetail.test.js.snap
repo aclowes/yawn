@@ -1,0 +1,127 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UserDetail success 1`] = `
+<div
+  className="container"
+>
+  <div
+    className="show-grid row"
+  >
+    <div
+      className="col-md-6 col-xs-6"
+    >
+      <form
+        onSubmit={[Function]}
+      >
+        <div
+          className="form-group"
+        >
+          <label
+            className="control-label"
+            htmlFor="username"
+          >
+            Username
+          </label>
+          <input
+            className="form-control"
+            id="username"
+            onChange={[Function]}
+            type="text"
+            value="tester"
+          />
+        </div>
+        <div
+          className="form-group"
+        >
+          <label
+            className="control-label"
+            htmlFor="email"
+          >
+            Email
+          </label>
+          <input
+            className="form-control"
+            id="email"
+            onChange={[Function]}
+            type="text"
+            value="bob@smith.com"
+          />
+        </div>
+        <div
+          className="form-group"
+        >
+          <label
+            className="control-label"
+            htmlFor="password"
+          >
+            New Password
+          </label>
+          <input
+            className="form-control"
+            id="password"
+            onChange={[Function]}
+            type="password"
+            value={undefined}
+          />
+        </div>
+        <div
+          className="checkbox"
+          style={undefined}
+        >
+          <label>
+            <input
+              checked={true}
+              disabled={false}
+              onChange={[Function]}
+              type="checkbox"
+              value="read_only"
+            />
+            Read-only User
+          </label>
+        </div>
+        <button
+          className="btn btn-primary"
+          disabled={false}
+          type="submit"
+        >
+          Save
+        </button>
+        <a
+          onClick={[Function]}
+          style={Object {}}
+        >
+          <button
+            className="btn btn-default"
+            disabled={false}
+            type="button"
+          >
+            Cancel
+          </button>
+        </a>
+      </form>
+    </div>
+    <div
+      className="col-md-6 col-xs-6"
+    >
+      <dl
+        className="dl-horizontal"
+      >
+        <dt>
+          API Token
+        </dt>
+        <dd>
+          abcdef
+        </dd>
+      </dl>
+      <button
+        className="btn btn-default"
+        disabled={false}
+        onClick={[Function]}
+        type="button"
+      >
+        Refresh Token
+      </button>
+    </div>
+  </div>
+</div>
+`;
