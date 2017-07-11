@@ -21,10 +21,9 @@ it('UserList failure', () => {
 it('UserList success', () => {
   mockAPI([[{
     "id": 4,
-    "name": "alec-graybeard.local 36470",
-    "status": "exited",
-    "start_timestamp": "2017-01-30T04:13:47.966080Z",
-    "last_heartbeat": "2017-01-30T04:15:10.845289Z"
+    "username": "tester",
+    "email": "bob@smith.com",
+    "api_token": "abcdef"
   }]]);
   const component = ReactTestRenderer.create(<UserList />);
   let tree = component.toJSON();

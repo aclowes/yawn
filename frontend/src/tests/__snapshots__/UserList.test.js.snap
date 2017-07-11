@@ -37,6 +37,18 @@ exports[`UserList failure 1`] = `
       </tr>
     </tbody>
   </table>
+  <a
+    onClick={[Function]}
+    style={Object {}}
+  >
+    <button
+      className="btn btn-default"
+      disabled={false}
+      type="button"
+    >
+      Add User
+    </button>
+  </a>
 </div>
 `;
 
@@ -71,6 +83,18 @@ exports[`UserList loading 1`] = `
       </tr>
     </tbody>
   </table>
+  <a
+    onClick={[Function]}
+    style={Object {}}
+  >
+    <button
+      className="btn btn-default"
+      disabled={false}
+      type="button"
+    >
+      Add User
+    </button>
+  </a>
 </div>
 `;
 
@@ -101,12 +125,30 @@ exports[`UserList success 1`] = `
           <a
             onClick={[Function]}
             style={Object {}}
-          />
+          >
+            tester
+          </a>
         </td>
-        <td />
-        <td />
+        <td>
+          bob@smith.com
+        </td>
+        <td>
+          abcdef
+        </td>
       </tr>
     </tbody>
   </table>
+  <a
+    onClick={[Function]}
+    style={Object {}}
+  >
+    <button
+      className="btn btn-default"
+      disabled={false}
+      type="button"
+    >
+      Add User
+    </button>
+  </a>
 </div>
 `;

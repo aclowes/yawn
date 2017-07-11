@@ -10,6 +10,7 @@ from .serializers import UserSerializer, LoginSerializer
 
 class UserViewSet(viewsets.GenericViewSet,
                   viewsets.mixins.ListModelMixin,
+                  viewsets.mixins.CreateModelMixin,
                   viewsets.mixins.RetrieveModelMixin,
                   viewsets.mixins.UpdateModelMixin):
     """

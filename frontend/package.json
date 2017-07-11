@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
+    "jest-junit": "^1.5.1",
     "react-scripts": "^1.0.7",
     "react-test-renderer": "^15.6.1"
   },

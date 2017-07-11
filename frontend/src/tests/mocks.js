@@ -16,7 +16,7 @@ export function mockAPI(responses = []) {
       callback(response, null)
     }
   });
-  API.patch = API.delete = jest.fn((url, data, callback) => {
+  API.post = API.patch = API.delete = jest.fn((url, data, callback) => {
     // just ignore the payload data
     API.get(url, callback);
   })

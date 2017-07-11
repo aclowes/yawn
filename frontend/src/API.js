@@ -56,6 +56,10 @@ export default class API {
     request(url, 'GET', null, callback)
   }
 
+  static post(url, body, callback) {
+    request(url, 'POST', body, callback)
+  }
+
   static patch(url, body, callback) {
     request(url, 'PATCH', body, callback)
   }

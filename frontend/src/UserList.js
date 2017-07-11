@@ -1,5 +1,5 @@
 import React from 'react';
-import {Table, Alert} from 'react-bootstrap';
+import {Table, Alert, Button} from 'react-bootstrap';
 import {Link} from 'react-router';
 
 import API from "./API";
@@ -29,7 +29,7 @@ export default class UserList extends React.Component {
           <tr key={user.id}>
             <td><Link to={`/users/${user.id}`}>{user.username}</Link></td>
             <td>{user.email}</td>
-            <td>{user.token}</td>
+            <td>{user.api_token}</td>
           </tr>
         )
       })
@@ -53,6 +53,7 @@ export default class UserList extends React.Component {
           {this.renderRows()}
           </tbody>
         </Table>
+        <Link to="/users/add"><Button>Add User</Button></Link>
       </div>
     )
   }
