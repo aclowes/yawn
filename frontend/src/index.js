@@ -16,6 +16,7 @@ import UserDetail from "./UserDetail";
 
 export class NotFound extends React.Component {
   render() {
+    document.title = 'YAWN - Not found';
     return <h3>Page Not Found (404)</h3>
   }
 }

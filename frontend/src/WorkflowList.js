@@ -11,6 +11,7 @@ export default class WorkflowList extends React.Component {
   }
 
   componentDidMount() {
+    document.title = `YAWN - Workflows`;
     API.get('/api/names/', (payload, error) => {
       this.setState({workflows: payload, error});
     })

@@ -13,6 +13,9 @@ export default class TaskDetail extends React.Component {
   componentDidMount() {
     API.get(`/api/tasks/${this.props.params.id}/`, (payload, error) => {
       const execution = payload ? payload.executions.length : null;
+      if (payload) {
+        document.title = `YAWN - Task ${payload.name}`;
+      }
       this.setState({task: payload, error, execution});
     });
   }

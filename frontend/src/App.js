@@ -1,5 +1,5 @@
 import React from 'react';
-import {Nav, NavItem} from 'react-bootstrap';
+import {Glyphicon, Nav, NavItem} from 'react-bootstrap';
 
 import 'bootswatch/united/bootstrap.css';
 import './App.css';
@@ -9,7 +9,7 @@ import {YawnNavBar, YawnNavItem} from './utilities';
 export default class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {user: null, error: null};
+    this.state = {user: null, error: null, reload: false};
   }
 
   componentDidMount() {
@@ -27,12 +27,24 @@ export default class App extends React.Component {
     });
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.state.reload) {
+      this.setState({reload: false})
+    }
+  }
+
   logout = (event) => {
     event.preventDefault();
     API.delete(`/api/users/logout/`, {}, (payload, error) => {
       this.setState({user: null, error});
       this.props.router.push('/login');
     });
+  };
+
+  /* Remount the page to force everything to reload */
+  refresh = (event) => {
+    event.preventDefault();
+    this.setState({reload: true});
   };
 
   renderToolbar() {
@@ -47,6 +59,9 @@ export default class App extends React.Component {
           <YawnNavItem href="/users">Users</YawnNavItem>
         </Nav>
         <Nav pullRight>
+          <NavItem onClick={this.refresh}>
+            <Glyphicon glyph="refresh"/>
+          </NavItem>
           <NavItem onClick={this.logout}>Logout {user}</NavItem>
         </Nav>
       </div>
@@ -56,7 +71,7 @@ export default class App extends React.Component {
   render() {
     return (
       <YawnNavBar toolbar={this.renderToolbar()} error={this.state.error}>
-        {this.props.children}
+        {this.state.reload ? 'Loading...' : this.props.children}
       </YawnNavBar>
     );
   }
