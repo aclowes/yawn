@@ -127,125 +127,181 @@ exports[`WorkflowDetail success 1`] = `
     <div
       className="panel-body"
     >
-      <table
-        className="table table-bordered table-condensed"
-      >
-        <thead>
-          <tr>
-            <th
-              className="text-center"
-            >
-              Task
-            </th>
-            <th
-              className="text-center"
-              colSpan={1}
-            >
-              Run
-            </th>
-          </tr>
-          <tr>
-            <th />
-            <th
-              className="succeeded"
-              onBlur={[Function]}
-              onClick={null}
-              onFocus={[Function]}
-              onMouseOut={[Function]}
-              onMouseOver={[Function]}
-            >
-              #
-              0
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>
-              start
-            </td>
-            <td
-              className="succeeded"
-            >
-              <a
+      <div>
+        <table
+          className="table table-bordered table-condensed"
+        >
+          <thead>
+            <tr>
+              <th
+                className="text-center"
+              >
+                Task
+              </th>
+              <th
+                className="text-center"
+                colSpan={1}
+              >
+                Run
+              </th>
+            </tr>
+            <tr>
+              <th />
+              <th
+                className="succeeded"
                 onBlur={[Function]}
-                onClick={[Function]}
+                onClick={null}
                 onFocus={[Function]}
                 onMouseOut={[Function]}
                 onMouseOver={[Function]}
-                style={Object {}}
               >
+                #
+                0
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                start
+              </td>
+              <td>
+                <a
+                  onClick={[Function]}
+                  style={Object {}}
+                >
+                  <div
+                    onBlur={[Function]}
+                    onClick={null}
+                    onFocus={[Function]}
+                    onMouseOut={[Function]}
+                    onMouseOver={[Function]}
+                  >
+                    <span
+                      className="succeeded glyphicon glyphicon-ok"
+                    />
+                  </div>
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                task2
+              </td>
+              <td>
+                <a
+                  onClick={[Function]}
+                  style={Object {}}
+                >
+                  <div
+                    onBlur={[Function]}
+                    onClick={null}
+                    onFocus={[Function]}
+                    onMouseOut={[Function]}
+                    onMouseOver={[Function]}
+                  >
+                    <span
+                      className="succeeded glyphicon glyphicon-ok"
+                    />
+                  </div>
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                task3
+              </td>
+              <td>
+                <a
+                  onClick={[Function]}
+                  style={Object {}}
+                >
+                  <div
+                    onBlur={[Function]}
+                    onClick={null}
+                    onFocus={[Function]}
+                    onMouseOut={[Function]}
+                    onMouseOver={[Function]}
+                  >
+                    <span
+                      className="succeeded glyphicon glyphicon-ok"
+                    />
+                  </div>
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                done
+              </td>
+              <td>
+                <a
+                  onClick={[Function]}
+                  style={Object {}}
+                >
+                  <div
+                    onBlur={[Function]}
+                    onClick={null}
+                    onFocus={[Function]}
+                    onMouseOut={[Function]}
+                    onMouseOver={[Function]}
+                  >
+                    <span
+                      className="succeeded glyphicon glyphicon-ok"
+                    />
+                  </div>
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <table
+          className="table table-bordered table-condensed"
+        >
+          <tbody>
+            <tr>
+              <td>
+                Key:
+              </td>
+              <td>
                 <span
-                  className="glyphicon glyphicon-ok"
+                  className="waiting glyphicon glyphicon-glass"
                 />
-              </a>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              task2
-            </td>
-            <td
-              className="succeeded"
-            >
-              <a
-                onBlur={[Function]}
-                onClick={[Function]}
-                onFocus={[Function]}
-                onMouseOut={[Function]}
-                onMouseOver={[Function]}
-                style={Object {}}
-              >
+                : 
+                waiting
+              </td>
+              <td>
                 <span
-                  className="glyphicon glyphicon-ok"
+                  className="queued glyphicon glyphicon-calendar"
                 />
-              </a>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              task3
-            </td>
-            <td
-              className="succeeded"
-            >
-              <a
-                onBlur={[Function]}
-                onClick={[Function]}
-                onFocus={[Function]}
-                onMouseOut={[Function]}
-                onMouseOver={[Function]}
-                style={Object {}}
-              >
+                : 
+                queued
+              </td>
+              <td>
                 <span
-                  className="glyphicon glyphicon-ok"
+                  className="running glyphicon glyphicon-console"
                 />
-              </a>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              done
-            </td>
-            <td
-              className="succeeded"
-            >
-              <a
-                onBlur={[Function]}
-                onClick={[Function]}
-                onFocus={[Function]}
-                onMouseOut={[Function]}
-                onMouseOver={[Function]}
-                style={Object {}}
-              >
+                : 
+                running
+              </td>
+              <td>
                 <span
-                  className="glyphicon glyphicon-ok"
+                  className="succeeded glyphicon glyphicon-ok"
                 />
-              </a>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+                : 
+                succeeded
+              </td>
+              <td>
+                <span
+                  className="failed glyphicon glyphicon-remove"
+                />
+                : 
+                failed
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>
