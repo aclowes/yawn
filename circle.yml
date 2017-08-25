@@ -2,7 +2,7 @@ machine:
   python:
     version: 3.5.2
   node:
-    version: 6.1.0
+    version: 8.1.4
 
 dependencies:
   cache_directories:
