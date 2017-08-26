@@ -21,14 +21,17 @@ def test_webserver(mock_run):
 
 
 def test_static_files():
+    # make files to serve
+    root = os.path.join(os.path.dirname(yawn.__file__), 'staticfiles/')
+    os.makedirs(root, exist_ok=True)
+    for filename in ('index.html', 'favicon.ico'):
+        path = os.path.join(root, filename)
+        subprocess.check_call(['touch', path])
+
+    # setup whitenoise after the files exist
     app = webserver.get_wsgi_application()
     whitenoise = webserver.DefaultFileServer(app, settings)
     whitenoise.application = mock.Mock()
-
-    # make files to serve
-    for filename in ('index.html', 'favicon.ico'):
-        path = os.path.join(os.path.dirname(yawn.__file__), 'staticfiles', filename)
-        subprocess.check_call(['touch', path])
 
     # an API request
     whitenoise({'PATH_INFO': '/api/'}, None)
