@@ -1,4 +1,5 @@
 import os
+import sys
 import subprocess
 
 from unittest import mock
@@ -13,9 +14,10 @@ from yawn.management.commands import webserver
 
 @mock.patch.object(webserver.WSGIApplication, 'run')
 def test_webserver(mock_run):
-    mock.patch('argparse._sys.argv', ['worker'])
-    management.call_command('webserver')
-    assert mock_run.call_count == 1
+    # pytest with coverage arguments causes gunicorn's argparse to fail
+    with mock.patch.object(sys, 'argv', ['worker']):
+        management.call_command('webserver')
+        assert mock_run.call_count == 1
 
 
 def test_static_files():
