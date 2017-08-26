@@ -12,6 +12,10 @@ export default class Login extends React.Component {
     this.state = {username: '', password: '', error: null};
   }
 
+  componentDidMount() {
+    document.title = `YAWN - Login`;
+  }
+
   handleChange = (event) => {
     this.setState({[event.target.id]: event.target.value});
   };

@@ -6,6 +6,7 @@ import API from "./API";
 export default class QueueList extends React.Component {
   constructor(props) {
     super(props);
+    document.title = 'YAWN - Queues';
     this.state = {queues: null, error: null};
   }
 

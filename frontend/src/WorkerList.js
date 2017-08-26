@@ -7,6 +7,7 @@ import API from "./API";
 export default class WorkerList extends React.Component {
   constructor(props) {
     super(props);
+    document.title = `YAWN - Workers`;
     this.state = {workers: null, error: null};
   }
 

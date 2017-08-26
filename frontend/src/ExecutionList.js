@@ -7,6 +7,7 @@ import ExecutionTable from "./ExecutionTable";
 export default class ExecutionList extends React.Component {
   constructor(props) {
     super(props);
+    document.title = `YAWN - Executions`;
     this.state = {executions: null, error: null};
   }
 

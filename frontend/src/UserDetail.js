@@ -16,8 +16,12 @@ export default class UserDetail extends React.Component {
   componentDidMount() {
     if (this.props.params.id === 'add') {
       this.setState({user: true});
+      document.title = 'YAWN - Add user';
     } else {
       API.get(`/api/users/${this.props.params.id}/`, (payload, error) => {
+        if (payload) {
+          document.title = `YAWN - User ${payload.username}`;
+        }
         this.setState({user: payload, error});
       });
     }

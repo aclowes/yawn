@@ -7,6 +7,7 @@ import API from "./API";
 export default class UserList extends React.Component {
   constructor(props) {
     super(props);
+    document.title = 'YAWN - Users';
     this.state = {users: null, error: null};
   }
 
