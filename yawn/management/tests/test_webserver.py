@@ -1,13 +1,10 @@
 import os
 import sys
-import subprocess
 
 from unittest import mock
 
 from django.conf import settings
 from django.core import management
-
-import yawn
 
 from yawn.management.commands import webserver
 
@@ -21,17 +18,11 @@ def test_webserver(mock_run):
 
 
 def test_static_files():
-    # make files to serve
-    root = os.path.join(os.path.dirname(yawn.__file__), 'staticfiles/')
-    os.makedirs(root, exist_ok=True)
-    for filename in ('index.html', 'favicon.ico'):
-        path = os.path.join(root, filename)
-        subprocess.check_call(['touch', path])
-
-    # setup whitenoise after the files exist
-    app = webserver.get_wsgi_application()
-    whitenoise = webserver.DefaultFileServer(app, settings)
-    whitenoise.application = mock.Mock()
+    root = os.path.join(settings.BASE_DIR, 'management/tests/static')
+    with mock.patch.object(settings, 'WHITENOISE_ROOT', root):
+        app = webserver.get_wsgi_application()
+        whitenoise = webserver.DefaultFileServer(app, settings)
+        whitenoise.application = mock.Mock()
 
     # an API request
     whitenoise({'PATH_INFO': '/api/'}, None)
