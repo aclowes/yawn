@@ -77,10 +77,11 @@ class Manager:
                                    preexec_fn=os.setpgrp, env=process_environment, shell=True)
 
         # store references to the process and file descriptors
+        # Popen gives us io.BufferedReader; get the raw file handle instead
         execution = Execution(process, execution_id, timeout)
         self.pipes.update({
-            process.stdout: execution,
-            process.stderr: execution
+            process.stdout.raw: execution,
+            process.stderr.raw: execution
         })
         self.running[execution_id] = execution
 
@@ -112,8 +113,7 @@ class Manager:
         # read from each ready file descriptor
         for fd in read_ready:
             execution = self.pipes[fd]
-            # Popen gives us io.BufferedReader; use read1 to get a single read
-            data = fd.read1(1024)
+            data = fd.read(1024)
             if data == b'':
                 # the pipe is closed
                 fd.close()
@@ -131,7 +131,7 @@ class Manager:
                 logger.error('Unable to decode byte data! Throwing it away.')
 
             result = all_results.setdefault(execution.id, Result(execution.id))
-            if fd == execution.process.stdout:
+            if fd == execution.process.stdout.raw:
                 result.stdout = data
             else:
                 result.stderr = data
@@ -155,7 +155,8 @@ class Manager:
                 continue  # we'll check again later
 
             # we may not have read everything available, so only cleanup after all pipes are closed
-            open_pipes = {execution.process.stdout, execution.process.stderr} & set(self.pipes.keys())
+            open_pipes = {execution.process.stdout.raw, execution.process.stderr.raw
+                          } & set(self.pipes.keys())
             if not open_pipes:
                 result = all_results.setdefault(execution.id, Result(execution.id))
                 result.returncode = execution.process.returncode
