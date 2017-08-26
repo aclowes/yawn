@@ -17,23 +17,23 @@ pre {
 /* Status Colors */
 
 .waiting {
-    background-color: ghostwhite;
+    color: cornflowerblue;
 }
 
 .queued {
-    background-color: lightyellow;
+    color: blueviolet;
 }
 
 .running {
-    background-color: yellow;
+    color: darkblue;
 }
 
 .succeeded {
-    background-color: forestgreen;
+    color: forestgreen;
 }
 
 .failed {
-    background-color: red;
+    color: darkred;
 }
 
 /* WorkflowDetailGraph */

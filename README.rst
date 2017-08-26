@@ -87,6 +87,9 @@ To get started using YAWN::
     # setup the tables by running db migrations
     yawn migrate
 
+    # create a user to login with
+    yawn createsuperuser
+
     # create some sample workflows
     yawn examples
 

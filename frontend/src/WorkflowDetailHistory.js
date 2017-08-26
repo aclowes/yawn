@@ -11,6 +11,14 @@ export default class WorkflowDetailHistory extends React.Component {
     this.state = {runs: null, error: null};
   }
 
+  statuses = {
+    waiting: 'glass',
+    queued: 'calendar',
+    running: 'console',
+    succeeded: 'ok',
+    failed: 'remove',
+  };
+
   loadRuns(workflow_id) {
     API.get(`/api/runs/?workflow=${workflow_id}`, (payload, error) => {
       this.setState({runs: payload, error});
@@ -31,7 +39,7 @@ export default class WorkflowDetailHistory extends React.Component {
   renderRunHeaders() {
     return this.state.runs.map((run, index) => {
       const date = (run.scheduled_time || run.submitted_time).substr(0, 10);
-      const type = run.scheduled_time ? 'Scheduled' : 'Manual';
+      const type = run.scheduled_time ? 'Scheduled run' : 'Manual run';
       const tooltip = (
         <Tooltip id={run.id}>
           {type}<br/>
@@ -57,21 +65,17 @@ export default class WorkflowDetailHistory extends React.Component {
       run.tasks.find((task) => task.name === template.name)
     );
     return taskRuns.map((task) => {
-      const glyph = {
-        waiting: 'glass',
-        queued: 'download-alt',
-        running: 'refresh',
-        succeeded: 'ok',
-        failed: 'remove',
-      }[task.status];
+      const glyph = this.statuses[task.status];
       const tooltip = <Tooltip id={task.id}>{startCase(task.status)}</Tooltip>;
       return (
-        <td key={task.id} className={task.status}>
-          <OverlayTrigger overlay={tooltip} placement="right">
-            <Link to={`/tasks/${task.id}`}>
-              <Glyphicon glyph={glyph}/>
-            </Link>
-          </OverlayTrigger>
+        <td key={task.id}>
+          <Link to={`/tasks/${task.id}`}>
+            <OverlayTrigger overlay={tooltip} placement="top">
+              <div>
+                <Glyphicon glyph={glyph} className={task.status}/>
+              </div>
+            </OverlayTrigger>
+          </Link>
         </td>
       )
     })
@@ -97,21 +101,37 @@ export default class WorkflowDetailHistory extends React.Component {
       )
     } else {
       return (
-        <Table bordered condensed>
-          <thead>
-          <tr>
-            <th className="text-center">Task</th>
-            <th className="text-center" colSpan={this.state.runs.length}>Run</th>
-          </tr>
-          <tr>
-            <th/>
-            {this.renderRunHeaders()}
-          </tr>
-          </thead>
-          <tbody>
-          {this.renderRows()}
-          </tbody>
-        </Table>
+        <div>
+          <Table bordered condensed>
+            <thead>
+            <tr>
+              <th className="text-center">Task</th>
+              <th className="text-center" colSpan={this.state.runs.length}>Run</th>
+            </tr>
+            <tr>
+              <th/>
+              {this.renderRunHeaders()}
+            </tr>
+            </thead>
+            <tbody>
+            {this.renderRows()}
+            </tbody>
+          </Table>
+          <Table bordered condensed>
+            <tbody>
+            <tr>
+              <td>Key:</td>
+              {Object.entries(this.statuses).map(function ([status, glyph]) {
+                return (
+                  <td key={status}>
+                    <Glyphicon glyph={glyph} className={status}/>: {status}
+                  </td>
+                )
+              })}
+            </tr>
+            </tbody>
+          </Table>
+        </div>
       )
     }
   }
