@@ -18,7 +18,7 @@ def test_read_output(manager):
 
     # stdout is ready
     results = manager.read_output(timeout=1)
-    assert len(results) == 1, 'Unexpected state {} {}'.format(manager.pipes, manager.running)
+    assert len(results) == 1, 'Unexpected state {}'.format(manager.running[1])
     assert results[0].stdout == 'starting\n'
     assert results[0].stderr is None
     assert results[0].returncode is None
@@ -29,7 +29,7 @@ def test_read_output(manager):
 
     # stderr is ready
     results = manager.read_output(timeout=1)
-    assert len(results) == 1, 'Unexpected state {} {}'.format(manager.pipes, manager.running)
+    assert len(results) == 1, 'Unexpected state {}'.format(manager.running[1])
     assert results[0].stdout is None
     assert results[0].stderr == 'stopping\n'
     assert results[0].execution_id == execution_id
@@ -37,7 +37,7 @@ def test_read_output(manager):
     # grhh... sometime it exits later, on circleci it often exits concurrently
     if results[0].returncode is None:
         results = manager.read_output(timeout=1)
-        assert len(results) == 1, 'Unexpected state {} {}'.format(manager.pipes, manager.running)
+        assert len(results) == 1, 'Unexpected state {}'.format(manager.running[1])
 
     assert results[0].execution_id == execution_id
     assert results[0].returncode == 0
@@ -51,7 +51,7 @@ def test_timeout(manager):
     assert results == []
 
     results = manager.read_output(timeout=1)
-    assert len(results) == 1, 'Unexpected state {} {}'.format(manager.pipes, manager.running)
+    assert len(results) == 1, 'Unexpected state {}'.format(manager.running[1])
     assert results[0].stdout is None
     assert results[0].stderr is None
     assert results[0].returncode == -9
@@ -63,7 +63,7 @@ def test_timeout_already_exited(mock_kill, manager):
     manager.start_subprocess(1, command, environment={}, timeout=-1)
 
     results = manager.read_output(timeout=1)
-    assert len(results) == 1, 'Unexpected state {} {}'.format(manager.pipes, manager.running)
+    assert len(results) == 1, 'Unexpected state {}'.format(manager.running[1])
     assert results[0].stdout is None
     assert results[0].stderr is None
     assert results[0].returncode == 0
