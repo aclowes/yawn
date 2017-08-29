@@ -61,6 +61,10 @@ the test to run::
 Making a Release
 ----------------
 
+Tag the release_ on GitHub, naming it in the ``v0.0.0`` format.
+
+.. _release: https://github.com/aclowes/yawn/releases/new
+
 Build the frontend code, then bundle and release a source tarball. Finally, test
 installing it::
 

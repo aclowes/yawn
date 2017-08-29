@@ -47,6 +47,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'yawn.utilities.middleware.DefaultFileMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
