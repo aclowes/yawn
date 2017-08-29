@@ -34,6 +34,9 @@ class WSGIApplication(BaseApplication):
     def load_config(self):
         parser = self.cfg.parser()
 
+        # by default, log access to stdout
+        self.cfg.set('accesslog', '-')
+
         env_vars = self.cfg.get_cmd_args_from_env()
         if env_vars:
             env_args = parser.parse_args(env_vars)
