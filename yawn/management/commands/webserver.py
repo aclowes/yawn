@@ -3,30 +3,11 @@ import shlex
 from gunicorn.app.base import BaseApplication
 from django.core.management.base import BaseCommand
 from django.core.wsgi import get_wsgi_application
-from django.conf import settings
-from whitenoise.django import DjangoWhiteNoise
-from whitenoise.utils import decode_path_info
-
-
-class DefaultFileServer(DjangoWhiteNoise):
-    def __call__(self, environ, start_response):
-        """
-        Serve index.html if not /api/ or a static file
-
-        This allows users to navigate directly to a URL like http://127.0.0.1:8000/workflows/2
-        and we return index.html, and then react-router interprets the path.
-        """
-        path = decode_path_info(environ['PATH_INFO'])
-        if path.startswith('/api'):
-            return self.application(environ, start_response)
-        static_file = self.files.get(path)
-        if static_file is None:
-            # serve the homepage on non-existent file
-            static_file = self.files.get('/index.html')
-        return self.serve(static_file, environ, start_response)
 
 
 class WSGIApplication(BaseApplication):
+    """A Gunicorn Application, with logic to parse config passed from the command"""
+
     def __init__(self, options):
         self.options = options
         super().__init__()
@@ -56,9 +37,7 @@ class WSGIApplication(BaseApplication):
             self.cfg.set(k.lower(), v)
 
     def load(self):
-        app = get_wsgi_application()
-        whitenoise = DefaultFileServer(app, settings)
-        return whitenoise
+        return get_wsgi_application()
 
 
 class Command(BaseCommand):

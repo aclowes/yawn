@@ -188,6 +188,8 @@ Links
 
 * Contributing_
 * License_
+* `Deploying YAWN on Kubernetes via Google Container Engine`_
 
 .. _Contributing: CONTRIBUTING.rst
 .. _License: LICENSE.txt
+.. _Deploying YAWN on Kubernetes via Google Container Engine: https://github.com/aclowes/yawn-gke
