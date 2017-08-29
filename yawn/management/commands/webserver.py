@@ -1,6 +1,6 @@
 import shlex
 
-from gunicorn.app.base import BaseApplication, Config
+from gunicorn.app.base import BaseApplication
 from django.core.management.base import BaseCommand
 from django.core.wsgi import get_wsgi_application
 from django.conf import settings
