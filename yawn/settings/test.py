@@ -1,7 +1,3 @@
-from .base import *  # NOQA
-
-SECRET_KEY = 'secret key for tests'
-
-DEBUG = True
+from .debug import *  # NOQA
 
 ALLOWED_HOSTS = ['testserver']

@@ -1,5 +1,17 @@
 import os
 
+# Production settings that probably won't work with local dev,
+# but typically desirable when deployed.
+
+# You also need to set SECRET_KEY and ALLOWED_HOSTS!!
+
+# Tell the browser only to send the cookie with HTTPS requests
+CSRF_COOKIE_SECURE = True
+
+# Tell Django that it is running behind a proxy and should forward HTTP->HTTPS
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_SSL_REDIRECT = True
+
 # Custom YAWN settings
 
 DATABASES = {
