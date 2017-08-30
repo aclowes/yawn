@@ -11,6 +11,7 @@ CSRF_COOKIE_SECURE = True
 # Tell Django that it is running behind a proxy and should forward HTTP->HTTPS
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 SECURE_SSL_REDIRECT = True
+SECURE_REDIRECT_EXEMPT = ['^api/healthy/$']
 
 # Custom YAWN settings
 
