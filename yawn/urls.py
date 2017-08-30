@@ -1,4 +1,5 @@
 from django.conf.urls import include, url
+from django.http import HttpResponse
 from rest_framework import routers
 
 from yawn.task.views import TaskViewSet, ExecutionViewSet
@@ -21,5 +22,5 @@ router.register(r'users', UserViewSet)
 # Additionally, we include login URLs for the browsable API.
 urlpatterns = [
     url(r'^api/', include(router.urls)),
-    url(r'^api-auth/', include('rest_framework.urls'))
+    url(r'^api/healthy/$', lambda x: HttpResponse('ok')),
 ]
