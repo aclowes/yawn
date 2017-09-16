@@ -9,7 +9,7 @@ import {YawnNavBar, YawnNavItem} from './utilities';
 export default class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {user: null, error: null, reload: false};
+    this.state = {user: {}, error: null, reload: false};
   }
 
   componentDidMount() {
@@ -36,7 +36,7 @@ export default class App extends React.Component {
   logout = (event) => {
     event.preventDefault();
     API.delete(`/api/users/logout/`, {}, (payload, error) => {
-      this.setState({user: null, error});
+      this.setState({user: {}, error});
       this.props.router.push('/login');
     });
   };
@@ -48,7 +48,7 @@ export default class App extends React.Component {
   };
 
   renderToolbar() {
-    const user = this.state.user && `(${this.state.user.username})`;
+    const userAction = this.state.user.id ? `Logout (${this.state.user.username})` : 'Login';
     return (
       <div>
         <Nav>
@@ -62,7 +62,7 @@ export default class App extends React.Component {
           <NavItem onClick={this.refresh}>
             <Glyphicon glyph="refresh"/>
           </NavItem>
-          <NavItem onClick={this.logout}>Logout {user}</NavItem>
+          <NavItem onClick={this.logout}>{userAction}</NavItem>
         </Nav>
       </div>
     )
