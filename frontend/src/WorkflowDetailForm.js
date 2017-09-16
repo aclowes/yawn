@@ -73,7 +73,9 @@ export default class WorkflowDetailForm extends React.Component {
   handleSubmit = (event) => {
     const update = formValues(this.state);
     API.patch(`/api/workflows/${this.props.workflow.id}/`, update, (payload, error) => {
-      this.setState({...formValues(payload), error, editable: false});
+      // if there is an error, don't parse the payload
+      const form = error ? {} : formValues(payload);
+      this.setState({...form, error, editable: false});
     });
     event.preventDefault();
   };

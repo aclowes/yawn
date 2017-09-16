@@ -3,6 +3,7 @@ import signal
 import typing  # NOQA
 import collections
 
+import time
 from django.db import transaction
 from django.db.models import functions
 
@@ -43,14 +44,16 @@ class Main:
         Main event loop.
 
         Why not threads/gevent/asyncio?
-            Because this is simple and maybe even more efficient!
+            Because this is simple and maybe more efficient
         """
         self.handle_signals()
         self.executor = Manager()
         self.state = State.running
+        loop_start = time.time()
         logger.warning('Starting YAWN worker with concurrency=%s', self.concurrency)
 
         while True:
+
             if self.state == State.running:
 
                 # update own status and check for lost workers
@@ -71,6 +74,11 @@ class Main:
             # check status on running tasks
             self.results.extend(self.executor.read_output())
             self.save_results()
+
+            # don't run the loop more than once per second
+            loop_duration = time.time() - loop_start
+            time.sleep(max(1 - loop_duration, 0))
+            loop_start += loop_duration
 
         logger.warning('Exiting')
         self.worker.status = Worker.EXITED

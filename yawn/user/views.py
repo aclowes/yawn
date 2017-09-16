@@ -4,7 +4,9 @@ from rest_framework import viewsets, status
 from rest_framework.decorators import list_route
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
+from rest_framework.settings import api_settings
 
+from yawn.user.permissions import ModelPermissions
 from .serializers import UserSerializer, LoginSerializer
 
 
@@ -15,12 +17,17 @@ class UserViewSet(viewsets.GenericViewSet,
                   viewsets.mixins.UpdateModelMixin):
     """
     User endpoint, GET(list, detail), PATCH to change
+
+    This ViewSet has `permission_classes` set and `/me/` has the default permissions
+    so that the default permission class can be set to IsAuthenticatedOrReadOnly
+    without leaking user API tokens.
     """
     queryset = User.objects.all().order_by('id')
 
     serializer_class = UserSerializer
+    permission_classes = (ModelPermissions,)
 
-    @list_route(methods=['get'])
+    @list_route(methods=['get'], permission_classes=api_settings.DEFAULT_PERMISSION_CLASSES)
     def me(self, request):
         serializer = self.get_serializer(request.user)
         return Response(serializer.data)
