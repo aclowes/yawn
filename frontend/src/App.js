@@ -14,7 +14,7 @@ export default class App extends React.Component {
 
   componentDidMount() {
     API.get(`/api/users/me/`, (payload, error, status) => {
-      if (status === 403) {
+      if ([401, 403].indexOf(status) > -1) {
         // redirect to login page if not authenticated
         this.props.router.push('/login');
       } else {
