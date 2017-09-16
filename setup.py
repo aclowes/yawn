@@ -22,7 +22,7 @@ setup(
     # Versions should comply with PEP440.  For a discussion on single-sourcing
     # the version across setup.py and the project code, see
     # https://packaging.python.org/en/latest/single_source_version.html
-    version='0.1.7',
+    version='0.1.8',
 
     description='Yet Another Workflow Engine, a subprocess-based DAG execution system',
     long_description=long_description,
@@ -79,6 +79,7 @@ setup(
         'djangorestframework>=3.4',
         'whitenoise>=3.0',
         'gunicorn>=19',
+        'pyyaml>=3.08',
     ],
 
     # List additional groups of dependencies here (e.g. development
@@ -91,7 +92,6 @@ setup(
             'pytest',
             'pytest-cov',
             'flake8',
-            'pyyaml',
             'pytest-catchlog',
         ],
     },
@@ -105,6 +105,7 @@ setup(
             'staticfiles/static/js/*',
             'staticfiles/static/media/*',
             'staticfiles/*',
+            'workflow/tests/*',  # example workflow yaml
         ],
     },
 
