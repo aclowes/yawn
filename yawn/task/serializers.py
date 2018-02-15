@@ -59,10 +59,9 @@ class TaskDetailSerializer(TaskSerializer):
 
     def update(self, instance, validated_data):
         if validated_data.get('terminate'):
-            for execution in instance.execution_set.all():
-                if execution.id == validated_data['terminate']:
-                    execution.status = Execution.KILLED
-                    execution.save()
+            instance.execution_set.filter(
+                id=validated_data['terminate'], status=Execution.RUNNING
+            ).update(status=Execution.KILLED)
         if validated_data.get('enqueue'):
             instance.enqueue()
         return instance
