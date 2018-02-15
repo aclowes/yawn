@@ -5,8 +5,11 @@ YAWN provides a framework for executing a set of shell commands with dependencie
 in a distributed manner and on a repeating schedule. Other tools do similar things and
 are inspirations for this one; particularly Celery_ and Airflow_.
 
+Browse it live at https://yawn.live, deployed on GKE_.
+
 .. _Celery: http://www.celeryproject.org/
 .. _Airflow: https://airflow.incubator.apache.org/
+.. _GKE: https://github.com/aclowes/yawn-gke
 
 .. image:: https://circleci.com/gh/aclowes/yawn/tree/master.svg?style=svg
   :target: https://circleci.com/gh/aclowes/yawn/tree/master
