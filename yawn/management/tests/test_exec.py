@@ -19,6 +19,7 @@ class ExampleClass:
 
 
 def test_call_function(caplog):
+    caplog.set_level(logging.INFO)
     stdout = io.StringIO()
     management.call_command('exec', 'yawn.management.tests.test_exec', 'example_function', stdout=stdout)
     assert 'Execution complete' in stdout.getvalue()

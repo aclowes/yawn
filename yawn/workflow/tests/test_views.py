@@ -1,17 +1,11 @@
-import os
-
 import pytest
-import yaml
 
 from django.utils.dateparse import parse_datetime
 
 from yawn.workflow.models import WorkflowName
+from yawn.workflow.tests.utils import load_sample_workflow
 
-
-@pytest.fixture()
-def data():
-    filename = os.path.join(os.path.dirname(__file__), 'workflow.yaml')
-    return yaml.load(open(filename).read())
+data = pytest.fixture(load_sample_workflow)
 
 
 def test_create_workflow(client, data):

@@ -5,7 +5,7 @@ from django.core.management.base import BaseCommand
 from yawn.task.models import Template
 from yawn.workflow.models import WorkflowName
 from yawn.workflow.serializers import WorkflowSerializer
-from yawn.workflow.tests import test_views
+from yawn.workflow.tests.utils import load_sample_workflow
 
 
 class Command(BaseCommand):
@@ -44,7 +44,7 @@ class Command(BaseCommand):
 
         # Create from a dictionary:
         self.stdout.write('Third, an example using the serializer...')
-        serializer = WorkflowSerializer(data=test_views.data())
+        serializer = WorkflowSerializer(data=load_sample_workflow())
         serializer.is_valid(raise_exception=True)
         workflow = serializer.save()
         workflow.submit_run()

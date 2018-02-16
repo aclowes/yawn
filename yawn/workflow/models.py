@@ -7,7 +7,8 @@ from yawn.utilities import cron
 
 class WorkflowName(models.Model):
     name = models.TextField(unique=True)
-    current_version = models.OneToOneField('Workflow', null=True, related_name='is_current')
+    current_version = models.OneToOneField('Workflow', on_delete=models.CASCADE,
+                                           null=True, related_name='is_current')
 
     def new_version(self, **kwargs):
         """Create a new version of a workflow"""
