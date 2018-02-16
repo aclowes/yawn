@@ -15,6 +15,7 @@ yawns.egg-info/
 *.cache/
 .DS_Store
 *__pycache__/
+.pytest_cache/
 
 # pyenv
 .python-version

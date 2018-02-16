@@ -89,10 +89,9 @@ setup(
     extras_require={
         # 'dev': ['check-manifest'],
         'test': [
-            'pytest',
+            'pytest>=3.4',
             'pytest-cov',
             'flake8',
-            'pytest-catchlog',
         ],
     },
 
