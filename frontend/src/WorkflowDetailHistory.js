@@ -17,6 +17,7 @@ export default class WorkflowDetailHistory extends React.Component {
     running: 'console',
     succeeded: 'ok',
     failed: 'remove',
+    upstream_failed: 'minus',
   };
 
   loadRuns(workflow_id) {
