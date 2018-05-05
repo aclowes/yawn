@@ -298,6 +298,13 @@ exports[`WorkflowDetail success 1`] = `
                 : 
                 failed
               </td>
+              <td>
+                <span
+                  className="upstream_failed glyphicon glyphicon-minus"
+                />
+                : 
+                upstream_failed
+              </td>
             </tr>
           </tbody>
         </table>

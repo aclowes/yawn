@@ -31,7 +31,8 @@ class ExecutionViewSet(viewsets.GenericViewSet,
         Optionally filter to the executions for a given worker
         """
         queryset = self.queryset
-        worker = self.request.query_params.get('worker', None)
+        worker = self.request.query_params.get('worker')
         if worker is not None:
-            queryset = queryset.filter(worker_id=worker)
-        return queryset.order_by('-id')
+            # worker page filters and reverses the order
+            queryset = queryset.filter(worker_id=worker).order_by('-id')
+        return queryset

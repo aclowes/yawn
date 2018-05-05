@@ -46,7 +46,7 @@ class ExecutionListSerializer(serializers.ModelSerializer):
 
 
 class TaskDetailSerializer(TaskSerializer):
-    executions = ExecutionDetailSerializer(many=True, source='execution_set', read_only=True)
+    executions = serializers.SerializerMethodField()
     messages = MessageSerializer(many=True, source='message_set', read_only=True)
 
     max_retries = serializers.IntegerField(source='template.max_retries')
@@ -56,6 +56,10 @@ class TaskDetailSerializer(TaskSerializer):
     # actions
     terminate = serializers.IntegerField(write_only=True)
     enqueue = serializers.BooleanField(write_only=True)
+
+    def get_executions(self, instance):
+        executions = instance.execution_set.order_by('id')
+        return ExecutionDetailSerializer(executions, many=True).data
 
     def update(self, instance, validated_data):
         if validated_data.get('terminate'):
