@@ -61,14 +61,17 @@ the test to run::
 Making a Release
 ----------------
 
-Tag the release_ on GitHub, naming it in the ``v0.0.0`` format.
+Tag the release_ on GitHub, naming it in the ``v0.0.0`` format. Increment the version in
+``setup.py`` to match.
 
 .. _release: https://github.com/aclowes/yawn/releases/new
 
 Build the frontend code, then bundle and release a source tarball. Finally, test
-installing it::
+installing it before uploading to the production PyPI server::
 
   (cd frontend/ && yarn build)
   ./setup.py sdist upload -r https://test.pypi.org/legacy/
   pip install -i https://testpypi.python.org/pypi yawns
+
+  ./setup.py sdist upload -r https://upload.pypi.org/legacy/
 
