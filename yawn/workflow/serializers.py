@@ -166,6 +166,7 @@ class RunSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         workflow = Workflow.objects.get(id=validated_data['workflow_id'])
-        run = workflow.submit_run(validated_data['parameters'])
+        parameters = validated_data.get('parameters')
+        run = workflow.submit_run(parameters)
         run.refresh_from_db()  # load submitted_time...
         return run
