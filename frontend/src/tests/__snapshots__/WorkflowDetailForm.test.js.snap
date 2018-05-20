@@ -1,0 +1,75 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`WorkflowDetailForm editable 1`] = `
+<form
+  onSubmit={[Function]}
+>
+  <div
+    className="checkbox"
+    style={undefined}
+  >
+    <label>
+      <input
+        checked={false}
+        disabled={false}
+        onChange={[Function]}
+        type="checkbox"
+        value="schedule_active"
+      />
+      Schedule Active
+    </label>
+  </div>
+  <div
+    className="form-group"
+  >
+    <label
+      className="control-label"
+      htmlFor="schedule"
+    >
+      Schedule
+    </label>
+    <input
+      className="form-control"
+      id="schedule"
+      onChange={[Function]}
+      placeholder="<minute> <hour> <weekday>"
+      type="text"
+      value={null}
+    />
+  </div>
+  <div
+    className="form-group"
+  >
+    <label
+      className="control-label"
+      htmlFor="parameters"
+    >
+      Parameters
+    </label>
+    <textarea
+      className="form-control"
+      id="parameters"
+      onChange={[Function]}
+      placeholder="VARIABLE=value (one per line)"
+      type={undefined}
+      value="MY_OBJECT_ID=1
+    SOME_SETTING=false"
+    />
+  </div>
+  <button
+    className="btn btn-primary"
+    disabled={false}
+    type="submit"
+  >
+    Save
+  </button>
+  <button
+    className="btn btn-default"
+    disabled={false}
+    onClick={[Function]}
+    type="button"
+  >
+    Cancel
+  </button>
+</form>
+`;

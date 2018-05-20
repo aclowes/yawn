@@ -23,7 +23,7 @@ export class YawnNavItem extends React.Component {
 }
 
 
-export class YawnNavBar extends React.Component {
+export class Container extends React.Component {
   render() {
     return (
       <div>

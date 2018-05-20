@@ -4,7 +4,7 @@ import {Glyphicon, Nav, NavItem} from 'react-bootstrap';
 import 'bootswatch/united/bootstrap.css';
 import './App.css';
 import API from './API'
-import {YawnNavBar, YawnNavItem} from './utilities';
+import {Container, YawnNavItem} from './AppContainer';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -70,9 +70,9 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <YawnNavBar toolbar={this.renderToolbar()} error={this.state.error}>
+      <Container toolbar={this.renderToolbar()} error={this.state.error}>
         {this.state.reload ? 'Loading...' : this.props.children}
-      </YawnNavBar>
+      </Container>
     );
   }
 }

@@ -105,8 +105,7 @@ it('WorkflowDetail success', () => {
       "parameters": {"child": "true", "MY_OBJECT_ID": "1", "SOME_SETTING": "false"},
       "workflow": 1
     }]
-  ])
-  ;
+  ]);
   const component = ReactTestRenderer.create(<WorkflowDetail params={{id: 1}}/>);
   let tree = component.toJSON();
   expect(tree).toMatchSnapshot();

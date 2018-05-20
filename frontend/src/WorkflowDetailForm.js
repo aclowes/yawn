@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   Checkbox, FormGroup, FormControl, ControlLabel,
-  Button, Alert, Pagination
+  Button, Alert, Pagination, ButtonToolbar
 } from 'react-bootstrap';
 
 import API from './API'
