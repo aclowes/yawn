@@ -3,7 +3,7 @@ import {
   FormGroup, FormControl, ControlLabel, Button, Alert, Panel, Grid, Row, Col
 } from 'react-bootstrap';
 
-import {YawnNavBar} from './utilities';
+import {Container} from './AppContainer';
 import API from './API'
 
 export default class Login extends React.Component {
@@ -37,7 +37,7 @@ export default class Login extends React.Component {
 
   render() {
     return (
-      <YawnNavBar>
+      <Container>
         <Grid>
           <Row className="show-grid">
             <Col xs={1} md={4}/>
@@ -65,7 +65,7 @@ export default class Login extends React.Component {
             <Col xs={1} md={4}/>
           </Row>
         </Grid>
-      </YawnNavBar>
+      </Container>
     );
   }
 }

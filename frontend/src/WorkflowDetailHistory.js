@@ -1,5 +1,7 @@
 import React from 'react';
-import {Table, Alert, Tooltip, OverlayTrigger, Glyphicon} from 'react-bootstrap';
+import {
+  Table, Alert, Tooltip, OverlayTrigger, Glyphicon, Button
+} from 'react-bootstrap';
 import {Link} from 'react-router';
 import {startCase} from 'lodash';
 
@@ -36,6 +38,18 @@ export default class WorkflowDetailHistory extends React.Component {
       this.loadRuns(nextProps.workflow.id);
     }
   }
+
+  submitRun = (event) => {
+    const data = {workflow_id: this.props.workflow.id};
+    API.post('/api/runs/', data, (payload, error) => {
+      if (error) {
+        this.setState({...this.state, error});
+      } else {
+        this.loadRuns(this.props.workflow.id);
+      }
+    });
+    event.preventDefault();
+  };
 
   renderRunHeaders() {
     return this.state.runs.map((run, index) => {
@@ -132,6 +146,7 @@ export default class WorkflowDetailHistory extends React.Component {
             </tr>
             </tbody>
           </Table>
+          <Button onClick={this.submitRun}>Start new run</Button>
         </div>
       )
     }

@@ -308,6 +308,14 @@ exports[`WorkflowDetail success 1`] = `
             </tr>
           </tbody>
         </table>
+        <button
+          className="btn btn-default"
+          disabled={false}
+          onClick={[Function]}
+          type="button"
+        >
+          Start new run
+        </button>
       </div>
     </div>
   </div>
