@@ -1,5 +1,6 @@
 import pytest
 
+from django.utils import timezone
 from django.utils.dateparse import parse_datetime
 
 from yawn.workflow.models import WorkflowName
@@ -12,7 +13,7 @@ def test_create_workflow(client, data):
     response = client.post('/api/workflows/', data)
     assert response.status_code == 201
     assert response.data['name'] == data['name']
-    assert response.data['next_run'] is None
+    assert response.data['next_run'] > timezone.now() - timezone.timedelta(minutes=1)
     assert response.data['schedule'] == data['schedule']
     assert response.data['schedule_active'] == data['schedule_active']
     assert response.data['parameters'] == data['parameters']
