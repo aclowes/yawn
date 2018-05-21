@@ -7,6 +7,7 @@ A, B, C, D succeed -> Succeeded
 A, B failed, C, D upstream_failed -> Failed
 """
 import datetime
+from unittest import mock
 
 from django.utils import timezone
 
@@ -34,6 +35,19 @@ def test_first_ready():
 
     workflow = Workflow.first_ready()
     assert workflow.id == ready_workflow.id
+
+
+@mock.patch('yawn.workflow.models.Crontab')
+def test_next_run(mock_cron):
+    next_run = timezone.datetime(2011, 1, 1)
+    mock_cron().next_run.return_value = next_run
+
+    name = WorkflowName.objects.create(name='workflow1')
+    workflow = Workflow.objects.create(
+        name=name, version=2, schedule_active=True,
+        schedule='*'
+    )
+    assert workflow.next_run == next_run
 
 
 def test_new_version():
