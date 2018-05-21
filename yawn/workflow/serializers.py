@@ -112,7 +112,7 @@ def unchanged(current_workflow, new_data):
 
     This is ugly; suggestions would be appreciated...
     """
-    ignore = ('id', 'name', 'version', 'schedule_active')
+    ignore = ('id', 'name', 'version', 'schedule_active', 'next_run', 'parameters')
     if not compare_fields(current_workflow, new_data, ignore):
         return False
 
@@ -122,7 +122,7 @@ def unchanged(current_workflow, new_data):
         return False
 
     for current_task, new_task in zip(current_tasks, new_tasks):
-        ignore = ('id', 'upstream', 'workflow', 'next_run', 'parameters')
+        ignore = ('id', 'upstream', 'workflow')
         if not compare_fields(current_task, new_task, ignore):
             return False
 
