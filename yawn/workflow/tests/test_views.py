@@ -12,7 +12,7 @@ def test_create_workflow(client, data):
     response = client.post('/api/workflows/', data)
     assert response.status_code == 201
     assert response.data['name'] == data['name']
-    assert response.data['next_run'] is None
+    assert response.data['next_run'] is not None
     assert response.data['schedule'] == data['schedule']
     assert response.data['schedule_active'] == data['schedule_active']
     assert response.data['parameters'] == data['parameters']
@@ -92,16 +92,25 @@ def test_get_run(client, run):
 
 
 def test_post_run(client, run):
+    """create a new run of the workflow"""
     url = '/api/runs/'
     workflow = run.workflow
     data = {'workflow_id': workflow.id, 'parameters': {'A': '1', 'B': 'false'}}
     response = client.post(url, data)
     assert response.status_code == 201, response.data
-    assert response.data['id'] > run.id
+    assert response.data['id'] == run.id + 1
     assert response.data['status'] == run.RUNNING
     merged_parameters = workflow.parameters.copy()
     merged_parameters.update(data['parameters'])
     assert response.data['parameters'] == merged_parameters
+
+    # without parameters
+    data = {'workflow_id': workflow.id}
+    response = client.post(url, data)
+    assert response.status_code == 201, response.data
+    assert response.data['id'] == run.id + 2
+    assert response.data['status'] == run.RUNNING
+    assert response.data['parameters'] == workflow.parameters
 
 
 def test_patch_run(client, run):
