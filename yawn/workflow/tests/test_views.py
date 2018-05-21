@@ -1,6 +1,5 @@
 import pytest
 
-from django.utils import timezone
 from django.utils.dateparse import parse_datetime
 
 from yawn.workflow.models import WorkflowName
