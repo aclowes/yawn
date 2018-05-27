@@ -41,7 +41,7 @@ export default class TaskDetail extends React.Component {
 
   renderMessages() {
     return this.state.task.messages.map((message) => (
-      <Link to={`/queue/${message.queue_id}`} key={message.id}>{message.queue}</Link>
+      <span><Link to='/queues/' key={message.id}>{message.queue}</Link> </span>
     ))
   }
 
