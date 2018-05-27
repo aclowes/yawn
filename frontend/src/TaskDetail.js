@@ -11,13 +11,7 @@ export default class TaskDetail extends React.Component {
   }
 
   componentDidMount() {
-    API.get(`/api/tasks/${this.props.params.id}/`, (payload, error) => {
-      const execution = payload ? payload.executions.length : null;
-      if (payload) {
-        document.title = `YAWN - Task ${payload.name}`;
-      }
-      this.setState({task: payload, error, execution});
-    });
+    this.refreshExecution();
   }
 
   enqueue = () => {
@@ -36,6 +30,24 @@ export default class TaskDetail extends React.Component {
   selectExecution = (eventKey) => {
     this.setState({
       execution: eventKey
+    });
+  };
+
+  refreshExecution = () => {
+    API.get(`/api/tasks/${this.props.params.id}/`, (payload, error) => {
+      let execution = null;
+      if (payload) {
+        document.title = `YAWN - Task ${payload.name}`;
+        // keep the currently selected execution, or get the latest
+        execution = this.state.execution || payload.executions.length;
+
+        // while the task is running, refresh the page every five seconds
+        const status = execution > 0 && payload.executions[execution - 1].status;
+        if (status === 'running') {
+          window.setTimeout(this.refreshExecution, 5000);
+        }
+      }
+      this.setState({task: payload, error, execution});
     });
   };
 
