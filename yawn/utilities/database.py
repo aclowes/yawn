@@ -26,3 +26,11 @@ def close_on_exception(func):
                 'was used inside an transaction.atomic() block.'
 
     return wrapper
+
+
+def current_time():
+    """Return the database time"""
+    with db.connection.cursor() as cursor:
+        cursor.execute("SELECT STATEMENT_TIMESTAMP()")
+        row = cursor.fetchone()
+    return row[0]

@@ -1,5 +1,11 @@
+import datetime
+from unittest import mock
+
+from django.utils import timezone
+
 from yawn.worker.models import Queue
-from yawn.worker.main import Main
+from yawn.worker.main import Main, State
+from yawn.workflow.models import WorkflowName, Workflow
 
 
 def test_init_default_queue():
@@ -21,3 +27,27 @@ def test_init_custom_queues():
     queue_names = Queue.objects.filter(
         id__in=worker1.queue_ids).values_list('name', flat=True)
     assert sorted(queue_names) == queues
+
+
+@mock.patch('yawn.worker.main.time.sleep')
+def test_run(mock_time):
+    # so the worker exits immediately
+    worker = Main(1, 'test name', ['default'])
+
+    def set_shutdown(_):
+        # stop the worker after one run
+        worker.state = State.shutdown
+
+    mock_time.side_effect = set_shutdown
+    worker.run()
+
+
+def test_schedule_workflows():
+    name = WorkflowName.objects.create(name='workflow1')
+    next_run = timezone.now() - datetime.timedelta(hours=1)
+    workflow = Workflow.objects.create(
+        name=name, version=1, schedule_active=True, schedule='0 0 *', next_run=next_run)
+    worker = Main(1, 'test name', ['default'])
+    worker.schedule_workflows()
+    workflow.refresh_from_db()
+    assert workflow.next_run > next_run
