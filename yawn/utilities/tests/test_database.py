@@ -1,6 +1,9 @@
+import datetime
+
 import pytest
 from django.db import connection
 
+from yawn.utilities import database
 from yawn.utilities.database import close_on_exception
 
 
@@ -24,3 +27,7 @@ def test_close_on_exception():
     # but the exception is caught, and on retry the database reconnects:
     with connection.cursor() as cursor:
         cursor.execute('select 1')
+
+
+def test_current_time():
+    assert isinstance(database.current_time(), datetime.datetime)

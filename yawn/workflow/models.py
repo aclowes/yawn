@@ -1,9 +1,8 @@
 from django.db import models
 from django.contrib.postgres import fields
 from django.db.models import functions
-from django.utils import timezone
 
-from yawn.utilities import cron
+from yawn.utilities import cron, database
 from yawn.utilities.cron import Crontab
 
 
@@ -41,8 +40,7 @@ class Workflow(models.Model):
     def save(self, **kwargs):
         if self.schedule_active:
             if not self.next_run:
-                # this call uses the server time instead of the db time...
-                self.next_run = Crontab(self.schedule).next_run(timezone.now())
+                self.next_run = Crontab(self.schedule).next_run(database.current_time())
         else:
             self.next_run = None
         super().save(**kwargs)
@@ -78,6 +76,9 @@ class Workflow(models.Model):
             )
             if not template.upstream.exists():
                 task.enqueue()
+
+        # refresh to get the actual DB submitted time
+        run.refresh_from_db()
         return run
 
     def __str__(self):
