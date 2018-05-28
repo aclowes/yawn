@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.postgres import fields
 from django.db.models import functions
-from django.utils import timezone
 
 from yawn.utilities import cron, database
 from yawn.utilities.cron import Crontab
