@@ -21,7 +21,7 @@ export default class WorkerList extends React.Component {
     if (this.state.workers === null) {
       return (
         <tr>
-          <td colSpan="3">Loading...</td>
+          <td colSpan="4">Loading...</td>
         </tr>
       )
     } else {

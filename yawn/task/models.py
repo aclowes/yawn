@@ -181,5 +181,6 @@ class Execution(models.Model):
                 self.task.run.update_status()
 
         self.stop_timestamp = functions.Now()
+        self.exit_code = exit_code
         # need to be careful not to overwrite stdout/stderr
-        self.save(update_fields=['status', 'stop_timestamp'])
+        self.save(update_fields=['status', 'stop_timestamp', 'exit_code'])

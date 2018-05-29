@@ -25,7 +25,7 @@ class Result:
 
     def __str__(self):
         return 'Result(id={}, stdout={}, stderr={}, returncode={})'.format(
-            self.execution_id, bool(self.stdout), bool(self.stderr), self.returncode)
+            self.execution_id, self.stdout, self.stderr, self.returncode)
 
 
 class Execution:
@@ -39,7 +39,7 @@ class Execution:
 
     def __str__(self):
         return 'Result(id={}, stdout={}, stderr={}, returncode={})'.format(
-            self.id, bool(self.process.stdout), bool(self.process.stderr), self.process.returncode)
+            self.id, self.process.stdout, self.process.stderr, self.process.returncode)
 
 
 class Manager:
@@ -70,8 +70,6 @@ class Manager:
         for key, value in environment.items():
             # all variables must be strings, be explicit so it fail in our code
             process_environment[key] = str(value)
-
-        logger.info('Starting execution #%s', execution_id)
 
         process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                                    preexec_fn=os.setpgrp, env=process_environment, shell=True)
@@ -155,14 +153,13 @@ class Manager:
                 continue  # we'll check again later
 
             # we may not have read everything available, so only cleanup after all pipes are closed
-            open_pipes = {execution.process.stdout.raw, execution.process.stderr.raw
-                          } & set(self.pipes.keys())
+            open_pipes = (
+                {execution.process.stdout.raw, execution.process.stderr.raw}
+                & set(self.pipes.keys())
+            )
             if not open_pipes:
                 result = all_results.setdefault(execution.id, Result(execution.id))
                 result.returncode = execution.process.returncode
-                run_time = time.monotonic() - execution.start_time
-                logger.info('Execution #%s exited with code %s after %s seconds',
-                            execution.id, result.returncode, run_time)
                 del self.running[execution.id]
 
         return list(all_results.values())
