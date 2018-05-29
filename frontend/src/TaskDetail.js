@@ -37,7 +37,7 @@ export default class TaskDetail extends React.Component {
     API.get(`/api/tasks/${this.props.params.id}/`, (payload, error) => {
       let execution = null;
       if (payload) {
-        document.title = `YAWN - Task ${payload.name}`;
+        document.title = `YAWN - Task: ${payload.name}`;
         // keep the currently selected execution, or get the latest
         execution = this.state.execution || payload.executions.length;
 

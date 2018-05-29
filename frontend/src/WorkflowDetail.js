@@ -25,7 +25,7 @@ export default class WorkflowDetail extends React.Component {
   loadWorkflow(version) {
     API.get(`/api/workflows/${version}/`, (payload, error) => {
       if (payload) {
-        document.title = `YAWN - Workflow ${payload.name}`;
+        document.title = `YAWN - Workflow: ${payload.name}`;
       }
       this.setState({workflow: payload, error});
     });
