@@ -15,7 +15,7 @@ export default class WorkerDetail extends React.Component {
       this.setState({worker: payload, error});
 
       if (payload) {  // only get if worker returns... not strictly necessary
-        document.title = `YAWN - Worker ${payload.name}`;
+        document.title = `YAWN - Worker: ${payload.name}`;
         API.get(`/api/executions/?worker=${this.props.params.id}`, (payload, error) => {
           this.setState({executions: payload, error});
         });

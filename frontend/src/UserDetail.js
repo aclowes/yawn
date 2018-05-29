@@ -20,7 +20,7 @@ export default class UserDetail extends React.Component {
     } else {
       API.get(`/api/users/${this.props.params.id}/`, (payload, error) => {
         if (payload) {
-          document.title = `YAWN - User ${payload.username}`;
+          document.title = `YAWN - User: ${payload.username}`;
         }
         this.setState({user: payload, error});
       });

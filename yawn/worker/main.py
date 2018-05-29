@@ -24,7 +24,7 @@ class State(enum.Enum):
 
 
 class Main:
-    results = None  # type: typing.List[Result]
+    results = None  # type: typing.Deque[Result]
     executor = None
     state = State.stopped
     worker = None

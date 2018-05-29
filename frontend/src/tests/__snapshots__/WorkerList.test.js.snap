@@ -33,7 +33,7 @@ exports[`WorkerList failure 1`] = `
     <tbody>
       <tr>
         <td
-          colSpan="3"
+          colSpan="4"
         >
           Loading...
         </td>
@@ -70,7 +70,7 @@ exports[`WorkerList loading 1`] = `
     <tbody>
       <tr>
         <td
-          colSpan="3"
+          colSpan="4"
         >
           Loading...
         </td>
