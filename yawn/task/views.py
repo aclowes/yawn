@@ -21,7 +21,7 @@ class ExecutionViewSet(viewsets.GenericViewSet,
     """
     GET a list of Executions
     """
-    queryset = Execution.objects.all().order_by('id').select_related(
+    queryset = Execution.objects.all().order_by('-id').select_related(
         'worker', 'task__template__workflow__name')
 
     serializer_class = ExecutionListSerializer
@@ -34,5 +34,5 @@ class ExecutionViewSet(viewsets.GenericViewSet,
         worker = self.request.query_params.get('worker')
         if worker is not None:
             # worker page filters and reverses the order
-            queryset = queryset.filter(worker_id=worker).order_by('-id')
+            queryset = queryset.filter(worker_id=worker)
         return queryset

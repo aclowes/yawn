@@ -15,6 +15,7 @@ class WorkflowNameViewSet(viewsets.ReadOnlyModelViewSet):
     """
     queryset = WorkflowName.objects.select_related('current_version').annotate(
         task_count=Count('current_version__template')).order_by('id')
+    page_size = 100_000  # not much pagination
 
     serializer_class = WorkflowNameSerializer
 
