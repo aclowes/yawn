@@ -1,5 +1,6 @@
 import React from 'react';
 import {Glyphicon, Nav, NavItem} from 'react-bootstrap';
+import moment from 'moment-timezone';
 
 import 'bootswatch/united/bootstrap.css';
 import './App.css';
@@ -9,7 +10,9 @@ import {Container, YawnNavItem} from './AppContainer';
 export default class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {user: {}, error: null, reload: false};
+    const timezone = moment().tz(moment.tz.guess()).zoneAbbr();
+    moment.tz.setDefault(timezone);
+    this.state = {user: {}, error: null, reload: false, timezone};
   }
 
   componentDidMount() {
@@ -43,8 +46,20 @@ export default class App extends React.Component {
 
   /* Remount the page to force everything to reload */
   refresh = (event) => {
-    event.preventDefault();
     this.setState({reload: true});
+  };
+
+  /* Switch between local and UTC time */
+  toggleTimezone = (event) => {
+    event.preventDefault();
+    let timezone = this.state.timezone;
+    if (timezone === 'UTC') {
+      timezone = moment().tz(moment.tz.guess()).zoneAbbr();
+    } else {
+      timezone = 'UTC';
+    }
+    moment.tz.setDefault(timezone);
+    this.setState({timezone, reload: true});
   };
 
   renderToolbar() {
@@ -61,6 +76,9 @@ export default class App extends React.Component {
         <Nav pullRight>
           <NavItem onClick={this.refresh}>
             <Glyphicon glyph="refresh"/>
+          </NavItem>
+          <NavItem onClick={this.toggleTimezone}>
+            {this.state.timezone}
           </NavItem>
           <NavItem onClick={this.logout}>{userAction}</NavItem>
         </Nav>

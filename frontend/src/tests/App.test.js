@@ -2,7 +2,6 @@ import React from 'react';
 import ReactTestRenderer from 'react-test-renderer';
 
 import App from '../App';
-
 import {mockAPI} from './mocks'
 
 it('homepage renders', () => {
@@ -20,4 +19,13 @@ it('calls logout on click', () => {
   app.logout(mock);
   expect(mock.preventDefault).toBeCalled();
   expect(app.props.router.push).toBeCalledWith('/login');
+});
+
+it('calls logout on click', () => {
+  const mock = jest.fn();
+  mock.preventDefault = jest.fn();
+  const app = new App();
+  app.setState = jest.fn();
+  app.toggleTimezone(mock);
+  expect(app.setState).toBeCalledWith({'reload': true, 'timezone': 'UTC'});
 });
