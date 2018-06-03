@@ -53,13 +53,13 @@ exports[`WorkerDetail success 1`] = `
           Start Timestamp
         </dt>
         <dd>
-          January 29th 2017, 8:13:47 pm
+          January 30th 2017, 4:13:47 am
         </dd>
         <dt>
           Last Heartbeat
         </dt>
         <dd>
-          January 29th 2017, 8:15:10 pm
+          January 30th 2017, 4:15:10 am
         </dd>
       </dl>
     </div>
@@ -126,7 +126,7 @@ exports[`WorkerDetail success 1`] = `
               succeeded
             </td>
             <td>
-              January 29th 2017, 8:17:03 pm
+              January 30th 2017, 4:17:03 am
             </td>
             <td />
           </tr>

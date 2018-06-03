@@ -1,4 +1,4 @@
-import moment from "moment/moment";
+import moment from "moment";
 
 export function formatDateTime(datetime) {
   if (!datetime) {

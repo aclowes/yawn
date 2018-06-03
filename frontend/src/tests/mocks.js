@@ -1,4 +1,12 @@
+import moment from "moment-timezone";
+
 import API from '../API';
+
+/*
+* Set the timezone to UTC when running tests, for consistent
+* snapshots.
+* */
+moment.tz.setDefault('UTC');
 
 /*
  Mock API with canned responses; it will call the callback
