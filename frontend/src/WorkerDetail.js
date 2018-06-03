@@ -3,6 +3,7 @@ import {Panel, PanelGroup, Alert} from 'react-bootstrap';
 
 import API from "./API";
 import ExecutionTable from "./ExecutionTable";
+import {formatDateTime} from "./utilities";
 
 export default class WorkerDetail extends React.Component {
   constructor(props) {
@@ -36,9 +37,9 @@ export default class WorkerDetail extends React.Component {
               <dt>Status</dt>
               <dd>{worker.status}</dd>
               <dt>Start Timestamp</dt>
-              <dd>{worker.start_timestamp}</dd>
+              <dd>{formatDateTime(worker.start_timestamp)}</dd>
               <dt>Last Heartbeat</dt>
-              <dd>{worker.last_heartbeat}</dd>
+              <dd>{formatDateTime(worker.last_heartbeat)}</dd>
             </dl>
           </Panel>
           <Panel header="Executions">

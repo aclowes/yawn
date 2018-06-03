@@ -78,7 +78,9 @@ exports[`WorkflowDetail success 1`] = `
           <dt>
             Next Run
           </dt>
-          <dd />
+          <dd>
+            
+          </dd>
           <dt>
             Parameters
           </dt>

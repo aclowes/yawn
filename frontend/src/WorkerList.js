@@ -3,6 +3,7 @@ import {Table, Alert} from 'react-bootstrap';
 import {Link} from 'react-router';
 
 import API from "./API";
+import {formatDateTime} from "./utilities";
 
 export default class WorkerList extends React.Component {
   constructor(props) {
@@ -30,8 +31,8 @@ export default class WorkerList extends React.Component {
           <tr key={worker.id}>
             <td><Link to={`/workers/${worker.id}`}>{worker.name}</Link></td>
             <td>{worker.status}</td>
-            <td>{worker.start_timestamp}</td>
-            <td>{worker.last_heartbeat}</td>
+            <td>{formatDateTime(worker.start_timestamp)}</td>
+            <td>{formatDateTime(worker.last_heartbeat)}</td>
           </tr>
         )
       })
