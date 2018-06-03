@@ -10,6 +10,8 @@
   "dependencies": {
     "bootswatch": "^3.3.7",
     "dagre-d3": "^0.4.17",
+    "moment": "^2.22.2",
+    "moment-timezone": "^0.5.17",
     "react": "^15.6.1",
     "react-bootstrap": "^0.30.10",
     "react-dom": "^15.6.1",

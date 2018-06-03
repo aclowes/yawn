@@ -156,12 +156,14 @@ exports[`TaskDetail success 1`] = `
             Start Time
           </dt>
           <dd>
-            2017-01-30T03:26:38.211839Z
+            January 30th 2017, 3:26:38 am
           </dd>
           <dt>
             Stop Time
           </dt>
-          <dd />
+          <dd>
+            
+          </dd>
           <dt>
             Exit Code
           </dt>

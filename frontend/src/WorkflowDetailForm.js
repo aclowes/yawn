@@ -5,6 +5,7 @@ import {
 } from 'react-bootstrap';
 
 import API from './API'
+import {formatDateTime} from "./utilities";
 
 /* Helper to extract form values from a given object */
 function formValues(object) {
@@ -26,6 +27,7 @@ function formValues(object) {
     schedule: object.schedule,
     schedule_active: object.schedule_active,
     parameters: parameters,
+    next_run: object.next_run,
   }
 }
 
@@ -122,7 +124,7 @@ export default class WorkflowDetailForm extends React.Component {
             <dt>Schedule</dt>
             <dd>{this.state.schedule}</dd>
             <dt>Next Run</dt>
-            <dd>{this.props.workflow.next_run}</dd>
+            <dd>{formatDateTime(this.state.next_run)}</dd>
             <dt>Parameters</dt>
             <dd>
               <pre>{this.state.parameters}</pre>

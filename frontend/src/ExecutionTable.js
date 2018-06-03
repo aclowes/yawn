@@ -2,6 +2,8 @@ import React from 'react';
 import {Table} from 'react-bootstrap';
 import {Link} from 'react-router';
 
+import {formatDateTime} from "./utilities";
+
 
 export default class ExecutionTable extends React.Component {
 
@@ -19,7 +21,7 @@ export default class ExecutionTable extends React.Component {
           <td>{execution.task.workflow && execution.task.workflow.name}</td>
           <td><Link to={`/tasks/${execution.task.id}`}>{execution.task.name}</Link></td>
           <td>{execution.status}</td>
-          <td>{execution.start_timestamp}</td>
+          <td>{formatDateTime(execution.start_timestamp)}</td>
           <td>{execution.minutes_running}</td>
         </tr>
       ))

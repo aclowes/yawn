@@ -3,6 +3,7 @@ import {PanelGroup, Panel, Alert, Pagination, Button} from 'react-bootstrap';
 import {Link} from 'react-router';
 
 import API from "./API";
+import {formatDateTime} from "./utilities";
 
 export default class TaskDetail extends React.Component {
   constructor(props) {
@@ -92,9 +93,9 @@ export default class TaskDetail extends React.Component {
           </Link>
         </dd>
         <dt>Start Time</dt>
-        <dd>{execution.start_timestamp}</dd>
+        <dd>{formatDateTime(execution.start_timestamp)}</dd>
         <dt>Stop Time</dt>
-        <dd>{execution.stop_timestamp}</dd>
+        <dd>{formatDateTime(execution.stop_timestamp)}</dd>
         <dt>Exit Code</dt>
         <dd>{execution.exit_code}</dd>
         <dt>Standard Output</dt>
