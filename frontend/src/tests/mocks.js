@@ -7,6 +7,7 @@ import API from '../API';
 * snapshots.
 * */
 moment.tz.setDefault('UTC');
+moment.tz.guess = (zone) => 'UTC';
 
 /*
  Mock API with canned responses; it will call the callback
