@@ -21,3 +21,12 @@ it('calls logout on click', () => {
   expect(mock.preventDefault).toBeCalled();
   expect(app.props.router.push).toBeCalledWith('/login');
 });
+
+it('calls logout on click', () => {
+  const mock = jest.fn();
+  mock.preventDefault = jest.fn();
+  const app = new App();
+  app.setState = jest.fn();
+  app.toggleTimezone(mock);
+  expect(app.setState).toBeCalledWith({'reload': true, 'timezone': 'UTC'});
+});
