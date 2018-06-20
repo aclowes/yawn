@@ -16,6 +16,11 @@ class WorkflowName(models.Model):
         version = 0
         if self.current_version_id:
             version = self.current_version.version
+
+            # disable the past schedule
+            self.current_version.schedule_active = False
+            self.current_version.save()
+
         workflow = Workflow.objects.create(name=self, version=version + 1, **kwargs)
         self.current_version = workflow
         self.save()

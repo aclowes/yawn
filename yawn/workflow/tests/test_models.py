@@ -52,11 +52,13 @@ def test_next_run(mock_cron):
 
 def test_new_version():
     name = WorkflowName.objects.create(name='workflow1')
-    workflow = name.new_version()
-    assert workflow.version == 1
-    workflow.save()
-    workflow = name.new_version()
-    assert workflow.version == 2
+    workflow_1 = name.new_version(schedule='0 0 *', schedule_active=True)
+    assert workflow_1.next_run
+    assert workflow_1.version == 1
+    workflow_2 = name.new_version()
+    assert workflow_2.version == 2
+    workflow_1.refresh_from_db()
+    assert workflow_1.schedule_active is False
 
 
 def test_submit_run():
