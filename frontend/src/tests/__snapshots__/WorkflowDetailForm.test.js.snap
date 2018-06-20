@@ -56,20 +56,25 @@ exports[`WorkflowDetailForm editable 1`] = `
     SOME_SETTING=false"
     />
   </div>
-  <button
-    className="btn btn-primary"
-    disabled={false}
-    type="submit"
+  <div
+    className="btn-toolbar"
+    role="toolbar"
   >
-    Save
-  </button>
-  <button
-    className="btn btn-default"
-    disabled={false}
-    onClick={[Function]}
-    type="button"
-  >
-    Cancel
-  </button>
+    <button
+      className="btn btn-default"
+      disabled={false}
+      onClick={[Function]}
+      type="button"
+    >
+      Cancel
+    </button>
+    <button
+      className="btn btn-primary"
+      disabled={false}
+      type="submit"
+    >
+      Save
+    </button>
+  </div>
 </form>
 `;
