@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   Checkbox, FormGroup, FormControl, ControlLabel,
-  Button, Alert, Pagination
+  Button, ButtonToolbar, Alert, Pagination
 } from 'react-bootstrap';
 
 import API from './API'
@@ -77,7 +77,7 @@ export default class WorkflowDetailForm extends React.Component {
     API.patch(`/api/workflows/${this.props.workflow.id}/`, update, (payload, error) => {
       // if there is an error, don't parse the payload
       const form = error ? {} : formValues(payload);
-      this.setState({...form, error, editable: false});
+      this.setState({...form, error, editable: !!error});
     });
     event.preventDefault();
   };
@@ -99,13 +99,16 @@ export default class WorkflowDetailForm extends React.Component {
             <FormControl componentClass="textarea" placeholder="VARIABLE=value (one per line)"
                          onChange={this.handleChange} value={this.state.parameters}/>
           </FormGroup>
-          <Button type="submit" bsStyle="primary">Save</Button>
-          <Button onClick={this.toggleEditable}>Cancel</Button>
+          <ButtonToolbar>
+            <Button onClick={this.toggleEditable}>Cancel</Button>
+            <Button type="submit" bsStyle="primary">Save</Button>
+          </ButtonToolbar>
         </form>
       );
     } else {
       return (
         <div>
+          {this.state.error && <Alert bsStyle="danger">{this.state.error}</Alert>}
           <dl className="dl-horizontal">
             <dt>Name</dt>
             <dd>{this.props.workflow.name}</dd>
