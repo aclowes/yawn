@@ -13,7 +13,7 @@ jobs:
       - run: pytest --cov=yawn --junitxml=$CIRCLE_TEST_REPORTS/pytest.xml yawn
       - run: flake8 yawn
       - run: cd frontend && env JEST_JUNIT_OUTPUT=$CIRCLE_TEST_REPORTS/jest.xml
-        yarn test -- --coverage --testResultsProcessor jest-junit --runInBand
+          yarn test -- --coverage --testResultsProcessor jest-junit --runInBand
       # build, although it doesn't go anywhere:
       - run: cd frontend/ && yarn build
       - run: ./setup.py sdist
