@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  build:
+  test:
     docker:
       - image: circleci/python:3.5-jessie-node-browsers
     steps:
@@ -22,3 +22,9 @@ jobs:
           key: dependencies
           paths:
             - frontend/node_modules
+
+workflows:
+  version: 2
+  test:
+    jobs:
+      - test
