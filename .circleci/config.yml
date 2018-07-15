@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  test:
+  build:
     docker:
       - image: circleci/python:3.5-jessie-node-browsers
     steps:
@@ -8,7 +8,7 @@ jobs:
       - restore_cache:
           keys:
             - dependencies
-      - run: pip install -e .[test]
+      - run: sudo pip install -q -e .[test]
       - run: cd frontend && yarn install
       - run: pytest --cov=yawn --junitxml=$CIRCLE_TEST_REPORTS/pytest.xml yawn
       - run: flake8 yawn
@@ -22,9 +22,3 @@ jobs:
           key: dependencies
           paths:
             - frontend/node_modules
-
-workflows:
-  version: 2
-  test:
-    jobs:
-      - test
