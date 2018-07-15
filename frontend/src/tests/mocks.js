@@ -18,11 +18,16 @@ moment.tz.guess = (zone) => 'UTC';
 export function mockAPI(responses = []) {
   const availableResponses = responses;
   API.get = jest.fn((url, callback) => {
-    let response = availableResponses.shift();
-    if (response === undefined) {
+    let payload = availableResponses.shift();
+    if (payload === undefined) {
       callback(null, 'some error message')
+    } else if (payload && payload.hasOwnProperty('results')) {
+      // list endpoint; return results and pagination information separately
+      const results = payload.results;
+      delete payload.results;
+      callback(results, null, 200, payload)
     } else {
-      callback(response, null)
+      callback(payload, null)
     }
   });
   API.post = API.patch = API.delete = jest.fn((url, data, callback) => {

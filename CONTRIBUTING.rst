@@ -52,11 +52,13 @@ Read about reStructuredText_ and the `components in common`_ between it and Mark
 Debugging Javascript Tests
 --------------------------
 
-To open a CLI debugger inside a JS test, add the line ``debugger;`` inside a test
-and run the following command to enter the debugger, where ``App.test.js`` specifies
-the test to run::
+To debug tests inside Chrome, add the line ``debugger;`` inside a test, run the following
+command (where ``App.test.js`` specifies the test to run) and open ```about:inspect```
+in Chrome::
 
-  CI=1 node debug node_modules/react-scripts/scripts/test.js --runInBand --em src/tests/App.test.js
+  CI=true yarn run test:debug App.test.js
+
+If get ```Error watching file for changes``` then ```brew install watchman```.
 
 Making a Release
 ----------------

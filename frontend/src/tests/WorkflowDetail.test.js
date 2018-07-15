@@ -75,36 +75,40 @@ it('WorkflowDetail success', () => {
       "name": "Simple Workflow Example"
     },
     // run history
-    [{
-      "id": 1,
-      "tasks": [{
+    {
+      page: 2,
+      page_count: 2,
+      page_size: 10,
+      results: [{
         "id": 1,
-        "name": "start",
-        "workflow": {"id": 1, "name": "Simple Workflow Example", "version": 1},
-        "status": "succeeded"
-      }, {
-        "id": 2,
-        "name": "task2",
-        "workflow": {"id": 1, "name": "Simple Workflow Example", "version": 1},
-        "status": "succeeded"
-      }, {
-        "id": 3,
-        "name": "task3",
-        "workflow": {"id": 1, "name": "Simple Workflow Example", "version": 1},
-        "status": "succeeded"
-      }, {
-        "id": 4,
-        "name": "done",
-        "workflow": {"id": 1, "name": "Simple Workflow Example", "version": 1},
-        "status": "succeeded"
-      }],
-      "workflow_id": 1,
-      "submitted_time": "2017-01-22T20:53:36.548913Z",
-      "scheduled_time": null,
-      "status": "succeeded",
-      "parameters": {"child": "true", "MY_OBJECT_ID": "1", "SOME_SETTING": "false"},
-      "workflow": 1
-    }]
+        "tasks": [{
+          "id": 1,
+          "name": "start",
+          "workflow": {"id": 1, "name": "Simple Workflow Example", "version": 1},
+          "status": "succeeded"
+        }, {
+          "id": 2,
+          "name": "task2",
+          "workflow": {"id": 1, "name": "Simple Workflow Example", "version": 1},
+          "status": "succeeded"
+        }, {
+          "id": 3,
+          "name": "task3",
+          "workflow": {"id": 1, "name": "Simple Workflow Example", "version": 1},
+          "status": "succeeded"
+        }, {
+          "id": 4,
+          "name": "done",
+          "workflow": {"id": 1, "name": "Simple Workflow Example", "version": 1},
+          "status": "succeeded"
+        }],
+        "workflow_id": 1,
+        "submitted_time": "2017-01-22T20:53:36.548913Z",
+        "scheduled_time": null,
+        "status": "succeeded",
+        "parameters": {"child": "true", "MY_OBJECT_ID": "1", "SOME_SETTING": "false"}
+      }]
+    }
   ]);
   const component = ReactTestRenderer.create(<WorkflowDetail params={{id: 1}}/>);
   let tree = component.toJSON();

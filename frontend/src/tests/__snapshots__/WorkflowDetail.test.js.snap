@@ -158,7 +158,7 @@ exports[`WorkflowDetail success 1`] = `
                 onMouseOver={[Function]}
               >
                 #
-                0
+                11
               </th>
             </tr>
           </thead>
@@ -310,14 +310,55 @@ exports[`WorkflowDetail success 1`] = `
             </tr>
           </tbody>
         </table>
-        <button
-          className="btn btn-default"
-          disabled={false}
-          onClick={[Function]}
-          type="button"
+        <div
+          className="btn-toolbar"
+          role="toolbar"
         >
-          Start new run
-        </button>
+          <div
+            className="btn-group"
+          >
+            <ul
+              className="pagination"
+            >
+              <li
+                className=""
+                style={undefined}
+              >
+                <a
+                  href="#"
+                  onClick={[Function]}
+                  role="button"
+                >
+                  1
+                </a>
+              </li>
+              <li
+                className="active"
+                style={undefined}
+              >
+                <a
+                  href="#"
+                  onClick={[Function]}
+                  role="button"
+                >
+                  2
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div
+            className="btn-group"
+          >
+            <button
+              className="btn btn-default"
+              disabled={false}
+              onClick={[Function]}
+              type="button"
+            >
+              Start new run
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </div>

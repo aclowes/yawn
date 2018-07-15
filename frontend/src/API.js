@@ -31,8 +31,14 @@ export function request(url, method, body, callback) {
     if (response.headers.get('Content-Type') === 'application/json') {
       response.json().then(function (payload) {
         if (response_obj.ok) {
-          // return the object list if response.results is defined:
-          callback(payload.results || payload, null, response_obj.status);
+          if (payload && payload.hasOwnProperty('results')) {
+            // list endpoint; return results and pagination information separately
+            const results = payload.results;
+            delete payload.results;
+            callback(results, null, response_obj.status, payload);
+          } else {
+            callback(payload, null, response_obj.status);
+          }
         } else {
           // the default rest framework error is in 'detail'
           callback(null, payload.detail || payload, response_obj.status);
