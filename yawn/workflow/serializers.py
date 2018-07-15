@@ -161,7 +161,7 @@ class RunSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Run
-        fields = '__all__'
+        exclude = ('workflow',)
         read_only_fields = ('submitted_time', 'scheduled_time', 'status')
 
     def create(self, validated_data):
