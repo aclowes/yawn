@@ -71,11 +71,10 @@ def test_signals():
         assert worker.state == State.terminate
         assert worker.executor.mark_terminated.called
 
-    except BaseException:
+    finally:
         # restore the default handlers
         signal.signal(signal.SIGINT, signal.SIG_DFL)
         signal.signal(signal.SIGTERM, signal.SIG_DFL)
-        raise
 
 
 def test_set_lost():
