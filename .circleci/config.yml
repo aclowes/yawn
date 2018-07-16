@@ -13,7 +13,7 @@ jobs:
             - v2-{{ checksum "frontend/yarn.lock" }}-{{ checksum "setup.py" }}
             - v2-{{ checksum "frontend/yarn.lock" }}
             - v2
-      - run: python -m venv pyenv && pip install -e .[test]
+      - run: python -m venv pyenv && source pyenv/bin/activate && pip install -e .[test]
       - run: cd frontend && yarn install
       - save_cache:
           key: v2-{{ checksum "frontend/yarn.lock" }}-{{ checksum "setup.py" }}
