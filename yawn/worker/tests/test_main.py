@@ -1,9 +1,12 @@
 import datetime
+import signal
 from unittest import mock
 
 from django.utils import timezone
 
-from yawn.worker.models import Queue
+from yawn.task.models import Template, Task
+from yawn.worker.executor import Result
+from yawn.worker.models import Queue, Worker
 from yawn.worker.main import Main, State
 from yawn.workflow.models import WorkflowName, Workflow
 
@@ -51,3 +54,62 @@ def test_schedule_workflows():
     worker.schedule_workflows()
     workflow.refresh_from_db()
     assert workflow.next_run > next_run
+
+
+def test_signals():
+    try:
+        worker = Main(1, 'test name', ['default'])
+        worker.handle_signals()
+        worker.executor = mock.Mock()
+
+        handler = signal.getsignal(signal.SIGINT)
+        handler()
+        assert worker.state == State.shutdown
+
+        handler = signal.getsignal(signal.SIGTERM)
+        handler()
+        assert worker.state == State.terminate
+        assert worker.executor.mark_terminated.called
+
+    except BaseException:
+        # restore the default handlers
+        signal.signal(signal.SIGINT, signal.SIG_DFL)
+        signal.signal(signal.SIGTERM, signal.SIG_DFL)
+        raise
+
+
+def test_set_lost():
+    worker = Main(1, 'test name', ['default'])
+    worker.update_worker()  # first time creates the row
+    worker.worker.status = Worker.LOST
+    worker.worker.save()
+
+    worker.executor = mock.Mock()
+    worker.update_worker()
+
+    assert worker.state == State.terminate
+    assert worker.executor.mark_terminated.called
+
+
+def test_save_results():
+    # lots of setup
+    worker = Main(1, 'test name', ['default'])
+    worker.update_worker()
+
+    name = WorkflowName.objects.create(name='workflow1')
+    workflow = name.new_version(parameters={'parent': True, 'child': False})
+    Template.objects.create(workflow=workflow, name='task1', command=[''])
+    run = workflow.submit_run(parameters={'child': True})
+    task1 = run.task_set.first()  # type: Task
+    execution = task1.start_execution(worker.worker)
+
+    result = Result(execution_id=execution.id)
+    result.stdout = 'test stdout'
+    worker.results.append(result)
+
+    # trigger a save
+    worker.save_results()
+
+    execution.refresh_from_db()
+    assert execution.stdout == result.stdout
+    assert not worker.results
