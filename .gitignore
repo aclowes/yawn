@@ -7,14 +7,15 @@ yawns.egg-info/
 *dist/
 .coverage
 *coverage/
+coverage.xml
+reports/
 
 # node packages
 *node_modules/
 
 # caches
-*.cache/
 .DS_Store
-*__pycache__/
+__pycache__
 .pytest_cache/
 
 # pyenv

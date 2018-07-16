@@ -1,0 +1,41 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/python:3.5-jessie-node-browsers
+      - image: circleci/postgres:9.6
+        environment:
+          POSTGRES_USER: circleci
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v2-{{ checksum "frontend/yarn.lock" }}-{{ checksum "setup.py" }}
+            - v2-{{ checksum "frontend/yarn.lock" }}
+            - v2
+      - run: python -m venv pyenv && source pyenv/bin/activate && pip install -e .[test]
+      - run: cd frontend && yarn install
+      - save_cache:
+          key: v2-{{ checksum "frontend/yarn.lock" }}-{{ checksum "setup.py" }}
+          paths:
+            - frontend/node_modules
+            - pyenv
+      - run: source pyenv/bin/activate && flake8 yawn
+      - run:
+          name: yarn test
+          command: mkdir -p reports/javascript && cd frontend &&
+            env JEST_JUNIT_OUTPUT=../reports/javascript/jest.xml
+            yarn test -- --coverage --testResultsProcessor jest-junit --runInBand
+      - run:
+          name: pytest yawn
+          command: until echo > /dev/tcp/localhost/5432; do sleep 1; done &&
+            mkdir -p reports/python && source pyenv/bin/activate &&
+            pytest --cov=yawn --cov-report xml --cov-report term --junitxml=reports/python/pytest.xml yawn
+      # check that building works:
+      - run: cd frontend && yarn build
+      - run: python setup.py sdist
+      - run: bash <(curl -s https://codecov.io/bash)
+      - store_test_results:
+          path: reports/
+      - store_artifacts:
+          path: dist/

@@ -19,6 +19,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'yawn',
+        'HOST': 'localhost'  # not using unix socket b/c circle build
     }
 }
 
