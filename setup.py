@@ -92,7 +92,6 @@ setup(
             'pytest>=3.4',
             'pytest-cov',
             'flake8',
-            'setuptools',
         ],
     },
 

@@ -10,12 +10,13 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v1-{{ checksum "setup.py" }}-{{ checksum "frontend/yarn.lock" }}
+            - v1-{{ checksum "frontend/yarn.lock" }}-{{ checksum "setup.py" }}
+            - v1-{{ checksum "frontend/yarn.lock" }}-{{ checksum "setup.py" }}
             - v1
       - run: sudo pip install -e .[test]
       - run: cd frontend && yarn install
       - save_cache:
-          key: v1-{{ checksum "setup.py" }}-{{ checksum "frontend/yarn.lock" }}
+          key: v1-{{ checksum "frontend/yarn.lock" }}-{{ checksum "setup.py" }}
           paths:
             - frontend/node_modules
             - /usr/local/lib/python3.5/site-packages
@@ -29,8 +30,8 @@ jobs:
           command: cd frontend && env JEST_JUNIT_OUTPUT=../reports/jest.xml
             yarn test -- --coverage --testResultsProcessor jest-junit --runInBand
       # check that building works:
-      - run: cd frontend/ && yarn build
-      - run: ./setup.py sdist
+      - run: cd frontend && yarn build
+      - run: python setup.py sdist
       - run: bash <(curl -s https://codecov.io/bash)
       - store_test_results:
           path: reports/
