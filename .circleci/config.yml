@@ -13,25 +13,25 @@ jobs:
             - v1-{{ checksum "frontend/yarn.lock" }}-{{ checksum "setup.py" }}
             - v1-{{ checksum "frontend/yarn.lock" }}-{{ checksum "setup.py" }}
             - v1
-      - run: sudo pip install -e .[test]
+      - run: python -m venv pyenv && pip install -e .[test]
       - run: cd frontend && yarn install
       - save_cache:
           key: v1-{{ checksum "frontend/yarn.lock" }}-{{ checksum "setup.py" }}
           paths:
             - frontend/node_modules
-            - /usr/local/lib/python3.5/site-packages
+            - pyenv
       - run:
           name: pytest yawn
-          command: mkdir reports &&
+          command: mkdir reports && source pyenv/bin/activate &&
             pytest --cov=yawn --junitxml=reports/pytest.xml yawn
-      - run: flake8 yawn
+      - run: source pyenv/bin/activate && flake8 yawn
       - run:
           name: yarn test
           command: cd frontend && env JEST_JUNIT_OUTPUT=../reports/jest.xml
             yarn test -- --coverage --testResultsProcessor jest-junit --runInBand
       # check that building works:
       - run: cd frontend && yarn build
-      - run: python setup.py sdist
+      - run: source pyenv/bin/activate && ./setup.py sdist
       - run: bash <(curl -s https://codecov.io/bash)
       - store_test_results:
           path: reports/
