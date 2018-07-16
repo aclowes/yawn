@@ -33,7 +33,8 @@ class Crontab:
         # if next run is next day, get smallest hour, smallest minute
         # if next run is today, future hour, get smallest minute
         # if next run is today, this hour, get next greatest minute
-        next_run = datetime.datetime(current_time.year, current_time.month, current_time.day)
+        next_run = datetime.datetime(current_time.year, current_time.month, current_time.day,
+                                     tzinfo=current_time.tzinfo)
         weekday = current_time.isoweekday()
         weekday = 0 if weekday == 7 else weekday  # Move Sunday to day 0
         if weekday in self.weekdays:

@@ -9,6 +9,7 @@ A, B failed, C, D upstream_failed -> Failed
 import datetime
 from unittest import mock
 
+import pytz
 from django.utils import timezone
 
 from yawn.task.models import Template, Task
@@ -39,7 +40,7 @@ def test_first_ready():
 
 @mock.patch('yawn.workflow.models.Crontab')
 def test_next_run(mock_cron):
-    next_run = timezone.datetime(2011, 1, 1)
+    next_run = timezone.datetime(2011, 1, 1, tzinfo=pytz.UTC)
     mock_cron().next_run.return_value = next_run
 
     name = WorkflowName.objects.create(name='workflow1')
