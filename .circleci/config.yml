@@ -10,11 +10,12 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - dependencies
+            - v1-{{ checksum "setup.py" }}-{{ checksum "frontend/yarn.lock" }}
+            - v1
       - run: sudo pip install -e .[test]
       - run: cd frontend && yarn install
       - save_cache:
-          key: dependencies
+          key: v1-{{ checksum "setup.py" }}-{{ checksum "frontend/yarn.lock" }}
           paths:
             - frontend/node_modules
             - /usr/local/lib/python3.5/site-packages
