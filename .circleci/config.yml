@@ -22,12 +22,13 @@ jobs:
             - pyenv
       - run:
           name: pytest yawn
-          command: mkdir reports && source pyenv/bin/activate &&
-            pytest --cov=yawn --cov-report xml --cov-report term --junitxml=reports/pytest.xml yawn
+          command: mkdir -p reports/python && source pyenv/bin/activate &&
+            pytest --cov=yawn --cov-report xml --cov-report term --junitxml=reports/python/pytest.xml yawn
       - run: source pyenv/bin/activate && flake8 yawn
       - run:
           name: yarn test
-          command: cd frontend && env JEST_JUNIT_OUTPUT=../reports/jest.xml
+          command: mkdir -p reports/javascript && cd frontend &&
+            env JEST_JUNIT_OUTPUT=../reports/javascript/jest.xml
             yarn test -- --coverage --testResultsProcessor jest-junit --runInBand
       # check that building works:
       - run: cd frontend && yarn build
