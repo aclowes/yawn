@@ -31,7 +31,7 @@ jobs:
             yarn test -- --coverage --testResultsProcessor jest-junit --runInBand
       # check that building works:
       - run: cd frontend && yarn build
-      - run: source pyenv/bin/activate && ./setup.py sdist
+      - run: python setup.py sdist
       - run: bash <(curl -s https://codecov.io/bash)
       - store_test_results:
           path: reports/
