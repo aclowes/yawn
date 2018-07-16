@@ -13,7 +13,7 @@ jobs:
       - run:
           name: pytest yawn
           command: mkdir reports &&
-            pytest --cov=yawn --junitxml=$CIRCLE_TEST_REPORTS/pytest.xml yawn
+            pytest --cov=yawn --junitxml=reports/pytest.xml yawn
       - run: flake8 yawn
       - run:
           name: yarn test
