@@ -25,7 +25,7 @@ jobs:
           name: yarn test
           command: mkdir -p reports/javascript && cd frontend &&
             env JEST_JUNIT_OUTPUT=../reports/javascript/jest.xml
-            yarn test -- --coverage --testResultsProcessor jest-junit --runInBand
+            yarn test --coverage --testResultsProcessor jest-junit --runInBand
       - run:
           name: pytest yawn
           command: until echo > /dev/tcp/localhost/5432; do sleep 1; done &&
