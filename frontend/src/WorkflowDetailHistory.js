@@ -24,7 +24,7 @@ export default class WorkflowDetailHistory extends React.Component {
   };
 
   loadRuns(workflow_id) {
-    API.get(`/api/runs/?workflow=${workflow_id}&page=${this.state.pagination.page}&page_size=25`,
+    API.get(`/api/runs/?workflow=${workflow_id}&page=${this.state.pagination.page}&page_size=20`,
       (payload, error, status, pagination) => {
         this.setState({runs: payload, error, pagination});
       });
