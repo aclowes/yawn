@@ -63,7 +63,7 @@ export default class App extends React.Component {
   };
 
   renderToolbar() {
-    const userAction = this.state.user.id ? `Logout (${this.state.user.username})` : 'Login';
+    const userAction = this.state.user ? `Logout (${this.state.user.username})` : 'Login';
     return (
       <div>
         <Nav>

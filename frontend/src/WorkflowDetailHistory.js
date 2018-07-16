@@ -1,6 +1,7 @@
 import React from 'react';
 import {
-  Table, Alert, Tooltip, OverlayTrigger, Glyphicon, Button
+  Table, Alert, Tooltip, OverlayTrigger, Glyphicon, Button,
+  Pagination, ButtonToolbar, ButtonGroup
 } from 'react-bootstrap';
 import {Link} from 'react-router';
 import {startCase} from 'lodash';
@@ -10,7 +11,7 @@ import API from "./API";
 export default class WorkflowDetailHistory extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {runs: null, error: null};
+    this.state = {runs: null, error: null, pagination: {page: 'last'}};
   }
 
   statuses = {
@@ -23,9 +24,10 @@ export default class WorkflowDetailHistory extends React.Component {
   };
 
   loadRuns(workflow_id) {
-    API.get(`/api/runs/?workflow=${workflow_id}`, (payload, error) => {
-      this.setState({runs: payload, error});
-    });
+    API.get(`/api/runs/?workflow=${workflow_id}&page=${this.state.pagination.page}&page_size=20`,
+      (payload, error, status, pagination) => {
+        this.setState({runs: payload, error, pagination});
+      });
   }
 
   componentDidMount() {
@@ -35,6 +37,7 @@ export default class WorkflowDetailHistory extends React.Component {
   componentWillReceiveProps(nextProps) {
     // the version changed...
     if (nextProps.workflow !== this.props.workflow) {
+      this.setState({runs: null, error: null, pagination: {page: 'last'}});
       this.loadRuns(nextProps.workflow.id);
     }
   }
@@ -49,6 +52,11 @@ export default class WorkflowDetailHistory extends React.Component {
       }
     });
     event.preventDefault();
+  };
+
+  selectPage = (pageNumber) => {
+    this.setState({pagination: {...this.state.pagination, page: pageNumber}},
+      () => {this.loadRuns(this.props.workflow.id)});
   };
 
   renderRunHeaders() {
@@ -66,7 +74,7 @@ export default class WorkflowDetailHistory extends React.Component {
       return (
         <OverlayTrigger key={run.id} overlay={tooltip} placement="bottom">
           <th className={run.status}>
-            #{index}
+            #{1 + index + (this.state.pagination.page - 1) * this.state.pagination.page_size}
           </th>
         </OverlayTrigger>
       )
@@ -146,7 +154,19 @@ export default class WorkflowDetailHistory extends React.Component {
             </tr>
             </tbody>
           </Table>
-          <Button onClick={this.submitRun}>Start new run</Button>
+          <ButtonToolbar>
+            <ButtonGroup>
+            <Pagination
+              ellipsis
+              items={this.state.pagination.page_count}
+              maxButtons={10}
+              activePage={this.state.pagination.page}
+              onSelect={this.selectPage}/>
+            </ButtonGroup>
+            <ButtonGroup>
+            <Button onClick={this.submitRun}>Start new run</Button>
+            </ButtonGroup>
+          </ButtonToolbar>
         </div>
       )
     }
