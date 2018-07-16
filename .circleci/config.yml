@@ -23,7 +23,7 @@ jobs:
       - run:
           name: pytest yawn
           command: mkdir reports && source pyenv/bin/activate &&
-            pytest --cov=yawn --junitxml=reports/pytest.xml yawn
+            pytest --cov=yawn --cov-report xml --cov-report term --junitxml=reports/pytest.xml yawn
       - run: source pyenv/bin/activate && flake8 yawn
       - run:
           name: yarn test
