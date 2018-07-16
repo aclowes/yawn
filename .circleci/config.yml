@@ -20,16 +20,17 @@ jobs:
           paths:
             - frontend/node_modules
             - pyenv
-      - run:
-          name: pytest yawn
-          command: mkdir -p reports/python && source pyenv/bin/activate &&
-            pytest --cov=yawn --cov-report xml --cov-report term --junitxml=reports/python/pytest.xml yawn
       - run: source pyenv/bin/activate && flake8 yawn
       - run:
           name: yarn test
           command: mkdir -p reports/javascript && cd frontend &&
             env JEST_JUNIT_OUTPUT=../reports/javascript/jest.xml
             yarn test -- --coverage --testResultsProcessor jest-junit --runInBand
+      - run:
+          name: pytest yawn
+          command: until echo > /dev/tcp/localhost/5432; do sleep 1; done &&
+            mkdir -p reports/python && source pyenv/bin/activate &&
+            pytest --cov=yawn --cov-report xml --cov-report term --junitxml=reports/python/pytest.xml yawn
       # check that building works:
       - run: cd frontend && yarn build
       - run: python setup.py sdist
