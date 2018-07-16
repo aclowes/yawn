@@ -4,7 +4,7 @@ from unittest import mock
 
 from django.utils import timezone
 
-from yawn.task.models import Template, Task
+from yawn.task.models import Template, Task  # noqa: used in typing
 from yawn.worker.executor import Result
 from yawn.worker.models import Queue, Worker
 from yawn.worker.main import Main, State
