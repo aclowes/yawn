@@ -8,13 +8,18 @@ jobs:
       - restore_cache:
           keys:
             - dependencies
-      - run: sudo pip install -q -e .[test]
+      - run: sudo pip install -e .[test]
       - run: cd frontend && yarn install
-      - run: pytest --cov=yawn --junitxml=$CIRCLE_TEST_REPORTS/pytest.xml yawn
+      - run:
+          name: pytest yawn
+          command: mkdir reports &&
+            pytest --cov=yawn --junitxml=$CIRCLE_TEST_REPORTS/pytest.xml yawn
       - run: flake8 yawn
-      - run: cd frontend && env JEST_JUNIT_OUTPUT=$CIRCLE_TEST_REPORTS/jest.xml
-          yarn test -- --coverage --testResultsProcessor jest-junit --runInBand
-      # build, although it doesn't go anywhere:
+      - run:
+          name: yarn test
+          command: cd frontend && env JEST_JUNIT_OUTPUT=../reports/jest.xml
+            yarn test -- --coverage --testResultsProcessor jest-junit --runInBand
+      # check that building works:
       - run: cd frontend/ && yarn build
       - run: ./setup.py sdist
       - run: bash <(curl -s https://codecov.io/bash)
@@ -22,3 +27,7 @@ jobs:
           key: dependencies
           paths:
             - frontend/node_modules
+      - store_test_results:
+          path: reports/
+      - store_artifacts:
+          path: dist/
