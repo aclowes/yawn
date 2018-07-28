@@ -63,7 +63,9 @@ export default class App extends React.Component {
   };
 
   renderToolbar() {
-    const userAction = this.state.user ? `Logout (${this.state.user.username})` : 'Login';
+    const userName = this.state.user && this.state.user.username;
+    // anonymous user has empty string username, so show Login for them too
+    const userAction = userName ? `Logout (${userName})` : 'Login';
     return (
       <div>
         <Nav>
