@@ -37,8 +37,11 @@ export default class WorkflowDetailHistory extends React.Component {
   componentWillReceiveProps(nextProps) {
     // the version changed...
     if (nextProps.workflow !== this.props.workflow) {
-      this.setState({runs: null, error: null, pagination: {page: 'last'}});
-      this.loadRuns(nextProps.workflow.id);
+      this.setState({runs: null, error: null, pagination: {page: 'last'}},
+        () => {
+          this.loadRuns(nextProps.workflow.id);
+        }
+      );
     }
   }
 
@@ -56,7 +59,9 @@ export default class WorkflowDetailHistory extends React.Component {
 
   selectPage = (pageNumber) => {
     this.setState({pagination: {...this.state.pagination, page: pageNumber}},
-      () => {this.loadRuns(this.props.workflow.id)});
+      () => {
+        this.loadRuns(this.props.workflow.id)
+      });
   };
 
   renderRunHeaders() {
@@ -156,15 +161,15 @@ export default class WorkflowDetailHistory extends React.Component {
           </Table>
           <ButtonToolbar>
             <ButtonGroup>
-            <Pagination
-              ellipsis
-              items={this.state.pagination.page_count}
-              maxButtons={10}
-              activePage={this.state.pagination.page}
-              onSelect={this.selectPage}/>
+              <Pagination
+                ellipsis
+                items={this.state.pagination.page_count}
+                maxButtons={10}
+                activePage={this.state.pagination.page}
+                onSelect={this.selectPage}/>
             </ButtonGroup>
             <ButtonGroup>
-            <Button onClick={this.submitRun}>Start new run</Button>
+              <Button onClick={this.submitRun}>Start new run</Button>
             </ButtonGroup>
           </ButtonToolbar>
         </div>
