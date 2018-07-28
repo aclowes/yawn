@@ -9,6 +9,6 @@ SECURE_PROXY_SSL_HEADER = None
 SECURE_SSL_REDIRECT = False
 
 # anonymous read-only allowed
-REST_FRAMEWORK['DEFAULT_PERMISSION_CLASSES'] = [
+REST_FRAMEWORK['DEFAULT_PERMISSION_CLASSES'] = [  # noqa
     'rest_framework.permissions.IsAuthenticatedOrReadOnly',
 ]
