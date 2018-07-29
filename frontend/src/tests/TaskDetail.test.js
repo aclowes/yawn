@@ -51,3 +51,12 @@ it('TaskDetail success', () => {
   let tree = component.toJSON();
   expect(tree).toMatchSnapshot();
 });
+
+it('TaskDetail scrolling', () => {
+  mockAPI();
+  const component = ReactTestRenderer.create(<TaskDetail params={{id: 1}}/>);
+  window.scroll = jest.fn();
+  const instance = component.getInstance();
+  instance.toggleFollow();
+  expect(window.scroll).toBeCalled();
+});
