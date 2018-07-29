@@ -1,5 +1,5 @@
 import React from 'react';
-import {PanelGroup, Panel, Alert, Pagination, Button} from 'react-bootstrap';
+import {PanelGroup, Panel, Alert, Pagination, Button, ButtonToolbar} from 'react-bootstrap';
 import {Link} from 'react-router';
 
 import API from "./API";
@@ -8,12 +8,19 @@ import {formatDateTime} from "./utilities";
 export default class TaskDetail extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {task: null, error: null};
+    this.state = {task: null, error: null, follow: false};
   }
 
   componentDidMount() {
     this.refreshExecution();
   }
+
+  componentDidUpdate() {
+    if (this.state.follow) {
+      const maxScroll = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      window.scroll(0, maxScroll);
+    }
+  };
 
   enqueue = () => {
     API.patch(`/api/tasks/${this.props.params.id}/`, {enqueue: true}, (payload, error) => {
@@ -52,6 +59,10 @@ export default class TaskDetail extends React.Component {
     });
   };
 
+  toggleFollow = () => {
+    this.setState({follow: !this.state.follow});
+  };
+
   renderMessages() {
     return this.state.task.messages.map((message) => (
       <span><Link to='/queues/' key={message.id}>{message.queue}</Link> </span>
@@ -72,41 +83,50 @@ export default class TaskDetail extends React.Component {
       return <div>No executions</div>
     }
     const execution = this.state.task.executions[this.state.execution - 1];
+    const canTerminate = execution.status === 'running';
     return (
-      <dl className="dl-horizontal">
-        <dt>Execution</dt>
-        <dd>
-          <Pagination
-            ellipsis
-            bsSize="small"
-            items={this.state.task.executions.length}
-            maxButtons={10}
-            activePage={this.state.execution}
-            onSelect={this.selectExecution}/>
-        </dd>
-        <dt>Status</dt>
-        <dd>{execution.status}</dd>
-        <dt>Worker</dt>
-        <dd>
-          <Link to={`/workers/${execution.worker.id}`}>
-            {execution.worker.name}
-          </Link>
-        </dd>
-        <dt>Start Time</dt>
-        <dd>{formatDateTime(execution.start_timestamp)}</dd>
-        <dt>Stop Time</dt>
-        <dd>{formatDateTime(execution.stop_timestamp)}</dd>
-        <dt>Exit Code</dt>
-        <dd>{execution.exit_code}</dd>
-        <dt>Standard Output</dt>
-        <dd>
-          <pre>{execution.stdout}</pre>
-        </dd>
-        <dt>Standard Error</dt>
-        <dd>
-          <pre>{execution.stderr}</pre>
-        </dd>
-      </dl>
+      <div>
+        <dl className="dl-horizontal">
+          <dt>Execution</dt>
+          <dd>
+            <Pagination
+              ellipsis
+              bsSize="small"
+              items={this.state.task.executions.length}
+              maxButtons={10}
+              activePage={this.state.execution}
+              onSelect={this.selectExecution}/>
+          </dd>
+          <dt>Status</dt>
+          <dd>{execution.status}</dd>
+          <dt>Worker</dt>
+          <dd>
+            <Link to={`/workers/${execution.worker.id}`}>
+              {execution.worker.name}
+            </Link>
+          </dd>
+          <dt>Start Time</dt>
+          <dd>{formatDateTime(execution.start_timestamp)}</dd>
+          <dt>Stop Time</dt>
+          <dd>{formatDateTime(execution.stop_timestamp)}</dd>
+          <dt>Exit Code</dt>
+          <dd>{execution.exit_code}</dd>
+          <dt>Standard Output</dt>
+          <dd>
+            <pre>{execution.stdout}</pre>
+          </dd>
+          <dt>Standard Error</dt>
+          <dd>
+            <pre>{execution.stderr}</pre>
+          </dd>
+        </dl>
+        <ButtonToolbar>
+          <Button onClick={this.terminate} disabled={!canTerminate} bsStyle="danger">Terminate</Button>
+          <Button onClick={this.toggleFollow}>
+            {this.state.follow ? 'Unpin scroll' : 'Pin scroll'}
+          </Button>
+        </ButtonToolbar>
+      </div>
     )
   }
 
@@ -122,6 +142,7 @@ export default class TaskDetail extends React.Component {
       const task = this.state.task;
       return (
         <div>
+          {this.state.error && <Alert bsStyle="danger">{this.state.error}</Alert>}
           <PanelGroup>
             <Panel header="Details">
               <dl className="dl-horizontal">
@@ -148,7 +169,6 @@ export default class TaskDetail extends React.Component {
             </Panel>
             <Panel header="Executions">
               {this.renderExecution()}
-              <Button onClick={this.terminate}>Terminate</Button>
             </Panel>
           </PanelGroup>
         </div>

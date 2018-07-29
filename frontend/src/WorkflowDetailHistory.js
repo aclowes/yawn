@@ -130,6 +130,7 @@ export default class WorkflowDetailHistory extends React.Component {
     } else {
       return (
         <div>
+          {this.state.error && <Alert bsStyle="danger">{this.state.error}</Alert>}
           <Table bordered condensed>
             <thead>
             <tr>

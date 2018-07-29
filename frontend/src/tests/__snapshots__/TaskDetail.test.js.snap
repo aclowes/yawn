@@ -111,89 +111,104 @@ exports[`TaskDetail success 1`] = `
       <div
         className="panel-body"
       >
-        <dl
-          className="dl-horizontal"
-        >
-          <dt>
-            Execution
-          </dt>
-          <dd>
-            <ul
-              className="pagination pagination-sm"
-            >
-              <li
-                className="active"
-                style={undefined}
+        <div>
+          <dl
+            className="dl-horizontal"
+          >
+            <dt>
+              Execution
+            </dt>
+            <dd>
+              <ul
+                className="pagination pagination-sm"
               >
-                <a
-                  href="#"
-                  onClick={[Function]}
-                  role="button"
+                <li
+                  className="active"
+                  style={undefined}
                 >
-                  1
-                </a>
-              </li>
-            </ul>
-          </dd>
-          <dt>
-            Status
-          </dt>
-          <dd>
-            succeeded
-          </dd>
-          <dt>
-            Worker
-          </dt>
-          <dd>
-            <a
+                  <a
+                    href="#"
+                    onClick={[Function]}
+                    role="button"
+                  >
+                    1
+                  </a>
+                </li>
+              </ul>
+            </dd>
+            <dt>
+              Status
+            </dt>
+            <dd>
+              succeeded
+            </dd>
+            <dt>
+              Worker
+            </dt>
+            <dd>
+              <a
+                onClick={[Function]}
+                style={Object {}}
+              >
+                graybeard.local 35405
+              </a>
+            </dd>
+            <dt>
+              Start Time
+            </dt>
+            <dd>
+              January 30th 2017, 3:26:38 am
+            </dd>
+            <dt>
+              Stop Time
+            </dt>
+            <dd>
+              
+            </dd>
+            <dt>
+              Exit Code
+            </dt>
+            <dd />
+            <dt>
+              Standard Output
+            </dt>
+            <dd>
+              <pre>
+                Starting...
+                
+              </pre>
+            </dd>
+            <dt>
+              Standard Error
+            </dt>
+            <dd>
+              <pre>
+                
+              </pre>
+            </dd>
+          </dl>
+          <div
+            className="btn-toolbar"
+            role="toolbar"
+          >
+            <button
+              className="btn btn-danger"
+              disabled={true}
               onClick={[Function]}
-              style={Object {}}
+              type="button"
             >
-              graybeard.local 35405
-            </a>
-          </dd>
-          <dt>
-            Start Time
-          </dt>
-          <dd>
-            January 30th 2017, 3:26:38 am
-          </dd>
-          <dt>
-            Stop Time
-          </dt>
-          <dd>
-            
-          </dd>
-          <dt>
-            Exit Code
-          </dt>
-          <dd />
-          <dt>
-            Standard Output
-          </dt>
-          <dd>
-            <pre>
-              Starting...
-              
-            </pre>
-          </dd>
-          <dt>
-            Standard Error
-          </dt>
-          <dd>
-            <pre>
-              
-            </pre>
-          </dd>
-        </dl>
-        <button
-          className="btn btn-default"
-          disabled={false}
-          onClick={[Function]}
-          type="button"
-        >
-          Terminate
-        </button>
+              Terminate
+            </button>
+            <button
+              className="btn btn-default"
+              disabled={false}
+              onClick={[Function]}
+              type="button"
+            >
+              Pin scroll
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
