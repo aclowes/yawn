@@ -19,18 +19,15 @@ def setup_django():
     """Provide a test database and django configuration"""
     from yawn.worker.models import Queue
 
-    # these are positional arguments, written out for clarity
-    verbosity = 1
-    interactive = False  # whether to ask before deleting
-    old_config = runner.setup_databases(verbosity, interactive)
+    manager = runner.DiscoverRunner(verbosity=1, interactive=False)
+    old_config = manager.setup_databases()
 
     # create the default queue outside the transaction
     Queue.get_default_queue()
 
     yield
 
-    for connection, old_name, destroy in old_config:
-        connection.creation.destroy_test_db(old_name)
+    manager.teardown_databases(old_config)
 
 
 class TestPassedRollback(Exception):

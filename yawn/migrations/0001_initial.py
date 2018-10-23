@@ -4,8 +4,7 @@ from __future__ import unicode_literals
 
 import django.contrib.postgres.fields.jsonb
 from django.db import migrations, models
-import django.db.models.deletion
-import django.db.models.functions.base
+import django.db.models.functions
 import yawn.utilities.cron
 
 
@@ -23,7 +22,7 @@ class Migration(migrations.Migration):
                 ('status', models.TextField(
                     choices=[('running', 'running'), ('succeeded', 'succeeded'), ('failed', 'failed'),
                              ('killed', 'killed'), ('lost', 'lost')], default='running')),
-                ('start_timestamp', models.DateTimeField(default=django.db.models.functions.base.Now)),
+                ('start_timestamp', models.DateTimeField(default=django.db.models.functions.Now)),
                 ('stop_timestamp', models.DateTimeField(null=True)),
                 ('exit_code', models.IntegerField(null=True)),
                 ('stdout', models.TextField(blank=True, default='')),
@@ -85,8 +84,8 @@ class Migration(migrations.Migration):
                 ('name', models.TextField()),
                 ('status', models.TextField(choices=[('active', 'active'), ('exited', 'exited'), ('lost', 'lost')],
                                             default='active')),
-                ('start_timestamp', models.DateTimeField(default=django.db.models.functions.base.Now)),
-                ('last_heartbeat', models.DateTimeField(default=django.db.models.functions.base.Now)),
+                ('start_timestamp', models.DateTimeField(default=django.db.models.functions.Now)),
+                ('last_heartbeat', models.DateTimeField(default=django.db.models.functions.Now)),
             ],
         ),
         migrations.CreateModel(
