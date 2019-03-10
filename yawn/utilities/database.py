@@ -18,7 +18,7 @@ def close_on_exception(func):
     def wrapper(*args, **kwargs):
         try:
             func(*args, **kwargs)
-        except OperationalError as exc:
+        except OperationalError:
             logger.error('Database error, closing connection', exc_info=True)
             db.connection.close()
             assert db.connection.closed_in_transaction is False, \
