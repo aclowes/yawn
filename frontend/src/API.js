@@ -29,7 +29,6 @@ export default class API {
   }
 
   static request(url, method, body, callback) {
-    let response_obj;
     const headers = {
       'Accepts': 'application/json',
     };
@@ -45,27 +44,26 @@ export default class API {
       credentials: 'include',
       headers, body
     }).then(function (response) {
-      response_obj = response;
       if (response.headers.get('Content-Type') === 'application/json') {
         response.json().then(function (payload) {
-          if (response_obj.ok) {
+          if (response.ok) {
             if (payload && payload.hasOwnProperty('results')) {
               // list endpoint; return results and pagination information separately
               const results = payload.results;
               delete payload.results;
-              callback(results, null, response_obj.status, payload);
+              callback(results, null, response.status, payload);
             } else {
-              callback(payload, null, response_obj.status);
+              callback(payload, null, response.status);
             }
           } else {
             // the default rest framework error is in 'detail'
-            callback(null, payload.detail || payload, response_obj.status);
+            callback(null, payload.detail || payload, response.status);
           }
         })
       } else {
         // try getting the response text
-        response_obj.text().then(function (error) {
-          callback(null, error, response_obj.status);
+        response.text().then(function (error) {
+          callback(null, error, response.status);
         })
       }
     }).catch(function (error) {
