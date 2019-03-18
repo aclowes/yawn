@@ -3,7 +3,6 @@ import os
 import signal
 import subprocess
 import select
-import selectors
 import time
 import typing
 
@@ -48,8 +47,6 @@ class Manager:
     """
 
     def __init__(self):
-        self.selector = selectors.DefaultSelector()
-
         # dict mapping file descriptors to the owning subprocess
         self.pipes = dict()  # type: typing.Dict[typing.io, Execution]
         self.running = dict()  # type: typing.Dict[int, Execution]
