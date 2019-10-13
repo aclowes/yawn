@@ -1,7 +1,10 @@
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from rest_framework import viewsets, status
-from rest_framework.decorators import list_route
+try:
+    from rest_framework.decorators import action
+except ImportError:
+    from rest_framework.decorators import list_route as action
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 from rest_framework.settings import api_settings
@@ -27,12 +30,12 @@ class UserViewSet(viewsets.GenericViewSet,
     serializer_class = UserSerializer
     permission_classes = (ModelPermissions,)
 
-    @list_route(methods=['get'], permission_classes=api_settings.DEFAULT_PERMISSION_CLASSES)
+    @action(methods=['get'], permission_classes=api_settings.DEFAULT_PERMISSION_CLASSES, detail=False)
     def me(self, request):
         serializer = self.get_serializer(request.user)
         return Response(serializer.data)
 
-    @list_route(methods=['patch'], permission_classes=[AllowAny])
+    @action(methods=['patch'], permission_classes=[AllowAny], detail=False)
     def login(self, request):
         credentials = LoginSerializer(data=request.data)
         credentials.is_valid(raise_exception=True)
@@ -43,7 +46,7 @@ class UserViewSet(viewsets.GenericViewSet,
         login(request, user)
         return Response({'detail': 'Login succeeded'})
 
-    @list_route(methods=['delete'])
+    @action(methods=['delete'], detail=False)
     def logout(self, request):
         logout(request)
         return Response({'detail': 'Logout succeeded'})
