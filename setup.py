@@ -79,7 +79,7 @@ setup(
         'djangorestframework>=3.4',
         'whitenoise>=3.0',
         'gunicorn>=19',
-        'pyyaml>=3.08',
+        'pyyaml>=5.1',
     ],
 
     # List additional groups of dependencies here (e.g. development
