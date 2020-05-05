@@ -1,16 +1,15 @@
+import os
+
 import django
 import pytest
 
-from django.conf import settings
 from django.db import transaction
 from django.test import runner
-
-import yawn.settings.test
 
 # Setup at the module level because django settings need to be
 # initialized before importing other django code.
 # This file is only imported by pytest when running tests.
-settings.configure(**yawn.settings.test.__dict__)
+os.environ['DJANGO_SETTINGS_MODULE'] = 'yawn.settings.test'
 django.setup()
 
 
