@@ -9,7 +9,7 @@
   "dependencies": {
     "bootswatch": "^3.3.7",
     "dagre-d3": "^0.4.17",
-    "lodash": "^4.17.19",
+    "lodash": "^4.17.21",
     "moment": "^2.22.2",
     "moment-timezone": "^0.5.17",
     "react": "^15.6.1",
