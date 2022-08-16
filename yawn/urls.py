@@ -1,4 +1,4 @@
-from django.conf.urls import include, url
+from django.urls import include, re_path
 from django.http import HttpResponse
 from rest_framework import routers
 
@@ -21,6 +21,6 @@ router.register(r'users', UserViewSet)
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
 urlpatterns = [
-    url(r'^api/', include(router.urls)),
-    url(r'^api/healthy/$', lambda x: HttpResponse('ok')),
+    re_path(r'^api/', include(router.urls)),
+    re_path(r'^api/healthy/$', lambda x: HttpResponse('ok')),
 ]
