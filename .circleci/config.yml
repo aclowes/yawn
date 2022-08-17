@@ -2,8 +2,8 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/python:3.5-jessie-node-browsers
-      - image: circleci/postgres:9.6
+      - image: cimg/python:3.8-browsers
+      - image: cimg/postgres:11.13
         environment:
           POSTGRES_USER: circleci
           POSTGRES_HOST_AUTH_METHOD: trust
@@ -11,13 +11,13 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v2-{{ checksum "frontend/yarn.lock" }}-{{ checksum "setup.py" }}
-            - v2-{{ checksum "frontend/yarn.lock" }}
-            - v2
+            - v3-{{ checksum "frontend/yarn.lock" }}-{{ checksum "setup.py" }}
+            - v3-{{ checksum "frontend/yarn.lock" }}
+            - v3
       - run: python -m venv pyenv && source pyenv/bin/activate && pip install -e .[test]
       - run: cd frontend && yarn install
       - save_cache:
-          key: v2-{{ checksum "frontend/yarn.lock" }}-{{ checksum "setup.py" }}
+          key: v3-{{ checksum "frontend/yarn.lock" }}-{{ checksum "setup.py" }}
           paths:
             - frontend/node_modules
             - pyenv

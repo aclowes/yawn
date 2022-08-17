@@ -1,5 +1,4 @@
 from django.db import models
-from django.contrib.postgres import fields
 from django.db.models import functions
 
 from yawn.utilities import cron, database
@@ -40,7 +39,7 @@ class Workflow(models.Model):
     next_run = models.DateTimeField(null=True)
 
     # parameters
-    parameters = fields.JSONField(default=dict)
+    parameters = models.JSONField(default=dict)
 
     def save(self, **kwargs):
         if self.schedule_active:
@@ -100,7 +99,7 @@ class Run(models.Model):
     submitted_time = models.DateTimeField()
     scheduled_time = models.DateTimeField(null=True)
     status = models.TextField(default=RUNNING, choices=STATUS_CHOICES)
-    parameters = fields.JSONField(default=dict)
+    parameters = models.JSONField(default=dict)
 
     def update_status(self):
         from yawn.task.models import Task
