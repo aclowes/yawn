@@ -75,7 +75,7 @@ setup(
     # https://packaging.python.org/en/latest/requirements.html
     install_requires=[
         'psycopg2-binary>=2.7',
-        'django>=2.2',
+        'django>=3',
         'djangorestframework>=3.4',
         'whitenoise>=3.0',
         'gunicorn>=19',
