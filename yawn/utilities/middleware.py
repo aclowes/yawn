@@ -9,10 +9,11 @@ class DefaultFileMiddleware(WhiteNoiseMiddleware):
     and we return index.html, and then react-router interprets the path.
     """
 
-    def process_request(self, request):
+    def __call__(self, request):
 
         if request.path_info.startswith('/api'):
-            return  # handled by Django
+            # handled by Django
+            return self.get_response(request)
 
         static_file = self.files.get(request.path_info)
 

@@ -89,9 +89,10 @@ setup(
     extras_require={
         # 'dev': ['check-manifest'],
         'test': [
+            'flake8',
             'pytest>=3.4',
             'pytest-cov',
-            'flake8',
+            'pytz',
         ],
     },
 
