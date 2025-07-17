@@ -72,8 +72,9 @@ Build the frontend code, then bundle and release a source tarball. Finally, test
 installing it before uploading to the production PyPI server::
 
   (cd frontend/ && yarn build)
-  ./setup.py sdist upload -r https://test.pypi.org/legacy/
+  python -m build
+  twine upload --repository testpypi dist/*
+
   pip install -i https://testpypi.python.org/pypi yawns
 
-  ./setup.py sdist upload -r https://upload.pypi.org/legacy/
-
+  twine upload dist/*

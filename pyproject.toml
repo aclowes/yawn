@@ -1,0 +1,64 @@
+# This is based on https://github.com/pypa/sampleproject
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "yawns"
+version = "0.3.1"
+
+description = "Yet Another Workflow Engine, a subprocess-based DAG execution system"
+readme = "README.rst"
+
+license = "MIT"
+keywords = ["task", "execution", "subprocess", "dag", "workflow"]
+
+requires-python = ">=3.6"
+
+authors = [{ name = "Alec Clowes", email = "aclowes@gmail.com" }]
+maintainers = [
+    { name = "Alec Clowes", email = "aclowes@gmail.com" }
+]
+
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Topic :: Software Development :: Libraries :: Application Frameworks",
+    "Programming Language :: Python :: 3 :: Only",
+]
+
+dependencies = [
+    "psycopg2-binary>=2.7",
+    "Django>=3.1",
+    "djangorestframework>=3.10",
+    "whitenoise>=3.0",
+    "gunicorn>=19",
+    "pyyaml>=5.1",
+]
+
+[project.optional-dependencies]
+test = [
+    "flake8",
+    "pytest>=3.4",
+    "pytest-cov",
+    "pytz",
+    "build",
+    "twine",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/aclowes/yawn"
+
+[project.scripts]
+yawn = "yawn.manage:main"
+
+[tool.setuptools]
+packages = ["yawn"]
+package-data = { "yawn" = [
+    "staticfiles/static/css/*",
+    "staticfiles/static/js/*",
+    "staticfiles/static/media/*",
+    "staticfiles/*",
+    "workflow/tests/*", # example workflow yaml
+] }
